@@ -1,0 +1,1 @@
+javac src/readySETgo/*.java -d bin
