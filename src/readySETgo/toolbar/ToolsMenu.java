@@ -1,20 +1,21 @@
-package toolbar;
+package readySETgo.toolbar;
+
+import javax.swing.JMenu;
 
 import readySETgo.MenuItemFactory;
 
-class ToolsMenu extends Jmenu {
-	
+public class ToolsMenu extends JMenu {
 	public ToolsMenu() {
 		super("Tools");
 
-        toolsMenu.add(mf.createJMenuItem("Undo","Undo last action"));
-        toolsMenu.add(mf.createJMenuItem("Redo", "Redo last action"));
-        toolsMenu.add(mf.createJMenuItem("Cut", "Cut something idk"));
-        toolsMenu.add(mf.createJMenuItem("Copy", "Copy something"));
-        toolsMenu.add(mf.createJMenuItem("Paste", "Paste whatcha copied"));
-        toolsMenu.add(mf.createJMenuItem("Zoom", "Zoom in or out probs add stuff here"));
-        toolsMenu.add(mf.createJMenuItem("Rotate", "Rotate stage view"));
-        toolsMenu.add(mf.createJMenuItem("Edit Label", "Edit a text label"));
+        this.add(MenuItemFactory.createJMenuItem("Undo","Undo last action"));
+        this.add(MenuItemFactory.createJMenuItem("Redo", "Redo last action"));
+        this.add(MenuItemFactory.createJMenuItem("Cut", "Cut something idk"));
+        this.add(MenuItemFactory.createJMenuItem("Copy", "Copy something"));
+        this.add(MenuItemFactory.createJMenuItem("Paste", "Paste whatcha copied"));
+        this.add(MenuItemFactory.createJMenuItem("Zoom", "Zoom in or out probs add stuff here"));
+        this.add(MenuItemFactory.createJMenuItem("Rotate", "Rotate stage view"));
+        this.add(MenuItemFactory.createJMenuItem("Edit Label", "Edit a text label"));
 
 	}
 

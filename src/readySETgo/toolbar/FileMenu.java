@@ -1,8 +1,14 @@
 package readySETgo.toolbar;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+
 import readySETgo.MenuItemFactory;
 
-class FileMenu extends Jmenu {
+public class FileMenu extends JMenu {
 	
 	public FileMenu() {
 		super("File");
