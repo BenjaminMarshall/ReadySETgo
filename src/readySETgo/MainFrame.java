@@ -12,6 +12,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
+import panels.StagePanel;
+
 public class MainFrame extends JFrame{
 
 	public MainFrame(int width, int height){
@@ -29,7 +31,7 @@ public class MainFrame extends JFrame{
 	
 	private void fill(){
 		JPanel panel1 = new MockColorPanel(Color.RED);
-		JPanel panel2 = new MockColorPanel(Color.BLUE);
+		JPanel panel2 = new StagePanel();
 		JPanel panel3 = new MockColorPanel(Color.GREEN);
 		
 		setLayout(new GridBagLayout());
