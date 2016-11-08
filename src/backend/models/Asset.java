@@ -1,14 +1,12 @@
 package backend.models;
 
-import java.io.Serializable;
-
 /**
  * @author Ksenia Belikova
  * @version 11/3/2016.
  * 
  * Changes made by Benjamin Marshall
  */
-public abstract class Asset implements Serializable {
+public abstract class Asset{
     private double physicalWidth;
     private double physicalLength;
     private double xPos;

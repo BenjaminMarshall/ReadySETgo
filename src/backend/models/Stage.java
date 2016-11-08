@@ -1,6 +1,5 @@
 package backend.models;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,10 +7,15 @@ import java.util.List;
  * @author Ksenia Belikova
  * @version 11/3/2016.
  */
-public class Stage implements Serializable {
+public class Stage {
     private String name;
     private List<Asset> assets = new ArrayList<Asset>();
 
+    
+    public void draw(){
+    	//TODO
+    }
+    
     public String getName() {
         return name;
     }

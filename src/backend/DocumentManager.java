@@ -16,9 +16,7 @@ public class DocumentManager {
     public static void saveDocument(Stage document, File file) {
         try {
             FileOutputStream fout = new FileOutputStream(file);
-            ObjectOutputStream oos = new ObjectOutputStream(fout);
-            oos.writeObject(document);
-            oos.close();
+            //TODO change to XML
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -28,9 +26,8 @@ public class DocumentManager {
         Stage loadedDocument;
         try {
             FileInputStream fin = new FileInputStream(file);
-            ObjectInputStream ois = new ObjectInputStream(fin);
-            loadedDocument = (Stage) ois.readObject();
-            ois.close();
+            loadedDocument = new Stage();
+            //TODO XML stuff
             return loadedDocument;
         } catch (Exception ex) {
             ex.printStackTrace();
