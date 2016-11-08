@@ -1,4 +1,4 @@
-package panels;
+package readySETgo.panels;
 
 import javax.swing.JPanel;
 

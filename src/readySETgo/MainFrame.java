@@ -1,6 +1,5 @@
 package readySETgo;
 
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -9,7 +8,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
-import panels.StagePanel;
+import readySETgo.panels.StagePanel;
 import readySETgo.toolbar.FileMenu;
 import readySETgo.toolbar.ToolsMenu;
 
