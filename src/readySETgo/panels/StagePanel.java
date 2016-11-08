@@ -2,16 +2,20 @@ package readySETgo.panels;
 
 import javax.swing.JPanel;
 
-import readySETgo.contextmenus.StagePopUp;
+import backend.models.Stage;
 
-public class StagePanel extends JPanel {
+public class StagePanel extends JPanel{
+	private Stage stage;
 	
 	public StagePanel(){
 		
-		
-		
-		
-		
-		addMouseListener(StagePopUp.createAdapter());
+	}
+
+	public Stage getStage() {
+		return stage;
+	}
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
 	}
 }

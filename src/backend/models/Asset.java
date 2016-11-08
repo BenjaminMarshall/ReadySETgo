@@ -34,6 +34,8 @@ public abstract class Asset implements Serializable {
     
     public abstract void toXML();
 
+    public abstract void draw();
+    
     public double getPhysicalWidth() {
         return physicalWidth;
     }
