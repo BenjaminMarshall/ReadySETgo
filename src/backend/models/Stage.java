@@ -8,7 +8,7 @@ import java.util.List;
  * @author Ksenia Belikova
  * @version 11/3/2016.
  */
-public class Document implements Serializable {
+public class Stage implements Serializable {
     private String name;
     private List<Asset> assets = new ArrayList<Asset>();
 

@@ -1,15 +1,19 @@
 package backend;
 
-import backend.models.Document;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
-import java.io.*;
+import backend.models.Stage;
 
 /**
  * @author Ksenia Belikova
  * @version 11/3/2016.
  */
 public class DocumentManager {
-    public static void saveDocument(Document document, File file) {
+    public static void saveDocument(Stage document, File file) {
         try {
             FileOutputStream fout = new FileOutputStream(file);
             ObjectOutputStream oos = new ObjectOutputStream(fout);
@@ -20,12 +24,12 @@ public class DocumentManager {
         }
     }
 
-    public static Document loadDocumentFromFile(File file) {
-        Document loadedDocument;
+    public static Stage loadDocumentFromFile(File file) {
+        Stage loadedDocument;
         try {
             FileInputStream fin = new FileInputStream(file);
             ObjectInputStream ois = new ObjectInputStream(fin);
-            loadedDocument = (Document) ois.readObject();
+            loadedDocument = (Stage) ois.readObject();
             ois.close();
             return loadedDocument;
         } catch (Exception ex) {

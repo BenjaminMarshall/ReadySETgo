@@ -5,6 +5,8 @@ import java.io.Serializable;
 /**
  * @author Ksenia Belikova
  * @version 11/3/2016.
+ * 
+ * Changes made by Benjamin Marshall
  */
 public abstract class Asset implements Serializable {
     private double physicalWidth;
@@ -12,6 +14,25 @@ public abstract class Asset implements Serializable {
     private double xPos;
     private double yPos;
     private double angle;
+    
+    
+    public Asset(){
+    	physicalWidth = 0;
+    	physicalLength = 0;
+    	xPos = 0;
+    	yPos = 0;
+    	angle = 0;
+    }
+    
+    public Asset(double w, double l, double x, double y, double a){
+    	physicalWidth = w;
+    	physicalLength = l;
+    	xPos = x;
+    	yPos = y;
+    	angle = a;
+    }
+    
+    public abstract void toXML();
 
     public double getPhysicalWidth() {
         return physicalWidth;
@@ -52,4 +73,5 @@ public abstract class Asset implements Serializable {
     public void setAngle(double angle) {
         this.angle = angle;
     }
+
 }
