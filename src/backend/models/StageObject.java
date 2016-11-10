@@ -15,14 +15,18 @@ public class StageObject extends Asset {
 		super();
 	}
 	
-	public StageObject(double w, double l, double x, double y, double a, String name, String imageRef) throws IOException{
+	public StageObject(String name, double w, double l, double x, double y, double a, String imageRef) throws IOException{
 		super(w, l, x, y, a);
+		File file = new File(imageRef);
+		System.out.println(file.getAbsolutePath());
+		
 		this.image = ImageIO.read(new File(imageRef));
+		this.imageRef = imageRef;
 		this.name = name;
 	}
 	
-	public StageObject(double w, double l, String name, String imageRef) throws IOException{
-		this(w, l, 0, 0, 0, name, imageRef);
+	public StageObject(String name, double w, double l, String imageRef) throws IOException{
+		this(name, w, l, 0, 0, 0, imageRef);
 	}
 	
 	@Override
