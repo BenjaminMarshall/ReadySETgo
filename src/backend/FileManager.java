@@ -25,7 +25,7 @@ import backend.models.TextBox;
  * @author Ksenia Belikova
  * @version 11/3/2016.
  */
-public class DocumentManager {
+public class FileManager {
     public static void saveDocument(Stage stage, File file) {
         try {
         	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
