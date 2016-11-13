@@ -25,6 +25,8 @@ import backend.models.Stage;
 import backend.models.StageObject;
 import backend.models.TextBox;
 
+//TODO Make XML File paths named constants
+
 /**
  * @author Ksenia Belikova
  * @version 11/3/2016.
@@ -248,4 +250,81 @@ public class FileManager {
     	
     	return objects;
     }
+
+    public static void saveListOfFlyRails(ArrayList<FlyRail> list){
+    	
+    	try {
+    		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        	DocumentBuilder builder = factory.newDocumentBuilder();
+        	Document doc = builder.newDocument();
+        	
+        	Element root = doc.createElement("root");
+        	
+        	Element rails = doc.createElement("rails");
+        	
+        	for(FlyRail a: list){
+        		Element obj = doc.createElement("rail");
+        		
+        		obj.setAttribute("name", a.getName());
+        		obj.setAttribute("posx", "" + a.getPosx());
+        		obj.setAttribute("posy", "" + a.getPosy());
+        		obj.setAttribute("flownin", "" + a.isFlownIn());
+        		obj.setAttribute("ref", a.getImageRef());
+        		
+        		rails.appendChild(obj);
+        	}
+        	
+        	root.appendChild(rails);
+        	doc.appendChild(root);
+        	
+        	TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File("res/Rails.xml"));
+            transformer.transform(source, result);
+    	} catch (Exception e){
+    		e.printStackTrace();
+    	}
+    }
+    
+    public static ArrayList<FlyRail> getListOfFlyRails(){
+    	ArrayList<FlyRail> rails = null;
+    	
+		try {
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	    	DocumentBuilder builder = factory.newDocumentBuilder();
+	    	Document doc =  builder.parse(new File("res/Rails.xml"));
+	    	doc.getDocumentElement().normalize();
+	    	
+	    	rails = new ArrayList<FlyRail>();
+	    	
+	    	NodeList n = doc.getElementsByTagName("rail");
+	    	for(int i = 0; i < n.getLength(); i++){
+	    		Element e = (Element) n.item(i);
+
+	    		String name = e.getAttribute("name");
+	    		double posX = Double.parseDouble(e.getAttribute("posx"));
+	    		double posY = Double.parseDouble(e.getAttribute("posy"));
+	    		Boolean isFlownIn =  Boolean.parseBoolean(e.getAttribute("flownin"));
+	    		String ref = e.getAttribute("ref");
+	    		
+	    		FlyRail f = new FlyRail(name, posX, posY, isFlownIn, ref);
+	    		rails.add(f);
+	    	}	    	
+	    	
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	return rails;
+    }
+
+    
 }

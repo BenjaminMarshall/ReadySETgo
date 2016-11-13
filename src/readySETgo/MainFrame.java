@@ -8,6 +8,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
+import readySETgo.panels.FlyRailPanel;
 import readySETgo.panels.StagePanel;
 import readySETgo.toolbar.FileMenu;
 import readySETgo.toolbar.ToolsMenu;
@@ -29,7 +30,7 @@ public class MainFrame extends JFrame{
     }
     
     private void fill(){
-        JPanel panel1 = new StagePanel();
+        JPanel panel1 = new FlyRailPanel();
         JPanel panel2 = new StagePanel();
         JPanel panel3 = new StagePanel();
         
