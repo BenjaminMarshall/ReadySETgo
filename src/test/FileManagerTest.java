@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import backend.FileManager;
+import backend.models.FlyRail;
 import backend.models.StageObject;
 
 public class FileManagerTest {
 
-	public static void main(String[] args){
+	
+	public static void objectTest() {
 		ArrayList<StageObject> objects = new ArrayList<StageObject>();
+		
 		
 		try {
 			StageObject podium = new StageObject("Podium", 0, 0, 0, 0, 0, "");
@@ -69,5 +72,44 @@ public class FileManagerTest {
 		}
 		
 		
+	}
+	
+	public static void flyRailTest() {
+		ArrayList<FlyRail> rails = new ArrayList<FlyRail>();
+		
+		
+		try {
+			
+			FlyRail f1 = new FlyRail("Curtain 1", 0.0, 0.0, false, "res/test.png");
+			FlyRail f2 = new FlyRail("Curtain 2", 0.0, 0.0, true, "res/test.png");
+			FlyRail f3 = new FlyRail("Curtain 3", 0.0, 0.0, false, "res/test.png");
+			FlyRail f4 = new FlyRail("Curtain 4", 0.0, 0.0, true, "res/test.png");
+			FlyRail f5 = new FlyRail("Curtain 5", 0.0, 0.0, false, "res/test.png");
+
+			rails.add(f1);
+			rails.add(f2);
+			rails.add(f3);
+			rails.add(f4);
+			rails.add(f5);
+			
+			System.out.println("Saving...");
+			FileManager.saveListOfFlyRails(rails);
+			System.out.println("Saved.");
+			
+			System.out.println("Loading...");
+			rails = FileManager.getListOfFlyRails();
+			System.out.println("Loaded.");
+			
+			for(FlyRail f: rails){
+				System.out.println(f.getName());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public static void main(String[] args){
+		flyRailTest();
 	}
 }
