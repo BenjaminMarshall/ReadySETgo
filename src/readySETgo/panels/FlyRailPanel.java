@@ -16,7 +16,6 @@ import backend.FileManager;
 import backend.models.FlyRail;
 
 public class FlyRailPanel extends JPanel{
-	//TODO do we need FlyRail objects? Probably
 	
 	class SingleRailPanel extends JPanel {
 		

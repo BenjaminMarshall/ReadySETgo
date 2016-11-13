@@ -1,22 +1,19 @@
 package readySETgo;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.event.MouseListener;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JPanel;
 
-import readySETgo.panels.FlyRailPanel;
-import readySETgo.panels.ObjectPanel;
-import readySETgo.panels.StagePanel;
+import readySETgo.panels.ContainerPanel;
 import readySETgo.toolbar.FileMenu;
 import readySETgo.toolbar.ToolsMenu;
 
 
 public class MainFrame extends JFrame{
-
+	private ContainerPanel container;
+	
     public MainFrame(int width, int height){
         super();
         setSize(width, height);
@@ -25,33 +22,14 @@ public class MainFrame extends JFrame{
         createMenuBar();
         
         setLocationRelativeTo(null);
-        setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+        setVisible(true);
     }
     
     private void fill(){
-        JPanel panel1 = new FlyRailPanel();
-        JPanel panel2 = new StagePanel();
-        JPanel panel3 = new ObjectPanel();
-        
-        setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        
-        c.gridx = 0;
-        c.gridy = 0;
-        c.weightx = .2;
-        c.weighty = 1;  
-        c.fill = c.BOTH;
-        add(panel1, c);
-        
-        c.gridx = 1;
-        c.weightx = .6;
-        add(panel2, c);
-        
-        c.gridx = 2;
-        c.weightx = .2;
-        add(panel3, c);
+    	container = new ContainerPanel();
+    	
+    	add(container);
     }
     
     private void createMenuBar(){
@@ -68,5 +46,10 @@ public class MainFrame extends JFrame{
 
         // Register menu bar
         setJMenuBar(menuBar);
-    }   
+    }
+
+	public void registerMouseListener(MouseListener m) {
+		container.registerMouseListener(m);
+		
+	}   
 }
