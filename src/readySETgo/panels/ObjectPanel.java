@@ -1,5 +1,6 @@
 package readySETgo.panels;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ArrayList;
@@ -59,8 +60,8 @@ public class ObjectPanel extends JPanel {
 		
 		for(StageObject o: listModel){
 			SingleObjectPanel op = new SingleObjectPanel(o);
+			op.setPreferredSize(new Dimension(200, 100));
 			objects.add(op);
-			
 			container.add(op);
 		}
 		
