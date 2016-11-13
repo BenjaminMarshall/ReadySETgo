@@ -1,9 +1,13 @@
 package readySETgo;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
+
 public class Driver {
 	
 	public static void main(String[] args){
-		MainFrame mf = new MainFrame(1080, 760);
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		MainFrame mf = new MainFrame(screenSize.width, screenSize.height);
 		
 	}
 }

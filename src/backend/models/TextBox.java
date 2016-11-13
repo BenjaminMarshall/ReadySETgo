@@ -1,5 +1,7 @@
 package backend.models;
 
+import java.awt.Graphics;
+
 public class TextBox extends Asset{
 	private String text;
 	
@@ -15,7 +17,7 @@ public class TextBox extends Asset{
 	}
 
 	@Override
-	public void draw() {
+	public void draw(Graphics g, double x, double y) {
 		// TODO Auto-generated method stub
 		
 	}

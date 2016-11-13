@@ -12,13 +12,46 @@ public class FileManagerTest {
 		ArrayList<StageObject> objects = new ArrayList<StageObject>();
 		
 		try {
-			StageObject o1 = new StageObject("Chair", 12.4, 12.5692, 0, 0, 0, "res/chair.png");
-			StageObject o2 = new StageObject("Table", 100, 1000000, 0, 0, 0, "res/chair.png");
-			StageObject o3 = new StageObject("Other Thing", 2.56, 103, 0, 0 , 0, "res/chair.png");
+			StageObject podium = new StageObject("Podium", 0, 0, 0, 0, 0, "");
+			StageObject table = new StageObject("Table", 0, 0, 0, 0, 0, "");
+			StageObject chair = new StageObject("Chair", 0, 0, 0, 0, 0, "res/chair.png");
+			StageObject risers = new StageObject("Stage Risers", 0, 0, 0, 0, 0, "");
+			StageObject taperSpeaker = new StageObject("Tapered Speaker", 0, 0, 0, 0, 0, "");
+			StageObject tallSpeaker = new StageObject("Tall Square Speaker", 0, 0, 0, 0, 0, "");
+			StageObject tinySpeaker = new StageObject("Tiny Speaker", 0, 0, 0, 0, 0, "");
 			
-			objects.add(o1);
-			objects.add(o2);
-			objects.add(o3);
+			podium.setPhysicalWidth(3, 2);
+			podium.setPhysicalLength(2, 2);
+				
+			table.setPhysicalWidth(6, 0);
+			table.setPhysicalLength(2, 7);
+			
+			chair.setPhysicalWidth(1, 9);
+			chair.setPhysicalLength(1, 5);
+			
+			risers.setPhysicalWidth(8, 0);
+			risers.setPhysicalLength(4, 0);
+			
+			taperSpeaker.setPhysicalWidth(2, 0);
+			taperSpeaker.setPhysicalLength(2, 0);
+			
+			tallSpeaker.setPhysicalWidth(1, 11);
+			tallSpeaker.setPhysicalLength(2, 2);
+			
+			tinySpeaker.setPhysicalWidth(1, 0);
+			tinySpeaker.setPhysicalLength(1, 9);
+			
+			
+			
+			objects.add(podium);
+			objects.add(table);
+			objects.add(chair);
+			objects.add(risers);
+			objects.add(taperSpeaker);
+			objects.add(tallSpeaker);
+			objects.add(tinySpeaker);
+			objects.add(new StageObject("dhfakjsldfjalwefkjawe", 50, 50, 0, 0, 0, ""));
+		
 			
 			System.out.println("Saving...");
 			FileManager.saveListOfObjects(objects);
