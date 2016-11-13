@@ -79,19 +79,12 @@ public class FileManagerTest {
 		
 		
 		try {
-			
-			FlyRail f1 = new FlyRail("Curtain 1", 0.0, 0.0, false, "res/test.png");
-			FlyRail f2 = new FlyRail("Curtain 2", 0.0, 0.0, true, "res/test.png");
-			FlyRail f3 = new FlyRail("Curtain 3", 0.0, 0.0, false, "res/test.png");
-			FlyRail f4 = new FlyRail("Curtain 4", 0.0, 0.0, true, "res/test.png");
-			FlyRail f5 = new FlyRail("Curtain 5", 0.0, 0.0, false, "res/test.png");
 
-			rails.add(f1);
-			rails.add(f2);
-			rails.add(f3);
-			rails.add(f4);
-			rails.add(f5);
+			for(int i = 0; i < 28; i++) {
+				rails.add(new FlyRail("Curtain "+i, 0.0, 0.0,  (i % 2 == 0), "res/test.png"));
+			}
 			
+
 			System.out.println("Saving...");
 			FileManager.saveListOfFlyRails(rails);
 			System.out.println("Saved.");
