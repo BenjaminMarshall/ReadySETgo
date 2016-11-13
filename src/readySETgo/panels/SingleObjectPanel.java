@@ -12,6 +12,7 @@ public class SingleObjectPanel extends JPanel {
 	private StageObject stageObject;
 	
 	public SingleObjectPanel(StageObject o){
+		super();
 		this.setStageObject(o);
 			
 		this.setSize(50, 100);

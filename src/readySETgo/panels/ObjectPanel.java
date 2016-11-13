@@ -19,6 +19,7 @@ public class ObjectPanel extends JPanel {
 	private ArrayList<StageObject> listModel;
 	
 	public ObjectPanel(){
+		super();
 		container = new JPanel();
 		refresh();
 		
@@ -39,7 +40,6 @@ public class ObjectPanel extends JPanel {
 		
 	}
 
-	//TODO
 	private void refresh(){
 		
 		container.removeAll();
