@@ -36,13 +36,4 @@ public class ContainerPanel extends JPanel {
         c.weightx = .2;
         add(rightPanel, c);
 	}
-	
-	public void registerMouseListener(MouseListener m){
-		//leftPanel.addMouseListener(m);
-		//centerPanel.addMouseListener(m);
-		//rightPanel.addMouseListener(m);
-		
-		addMouseListener(m);
-		
-	}
 }

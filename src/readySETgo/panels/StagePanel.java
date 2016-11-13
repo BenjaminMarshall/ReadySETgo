@@ -15,9 +15,7 @@ public class StagePanel extends JPanel{
 		super();
 		stage = new Stage();
 
-		System.out.println(Arrays.toString(this.getMouseListeners()));
-		//addMouseListener(StagePopUp.createAdapter());
-		System.out.println(Arrays.toString(this.getMouseListeners()));
+		addMouseListener(StagePopUp.createAdapter());
 	}
 	
 	public void paintComponent(Graphics g){

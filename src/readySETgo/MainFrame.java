@@ -47,9 +47,5 @@ public class MainFrame extends JFrame{
         // Register menu bar
         setJMenuBar(menuBar);
     }
-
-	public void registerMouseListener(MouseListener m) {
-		container.registerMouseListener(m);
-		
-	}   
+    
 }
