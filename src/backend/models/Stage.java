@@ -36,6 +36,12 @@ public class Stage {
     
     public void draw(Graphics g){
     	g.drawImage(stageImage, 0, 0, (int) width, (int) length, null);
+    	for(Asset a: assets){
+    		a.draw(g, a.getxPos(), a.getyPos());
+    	}
+    	for(FlyRail f: flyRails){
+    		
+    	}
     }
     
     public String getName() {
