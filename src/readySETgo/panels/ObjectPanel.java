@@ -5,6 +5,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -78,10 +79,7 @@ public class ObjectPanel extends JPanel {
 
 				@Override
 				public void mouseReleased(MouseEvent e) {
-					if(mask = true){
 						User.setSelectedState(SelectedState.SELECTED);
-					}
-					
 				}
 
 				@Override
@@ -89,13 +87,27 @@ public class ObjectPanel extends JPanel {
 					if(User.getSelectedState().equals(SelectedState.DRAGGING) && User.getMouseState(e).equals(MouseState.UP)){
 						User.setSelectedState(SelectedState.SELECTED);
 					}
-					mask = true;
+					
 				}
 				
 				public void mouseExited(MouseEvent e){
-					System.out.println("Exited object panel");
-					mask = false;
-					ObjectPanel.this.dispatchEvent(new MouseEvent(ObjectPanel.this, 0, 0, 0, 0, 0, 0, false, 0));
+					System.out.println("Exited object panel");	
+				}
+				
+			});
+			op.addMouseMotionListener(new MouseMotionListener(){
+
+				@Override
+				public void mouseDragged(MouseEvent e) {
+					if(User.getSelectedState().equals(SelectedState.DRAGGING)){
+						User.getSelected().setxPos(/* Calculated X here */ 0);
+						User.getSelected().setyPos(/* Calculated Y here */ 0);
+					}
+				}
+
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					// TODO Auto-generated method stub
 					
 				}
 				

@@ -1,11 +1,14 @@
 package readySETgo.panels;
 
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import backend.models.Asset;
 import backend.models.Stage;
@@ -21,6 +24,13 @@ public class StagePanel extends JPanel{
 		super();
 		stage = new Stage();
 
+		Timer t = new Timer(100, new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				repaint();
+			}
+		});
+		t.start();
+		
 		addMouseListener(StagePopUp.createAdapter());
 		addMouseListener(new MouseAdapter(){
 
@@ -70,16 +80,13 @@ public class StagePanel extends JPanel{
 					User.getSelected().setxPos(e.getX());
 					User.getSelected().setyPos(e.getY());
 				}
-				repaint();
 			}
 			
-			@Override
 			public void mouseMoved(MouseEvent e) {
 				if(User.getSelectedState().equals(SelectedState.DRAGGING)){
 					User.getSelected().setxPos(e.getX());
 					User.getSelected().setyPos(e.getY());
 				}
-				repaint();
 			}
 			
 		});
