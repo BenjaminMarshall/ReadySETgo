@@ -14,9 +14,9 @@ public class MainFrame extends JFrame {
     public MainFrame(int width, int height) {
         super();
         setSize(width, height);
-        URL iconUrl = getClass().getResource("/logo.jpg");
-        ImageIcon logo = new ImageIcon(iconUrl);
-        this.setIconImage(logo.getImage());
+        //URL iconUrl = getClass().getResource("res/logo.jpg");
+        //ImageIcon logo = new ImageIcon(iconUrl);
+        //this.setIconImage(logo.getImage());
         this.setTitle("Stage Plan");
         fill();
         createMenuBar();
