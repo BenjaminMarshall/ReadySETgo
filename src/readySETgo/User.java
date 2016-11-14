@@ -5,15 +5,15 @@ import java.awt.event.MouseEvent;
 import backend.models.Asset;
 
 public class User {
-	public static enum DraggingState {
+	public static enum SelectedState {
 		EMPTY, SELECTED, DRAGGING;
 	}
 	public static enum MouseState {
 		UP, DOWN;
 	}
 	
-	private static DraggingState state;
-	private static Asset dragging;
+	private static SelectedState state = SelectedState.EMPTY;
+	private static Asset selected;
 	private static Asset clipboard;
 
 	public static MouseState getMouseState(MouseEvent e){
@@ -25,20 +25,21 @@ public class User {
 		}
 	}
 	
-	public static DraggingState getDraggingState(){
+	public static SelectedState getSelectedState(){
 		return state;
 	}
 	
-	public static void setDraggingState(DraggingState s){
+	public static void setSelectedState(SelectedState s){
 		state = s;
+		System.out.println("State set to: " + s.name());
 	}
 	
-	public static Asset getDragging(){
-		return dragging;
+	public static Asset getSelected(){
+		return selected;
 	}
 	
-	public static void setDragging(Asset a){
-		dragging = a;
+	public static void setSelected(Asset a){
+		selected = a;
 	}
 
 	public static Asset getClipboard() {

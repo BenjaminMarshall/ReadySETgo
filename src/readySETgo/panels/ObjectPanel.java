@@ -3,8 +3,8 @@ package readySETgo.panels;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -14,12 +14,16 @@ import javax.swing.JScrollPane;
 
 import backend.FileManager;
 import backend.models.StageObject;
+import readySETgo.User;
+import readySETgo.User.MouseState;
+import readySETgo.User.SelectedState;
 
 public class ObjectPanel extends JPanel {
 	private JScrollPane scroller;
 	private JPanel container;
 	private ArrayList<SingleObjectPanel> objects;
 	private ArrayList<StageObject> listModel;
+	private boolean mask;
 	
 	public ObjectPanel(){
 		super();
@@ -40,7 +44,7 @@ public class ObjectPanel extends JPanel {
 		c.fill = c.BOTH;
 		
 		add(scroller, c);
-		
+		mask = true;
 	}
 
 	private void refresh(){
@@ -63,35 +67,35 @@ public class ObjectPanel extends JPanel {
 		for(StageObject o: listModel){
 			SingleObjectPanel op = new SingleObjectPanel(o);
 			op.setPreferredSize(new Dimension(200, 100));
-			op.addMouseListener(new MouseListener(){
-
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
+			op.addMouseListener(new MouseAdapter(){
 
 				@Override
 				public void mousePressed(MouseEvent e) {
-					// TODO Auto-generated method stub
+					User.setSelected(((SingleObjectPanel) e.getComponent()).getCopyOfStageObject());
+					User.setSelectedState(SelectedState.DRAGGING);
 					
 				}
 
 				@Override
 				public void mouseReleased(MouseEvent e) {
-					// TODO Auto-generated method stub
+					if(mask = true){
+						User.setSelectedState(SelectedState.SELECTED);
+					}
 					
 				}
 
 				@Override
 				public void mouseEntered(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
+					if(User.getSelectedState().equals(SelectedState.DRAGGING) && User.getMouseState(e).equals(MouseState.UP)){
+						User.setSelectedState(SelectedState.SELECTED);
+					}
+					mask = true;
 				}
-
-				@Override
-				public void mouseExited(MouseEvent e) {
-					// TODO Auto-generated method stub
+				
+				public void mouseExited(MouseEvent e){
+					System.out.println("Exited object panel");
+					mask = false;
+					ObjectPanel.this.dispatchEvent(new MouseEvent(ObjectPanel.this, 0, 0, 0, 0, 0, 0, false, 0));
 					
 				}
 				

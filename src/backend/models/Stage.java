@@ -1,7 +1,9 @@
 package backend.models;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -66,5 +68,16 @@ public class Stage {
 
 	public void setFlyRails(List<FlyRail> flyRails) {
 		this.flyRails = flyRails;
+	}
+
+	public Asset eventOnObject(MouseEvent e) {
+		for(Asset a: assets){
+			if(e.getX() > a.getxPos() && e.getX() < a.getxPos() + a.getPhysicalWidth()){
+				if(e.getY() > a.getyPos() && e.getY() < a.getyPos() + a.getPhysicalLength()){
+					return a;
+				}
+			}
+		}
+		return null;
 	}
 }

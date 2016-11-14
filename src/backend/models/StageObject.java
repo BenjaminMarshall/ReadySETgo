@@ -1,5 +1,6 @@
 package backend.models;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
@@ -39,7 +40,8 @@ public class StageObject extends Asset {
 	@Override
 	public void draw(Graphics g, double x, double y) {
 		if(image == null){
-			g.drawRect((int) x, (int) y, (int) getPhysicalWidth(), (int) getPhysicalLength());
+			g.setColor(Color.BLACK);
+			g.fillRect((int) x, (int) y, (int) getPhysicalWidth(), (int) getPhysicalLength());
 		} else {
 			g.drawImage(image, (int) x, (int) y, (int) getPhysicalWidth(), (int) getPhysicalLength(), null);
 		}
@@ -94,6 +96,14 @@ public class StageObject extends Asset {
 		public int compare(StageObject o1, StageObject o2) {
 			return o1.getName().compareTo(o2.getName());
 		}	
+	}
+	
+	public String toString(){
+		return this.getName();
+	}
+
+	public StageObject copyOf() {
+		return new StageObject(getName(), getPhysicalWidth(), getPhysicalLength(), getxPos(), getyPos(), getAngle(), getImageRef());
 	}
 
 }

@@ -6,6 +6,7 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+import backend.models.Asset;
 import backend.models.StageObject;
 
 public class SingleObjectPanel extends JPanel {
@@ -40,5 +41,9 @@ public class SingleObjectPanel extends JPanel {
 
 	public void setStageObject(StageObject stageObject) {
 		this.stageObject = stageObject;
+	}
+
+	public StageObject getCopyOfStageObject() {
+		return stageObject.copyOf();
 	}
 }
