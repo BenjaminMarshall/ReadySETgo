@@ -1,6 +1,5 @@
 package test;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import backend.FileManager;
@@ -53,9 +52,10 @@ public class FileManagerTest {
 			objects.add(taperSpeaker);
 			objects.add(tallSpeaker);
 			objects.add(tinySpeaker);
-			objects.add(new StageObject("dhfakjsldfjalwefkjawe", 50, 50, 0, 0, 0, ""));
+			objects.add(new StageObject("updated", 50, 50, 0, 0, 0, ""));
+			objects.add(new StageObject("ASdASD", 5, 5, 0, 0, 0, ""));
+			objects.add(new StageObject("ASDASDASD", 4, 4, 0, 0, 0, ""));
 		
-			
 			System.out.println("Saving...");
 			FileManager.saveListOfObjects(objects);
 			System.out.println("Saved.");
@@ -63,10 +63,6 @@ public class FileManagerTest {
 			System.out.println("Loading...");
 			objects = FileManager.getListOfObjects();
 			System.out.println("Loaded.");
-			
-			for(StageObject o: objects){
-				System.out.println(o.getName() + ": " + o.getPhysicalWidth() + ", " + o.getPhysicalLength());
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
