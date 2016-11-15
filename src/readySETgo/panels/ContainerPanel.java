@@ -2,8 +2,8 @@ package readySETgo.panels;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.MouseListener;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class ContainerPanel extends JPanel {
@@ -12,9 +12,10 @@ public class ContainerPanel extends JPanel {
 	private JPanel rightPanel;
 	
 	public ContainerPanel(){
+		
 		leftPanel = new FlyRailPanel();
         centerPanel = new StagePanel();
-        rightPanel = new ObjectPanel();
+        rightPanel = new ObjectPanel(centerPanel);
         
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();

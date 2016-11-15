@@ -3,6 +3,7 @@ package readySETgo.panels;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
@@ -10,8 +11,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.swing.BoxLayout;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 import backend.FileManager;
 import backend.models.StageObject;
@@ -25,12 +28,15 @@ public class ObjectPanel extends JPanel {
 	private ArrayList<SingleObjectPanel> objects;
 	private ArrayList<StageObject> listModel;
 	private boolean mask;
+	private JFrame mainFrame;
+	private JPanel stagePanel;
 	
-	public ObjectPanel(){
+	public ObjectPanel(JPanel p){
 		super();
 		container = new JPanel();
 		refresh();
 		
+		stagePanel = p;
 		
 		scroller = new JScrollPane(container, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
@@ -47,6 +53,7 @@ public class ObjectPanel extends JPanel {
 		add(scroller, c);
 		mask = true;
 	}
+	
 
 	private void refresh(){
 		
@@ -95,13 +102,20 @@ public class ObjectPanel extends JPanel {
 				}
 				
 			});
+			JPanel objPanel = this;
 			op.addMouseMotionListener(new MouseMotionListener(){
 
 				@Override
 				public void mouseDragged(MouseEvent e) {
 					if(User.getSelectedState().equals(SelectedState.DRAGGING)){
-						User.getSelected().setxPos(/* Calculated X here */ 0);
-						User.getSelected().setyPos(/* Calculated Y here */ 0);
+						
+						Point p = new Point(e.getX(), e.getY());
+						
+						SwingUtilities.convertPointToScreen(p, objPanel);
+						SwingUtilities.convertPointFromScreen(p, stagePanel);
+												
+						User.getSelected().setxPos(p.getX());
+						User.getSelected().setyPos(p.getY());
 					}
 				}
 
