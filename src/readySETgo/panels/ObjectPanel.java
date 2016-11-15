@@ -102,7 +102,6 @@ public class ObjectPanel extends JPanel {
 				}
 				
 			});
-			JPanel objPanel = this;
 			op.addMouseMotionListener(new MouseMotionListener(){
 
 				@Override
@@ -111,7 +110,7 @@ public class ObjectPanel extends JPanel {
 						
 						Point p = new Point(e.getX(), e.getY());
 						
-						SwingUtilities.convertPointToScreen(p, objPanel);
+						SwingUtilities.convertPointToScreen(p, op);
 						SwingUtilities.convertPointFromScreen(p, stagePanel);
 												
 						User.getSelected().setxPos(p.getX());
