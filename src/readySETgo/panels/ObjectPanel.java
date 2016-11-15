@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
@@ -27,8 +26,6 @@ public class ObjectPanel extends JPanel {
 	private JPanel container;
 	private ArrayList<SingleObjectPanel> objects;
 	private ArrayList<StageObject> listModel;
-	private boolean mask;
-	private JFrame mainFrame;
 	private JPanel stagePanel;
 	
 	public ObjectPanel(JPanel p){
@@ -51,7 +48,6 @@ public class ObjectPanel extends JPanel {
 		c.fill = c.BOTH;
 		
 		add(scroller, c);
-		mask = true;
 	}
 	
 
