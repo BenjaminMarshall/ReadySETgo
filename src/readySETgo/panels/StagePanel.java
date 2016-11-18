@@ -24,7 +24,7 @@ public class StagePanel extends JPanel{
 		super();
 		stage = new Stage();
 
-		Timer t = new Timer(100, new ActionListener(){
+		Timer t = new Timer(10, new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				repaint();
 			}

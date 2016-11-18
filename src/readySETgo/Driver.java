@@ -11,8 +11,6 @@ public class Driver {
 	
 	public static void main(String[] args){
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		MainFrame mf = new MainFrame((int) (screenSize.width * .85), (int) (screenSize.height * .85));
-		
-		
+		MainFrame mf = new MainFrame((int) (screenSize.width * .85), (int) (screenSize.height * .85));		
 	}
 }
