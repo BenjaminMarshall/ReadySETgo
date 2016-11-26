@@ -3,8 +3,12 @@ package readySETgo;
 import readySETgo.panels.ContainerPanel;
 import readySETgo.toolbar.FileMenu;
 import readySETgo.toolbar.ToolsMenu;
+
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 
@@ -14,9 +18,10 @@ public class MainFrame extends JFrame {
     public MainFrame(int width, int height) {
         super();
         setSize(width, height);
-        //URL iconUrl = getClass().getResource("res/logo.jpg");
-        //ImageIcon logo = new ImageIcon(iconUrl);
-        //this.setIconImage(logo.getImage());
+        try {
+            this.setIconImage(ImageIO.read(new File("res/logo.png")));
+        } catch (IOException e) {
+        }
         this.setTitle("Stage Plan");
         fill();
         createMenuBar();
