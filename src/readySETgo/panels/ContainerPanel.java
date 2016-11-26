@@ -3,18 +3,20 @@ package readySETgo.panels;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import backend.models.Stage;
 
 public class ContainerPanel extends JPanel {
 	private JPanel leftPanel;
-	private JPanel centerPanel;
+	private StagePanel centerPanel;
 	private JPanel rightPanel;
 	
 	public ContainerPanel(){
 		
-		leftPanel = new FlyRailPanel();
-        centerPanel = new StagePanel();
+		centerPanel = new StagePanel();
+		Stage s = centerPanel.getStage();
+		leftPanel = new FlyRailPanel(s);
         rightPanel = new ObjectPanel(centerPanel);
         
         setLayout(new GridBagLayout());

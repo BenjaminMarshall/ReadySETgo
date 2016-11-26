@@ -20,6 +20,7 @@ public class StageObject extends Asset {
 	
 	public StageObject(String name, double w, double l, double x, double y, double a, String imageRef) {
 		super(w, l, x, y, a);
+		System.out.println(imageRef);
 		File file = new File(imageRef);
 		System.out.println(file.getAbsolutePath());
 		

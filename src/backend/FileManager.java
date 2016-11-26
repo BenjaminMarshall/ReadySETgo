@@ -86,7 +86,8 @@ public class FileManager {
         	for(FlyRail r: stage.getFlyRails()){
         		Element rail = doc.createElement("rail");
         		
-        		
+        		rail.setAttribute("w", "" + r.getW());
+        		rail.setAttribute("l", "" + r.getL());
         		rail.setAttribute("x", "" + r.getPosx());
         		rail.setAttribute("y", "" + r.getPosy());
         		rail.setAttribute("ref", r.getImageRef());
@@ -155,12 +156,14 @@ public class FileManager {
         		Element e = (Element) n;
         		
         		String name = e.getTextContent();
+        		double w = Double.parseDouble(e.getAttribute("w"));
+        		double l = Double.parseDouble(e.getAttribute("l"));
         		double xpos = Double.parseDouble(e.getAttribute("x"));
         		double ypos = Double.parseDouble(e.getAttribute("y"));
         		boolean isFlownIn = Boolean.parseBoolean(e.getAttribute("isFlownIn"));
         		String imageRef = e.getAttribute("ref");
         		
-        		FlyRail f = new FlyRail(name, xpos, ypos, isFlownIn, imageRef);
+        		FlyRail f = new FlyRail(name, w, l, xpos, ypos, isFlownIn, imageRef);
         		flyRails.add(f);
         	}
         	
@@ -267,6 +270,8 @@ public class FileManager {
         		Element obj = doc.createElement("rail");
         		
         		obj.setAttribute("name", a.getName());
+        		obj.setAttribute("w", "" + a.getW());
+        		obj.setAttribute("l", "" + a.getL());
         		obj.setAttribute("posx", "" + a.getPosx());
         		obj.setAttribute("posy", "" + a.getPosy());
         		obj.setAttribute("flownin", "" + a.isFlownIn());
@@ -304,12 +309,14 @@ public class FileManager {
 	    		Element e = (Element) n.item(i);
 
 	    		String name = e.getAttribute("name");
+	    		double w = Double.parseDouble(e.getAttribute("w"));
+	    		double l = Double.parseDouble(e.getAttribute("l"));
 	    		double posX = Double.parseDouble(e.getAttribute("posx"));
 	    		double posY = Double.parseDouble(e.getAttribute("posy"));
 	    		Boolean isFlownIn =  Boolean.parseBoolean(e.getAttribute("flownin"));
 	    		String ref = e.getAttribute("ref");
 	    		
-	    		FlyRail f = new FlyRail(name, posX, posY, isFlownIn, ref);
+	    		FlyRail f = new FlyRail(name, w, l, posX, posY, isFlownIn, ref);
 	    		rails.add(f);
 	    	}	    	
 	    	

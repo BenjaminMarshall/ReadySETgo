@@ -52,9 +52,6 @@ public class FileManagerTest {
 			objects.add(taperSpeaker);
 			objects.add(tallSpeaker);
 			objects.add(tinySpeaker);
-			objects.add(new StageObject("updated", 50, 50, 0, 0, 0, ""));
-			objects.add(new StageObject("ASdASD", 5, 5, 0, 0, 0, ""));
-			objects.add(new StageObject("ASDASDASD", 4, 4, 0, 0, 0, ""));
 		
 			System.out.println("Saving...");
 			FileManager.saveListOfObjects(objects);
@@ -76,11 +73,10 @@ public class FileManagerTest {
 		
 		try {
 
-			for(int i = 0; i < 28; i++) {
-				rails.add(new FlyRail("Curtain "+i, 0.0, 0.0,  (i % 2 == 0), "res/test.png"));
+			for(int i = 0; i < 2; i++) {
+				rails.add(new FlyRail("Chair "+i, 1, 9, 50, 50,  (i % 2 == 0), "res/chair.png"));
 			}
 			
-
 			System.out.println("Saving...");
 			FileManager.saveListOfFlyRails(rails);
 			System.out.println("Saved.");

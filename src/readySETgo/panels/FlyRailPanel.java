@@ -3,7 +3,9 @@ package readySETgo.panels;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.ArrayList;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -12,27 +14,57 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-import backend.FileManager;
 import backend.models.FlyRail;
+import backend.models.Stage;
 
 public class FlyRailPanel extends JPanel{
 	
 	class SingleRailPanel extends JPanel {
 		
+		private FlyRail rail;
+		private JLabel railTitle;
+		private JButton railToggle;
+		
+		private String getTitleLabel() {
+			return rail.getName() + ": " + (rail.isFlownIn() ? "Flown In" : "Flown Out");
+		}
+		
+		private String getToggleLabel() {
+			return (rail.isFlownIn() ? "Fly Out" : "Fly In");
+		}
+		
+		private void toggleRail() {
+			this.rail.setFlownIn(!this.rail.isFlownIn());
+			this.updateLabels();
+		}
+		
+		private void updateLabels() {
+			this.railTitle.setText(this.getTitleLabel());
+			this.railToggle.setText(this.getToggleLabel());
+		}
+		
 		public SingleRailPanel(FlyRail f) {
 			super();
-			JLabel railTitle = new JLabel(f.getName() + ": " + (f.isFlownIn() ? "Flown In" : "Flown Out"));
-			JButton railToggle = new JButton((f.isFlownIn() ? "Fly Out" : "Fly In"));
+			this.rail = f;
+			this.railTitle = new JLabel(this.getTitleLabel());
+			this.railToggle = new JButton(this.getToggleLabel());
+			railToggle.addActionListener(new ActionListener()
+			{
+			  public void actionPerformed(ActionEvent e)
+			  {
+			    toggleRail();
+			  }
+			});
 			this.add(railTitle);
 			this.add(railToggle);
 			this.setPreferredSize(new Dimension(200, 50));
 		}
 	}
 
-	public FlyRailPanel() {
+	public FlyRailPanel(Stage s) {
 		super();
 	
-		JPanel contentPanel = this.loadFlyRails();
+		JPanel contentPanel = this.loadFlyRails(s);
 	
 		GridBagLayout gc = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
@@ -51,12 +83,12 @@ public class FlyRailPanel extends JPanel{
 		this.add(scrollPane, c);
 	}
 
-	public JPanel loadFlyRails() {
+	public JPanel loadFlyRails(Stage s) {
 		
 		JPanel ret = new JPanel();
 		ret.setLayout(new BoxLayout(ret, BoxLayout.PAGE_AXIS));
 		
-		ArrayList<FlyRail> rails = FileManager.getListOfFlyRails();
+		List<FlyRail> rails = s.getFlyRails();
 		this.removeAll();
 		for (FlyRail f : rails) { ret.add(new SingleRailPanel(f)); }
 		

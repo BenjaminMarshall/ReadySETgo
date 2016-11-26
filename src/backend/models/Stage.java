@@ -11,6 +11,8 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import backend.FileManager;
+
 /**
  * @author Ksenia Belikova
  * @version 11/3/2016.
@@ -26,7 +28,7 @@ public class Stage {
     public Stage(){
     	this.name = "New Stage";
     	this.assets = new ArrayList<Asset>();
-    	this.flyRails = new ArrayList<FlyRail>();
+    	this.flyRails =  FileManager.getListOfFlyRails();
     	try {
     	this.stageImage = ImageIO.read(new File("res/stage.png"));
     	} catch (IOException e){
@@ -42,7 +44,10 @@ public class Stage {
     		a.draw(g, a.getxPos(), a.getyPos());
     	}
     	for(FlyRail f: flyRails){
-    		
+    		if(f.isFlownIn()) {
+    			Asset a = f.getDrawable();
+    			a.draw(g, a.getxPos(), a.getyPos());
+    		}
     	}
     }
     
