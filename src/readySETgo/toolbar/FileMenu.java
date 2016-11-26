@@ -7,6 +7,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
 import readySETgo.MenuItemFactory;
+import readySETgo.PrintManager;
 
 public class FileMenu extends JMenu {
 	
@@ -20,7 +21,7 @@ public class FileMenu extends JMenu {
 		JMenuItem printMenuItem = new JMenuItem("Print...");
 		printMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Print");
+				PrintManager.getManager().print();
 			}});
 		this.add(printMenuItem);
 		this.addSeparator();
