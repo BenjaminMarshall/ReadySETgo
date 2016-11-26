@@ -23,18 +23,18 @@ public class PrintManager {
     public void print() {
         if (printable != null) {
             PrintService[] services = PrinterJob.lookupPrintServices();
-            if (services != null && services.length > 0) {
-                PrinterJob job = PrinterJob.getPrinterJob();
-                job.setPrintable(printable);
-                try {
+            PrinterJob job = PrinterJob.getPrinterJob();
+            job.setPrintable(printable);
+            try {
+                if (services != null && services.length > 0) {
                     job.setPrintService(services[0]);
-                    boolean ok = job.printDialog();
-                    if (ok) {
-                        job.print();
-                    }
-                } catch (PrinterException e) {
-                    e.printStackTrace();
                 }
+                boolean ok = job.printDialog();
+                if (ok) {
+                    job.print();
+                }
+            } catch (PrinterException e) {
+                e.printStackTrace();
             }
         }
     }
