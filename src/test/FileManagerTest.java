@@ -73,8 +73,8 @@ public class FileManagerTest {
 		
 		try {
 
-			for(int i = 0; i < 2; i++) {
-				rails.add(new FlyRail("Chair "+i, 1, 9, 50, 50,  (i % 2 == 0), "res/chair.png"));
+			for(int i = 0; i < 4; i++) {
+				rails.add(new FlyRail("Curtain "+(i+1), 640, 12, 115, (i*100),  (i % 2 == 0), "res/curtain.png"));
 			}
 			
 			System.out.println("Saving...");
