@@ -16,6 +16,14 @@ public class FileMenu extends JMenu {
         this.add(mf.createJMenuItem("Open", "Open a File"));
         this.add(mf.createJMenuItem("Save", "Save current file"));
         this.add(mf.createJMenuItem("Save as", "Save current file as..."));
+        this.addSeparator();
+		JMenuItem printMenuItem = new JMenuItem("Print...");
+		printMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println("Print");
+			}});
+		this.add(printMenuItem);
+		this.addSeparator();
 		this.add(this.createExitMenuItem()); 
 	}
 
