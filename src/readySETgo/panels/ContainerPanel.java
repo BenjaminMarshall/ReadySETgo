@@ -9,15 +9,20 @@ import backend.models.Stage;
 
 public class ContainerPanel extends JPanel {
 	private JPanel leftPanel;
-	private StagePanel centerPanel;
+	private StageViewPanel centerPanel;
 	private JPanel rightPanel;
+	private StagePanel stagePanel;
 	
 	public ContainerPanel(){
 		
-		centerPanel = new StagePanel();
-		Stage s = centerPanel.getStage();
+		stagePanel = new StagePanel();
+		Stage s = stagePanel.getStage();
 		leftPanel = new FlyRailPanel(s);
-        rightPanel = new ObjectPanel(centerPanel);
+        rightPanel = new ObjectPanel(stagePanel);
+
+        centerPanel = new StageViewPanel(stagePanel);
+        
+        
         
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
