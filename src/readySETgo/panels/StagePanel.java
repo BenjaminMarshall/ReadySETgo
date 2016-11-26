@@ -117,6 +117,9 @@ public class StagePanel extends JPanel implements Printable {
             return NO_SUCH_PAGE;
         }
         Graphics2D g2d = (Graphics2D) graphics;
+        double scale = 0.6;
+        g2d.scale(scale,scale);
+
         g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
         printAll(graphics);
         return PAGE_EXISTS;
