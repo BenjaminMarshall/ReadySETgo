@@ -1,6 +1,6 @@
 package readySETgo;
 
-import javax.swing.*;
+import javax.print.PrintService;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
@@ -22,17 +22,21 @@ public class PrintManager {
 
     public void print() {
         if (printable != null) {
-            PrinterJob job = PrinterJob.getPrinterJob();
-            job.setPrintable(printable);
-            boolean ok = job.printDialog();
-            if (ok) {
+            PrintService[] services = PrinterJob.lookupPrintServices();
+            if (services != null && services.length > 0) {
+                PrinterJob job = PrinterJob.getPrinterJob();
+                job.setPrintable(printable);
                 try {
-                    job.print();
-                } catch (PrinterException ex) {
-                    ex.printStackTrace();
-              /* The job did not successfully complete */
+                    job.setPrintService(services[0]);
+                    boolean ok = job.printDialog();
+                    if (ok) {
+                        job.print();
+                    }
+                } catch (PrinterException e) {
+                    e.printStackTrace();
                 }
             }
         }
     }
 }
+
