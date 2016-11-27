@@ -27,7 +27,10 @@ public class UndoManager {
 	
 	private static UndoManager manager = new UndoManager();
 
-	private UndoManager() {undoStack = new Stack<StageAction>();}
+	private UndoManager() {
+		undoStack = new Stack<StageAction>();
+		redoStack = new Stack<StageAction>();
+	}
 	
     public static UndoManager get() { return manager; }
     
@@ -37,29 +40,49 @@ public class UndoManager {
     	this.origY = origY;
     	this.origState = origState;
     	this.prevSelected = prevSelected;
+    	redoStack.removeAllElements();
     }
  
     public void storeDragEnd() {
     	undoStack.push(new DragAction(dragged, origX, origY, dragged.getxPos(), dragged.getyPos(), origState, prevSelected));
+    	redoStack.removeAllElements();
     }
  
     public void storeObjectPlacement(Asset created) {
     	undoStack.push(new CreationAction(created));
+    	redoStack.removeAllElements();
     }
     
     public void storeCut(Asset cutted, User.SelectedState origState, Asset prevSelected) {
     	undoStack.push(new CutAction(cutted, origState, prevSelected));
+    	redoStack.removeAllElements();
     }
     
     public void storePaste(Asset pasted, User.SelectedState origState, Asset prevSelected) {
     	undoStack.push(new PasteAction(pasted, origState, prevSelected));
+    	redoStack.removeAllElements();
     }
     
     public void storeDelete(Asset deleted, User.SelectedState origState, Asset prevSelected) {
     	undoStack.push(new DeleteAction(deleted, origState, prevSelected));
+    	redoStack.removeAllElements();
     }
     
-    public void undo() { if(!undoStack.isEmpty()) { undoStack.pop().undoAction(); } }
+    public void undo() {
+    	if(!undoStack.isEmpty()) {
+    		StageAction a = undoStack.pop();
+    		a.undoAction();
+    		redoStack.push(a);
+    	}
+    }
+    
+    public void redo() {
+    	if(!redoStack.isEmpty()) {
+    		StageAction a = redoStack.pop();
+    		a.redoAction();
+    		undoStack.push(a);
+    	}
+    }
     
 }
 

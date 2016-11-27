@@ -22,4 +22,10 @@ public class CutAction extends StageAction {
 		User.setSelected(this.prevSelected);
 	}
 
+	public void redoAction() {
+		StageManager.get().getStage().getAssets().remove(this.cutted);
+		User.setSelectedState(User.SelectedState.EMPTY);
+		User.setSelected(null);
+	}
+	
 }

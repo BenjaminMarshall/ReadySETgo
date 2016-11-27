@@ -29,4 +29,11 @@ public class DragAction extends StageAction {
 		User.setSelected(prevSelected);
 	}
 	
+	public void redoAction() {
+		dragged.setxPos(newX);
+		dragged.setyPos(newY);
+		User.setSelectedState(User.SelectedState.SELECTED);
+		User.setSelected(dragged);
+	}
+	
 }

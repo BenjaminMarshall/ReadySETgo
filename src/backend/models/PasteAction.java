@@ -22,4 +22,10 @@ public class PasteAction extends StageAction {
 		User.setSelected(this.prevSelected);
 	}
 
+	public void redoAction() {
+		StageManager.get().getStage().getAssets().add(this.pasted);
+		User.setSelectedState(User.SelectedState.SELECTED);
+		User.setSelected(this.pasted);
+	}
+	
 }

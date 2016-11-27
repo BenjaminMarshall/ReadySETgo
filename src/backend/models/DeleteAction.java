@@ -22,4 +22,10 @@ public class DeleteAction extends StageAction {
 		User.setSelected(this.prevSelected);
 	}
 
+	public void redoAction() {
+		StageManager.get().getStage().getAssets().remove(this.deleted);
+		User.setSelectedState(User.SelectedState.EMPTY);
+		User.setSelected(null);
+	}
+	
 }

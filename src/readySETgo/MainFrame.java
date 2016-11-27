@@ -112,6 +112,15 @@ public class MainFrame extends JFrame {
     			UndoManager.get().undo();
     		}
     	});
+
+    	// Ctrl Y => Redo
+    	KeyStroke ctrlY = KeyStroke.getKeyStroke(KeyEvent.VK_Y, KeyEvent.CTRL_DOWN_MASK);
+    	actionMap.put(ctrlY, new AbstractAction("redo") {
+    		@Override
+    		public void actionPerformed(ActionEvent e) {
+    			UndoManager.get().redo();
+    		}
+    	});
     	
     	KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager();
     	kfm.addKeyEventDispatcher( new KeyEventDispatcher() {
