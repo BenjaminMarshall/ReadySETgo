@@ -1,8 +1,11 @@
 package backend.models;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +15,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import backend.FileManager;
+import readySETgo.User;
 
 /**
  * @author Ksenia Belikova
@@ -42,6 +46,25 @@ public class Stage {
     	g.drawImage(stageImage, 0, 0, (int) width, (int) length, null);
     	for(Asset a: assets){
     		a.draw(g, a.getxPos(), a.getyPos());
+    		if(User.getSelectedState() == User.SelectedState.SELECTED && User.getSelected() == a) {
+    			//Highlight the selected object by drawing a dashed border around it
+    			int topLeftX = (int)(a.getxPos() - 2);
+    			int topLeftY = (int)(a.getyPos() - 2);
+    			int topRightX = (int)(a.getxPos() + a.getPhysicalWidth() + 2);
+    			int topRightY = (int)(a.getyPos() - 2);
+    			int botLeftX = (int)(a.getxPos() - 2);
+    			int botLeftY = (int)(a.getyPos() + a.getPhysicalLength() + 2);
+    			int botRightX = (int)(a.getxPos() + a.getPhysicalWidth() + 2);
+    			int botRightY = (int)(a.getyPos() + a.getPhysicalLength() + 2);
+    			Graphics2D g2 = (Graphics2D) g.create();    	        
+    	        Stroke dashed = new BasicStroke(2, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 1, new float[]{5}, 0);
+    	        g2.setStroke(dashed);
+    	        g2.drawLine(topLeftX,topLeftY,topRightX,topRightY);
+    	        g2.drawLine(topRightX,topRightY,botRightX,botRightY);
+    	        g2.drawLine(botRightX,botRightY,botLeftX,botLeftY);
+    	        g2.drawLine(botLeftX,botLeftY,topLeftX,topLeftY);
+    	        g2.dispose();
+    		}
     	}
     	for(FlyRail f: flyRails){
     		if(f.isFlownIn()) {
