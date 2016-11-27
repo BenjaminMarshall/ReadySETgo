@@ -8,8 +8,10 @@ import backend.models.CutAction;
 import backend.models.DeleteAction;
 import backend.models.DragAction;
 import backend.models.PasteAction;
+import backend.models.RailToggleAction;
 import backend.models.StageAction;
 import readySETgo.User;
+import readySETgo.panels.SingleRailPanel;
 
 /**
  * RSG
@@ -65,6 +67,11 @@ public class UndoManager {
     
     public void storeDelete(Asset deleted, User.SelectedState origState, Asset prevSelected) {
     	undoStack.push(new DeleteAction(deleted, origState, prevSelected));
+    	redoStack.removeAllElements();
+    }
+    
+    public void storeRailToggle(SingleRailPanel panel) {
+    	undoStack.push(new RailToggleAction(panel));
     	redoStack.removeAllElements();
     }
     
