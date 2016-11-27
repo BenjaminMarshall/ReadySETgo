@@ -6,14 +6,23 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 
 import backend.StageManager;
+import backend.UndoManager;
 import readySETgo.MenuItemFactory;
 
 public class ToolsMenu extends JMenu {
 	public ToolsMenu() {
 		super("Tools");
 
-        this.add(MenuItemFactory.createJMenuItem("Undo","Undo last action"));
-        this.add(MenuItemFactory.createJMenuItem("Redo", "Redo last action"));
+        this.add(MenuItemFactory.createJMenuItem("Undo","Undo last action", new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UndoManager.get().undo();
+			}
+		}));
+        this.add(MenuItemFactory.createJMenuItem("Redo", "Redo last action", new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				UndoManager.get().redo();
+			}
+		}));
         this.add(MenuItemFactory.createJMenuItem("Cut", "Cut something", new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				StageManager.get().getStage().cutSelected();
