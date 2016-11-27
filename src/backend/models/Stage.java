@@ -86,6 +86,10 @@ public class Stage {
         return assets;
     }
 
+    public void trashAsset(Asset a) {
+    	this.assets.remove(a);
+    }
+    
     public void setAssets(List<Asset> assets) {
         this.assets = assets;
     }

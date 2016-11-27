@@ -1,29 +1,62 @@
 package readySETgo.contextmenus;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
+import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import backend.models.Asset;
 import backend.models.Stage;
+import readySETgo.User;
 
 public class StagePopUp extends JPopupMenu {
 	
-	public StagePopUp(Boolean isOnObject){
+	private Stage stage;
+	
+	public StagePopUp(Stage s, MouseEvent e){
+		stage = s;
+		
+		double origX = e.getX();
+		double origY = e.getY();
+		
+		Boolean isOnObject = stage.eventOnObject(e) != null;
 		if(isOnObject) {
-			JMenuItem cutItem = new JMenuItem("Cut");
+			JMenuItem cutItem = new JMenuItem(new AbstractAction("Cut") {
+				public void actionPerformed(ActionEvent e) {
+					User.setClipboard(User.getSelected().copyOf());
+					stage.trashAsset(User.getSelected());
+				}
+			});
 			add(cutItem);
 			
-			JMenuItem copyItem = new JMenuItem("Copy");
+			JMenuItem copyItem = new JMenuItem(new AbstractAction("Copy") {
+				public void actionPerformed(ActionEvent e) {
+					User.setClipboard(User.getSelected().copyOf());
+				}
+			});
 			add(copyItem);
 			
-			JMenuItem deleteItem = new JMenuItem("Delete");
+			JMenuItem deleteItem = new JMenuItem(new AbstractAction("Delete") {
+				public void actionPerformed(ActionEvent e) {
+					stage.trashAsset(User.getSelected());
+				}
+			});
 			add(deleteItem);
 		}
 		else {
-			JMenuItem pasteItem = new JMenuItem("Paste");
+			JMenuItem pasteItem = new JMenuItem(new AbstractAction("Paste") {
+				public void actionPerformed(ActionEvent e) {
+					Asset a = User.getClipboard().copyOf();
+					a.setxPos(origX);
+					a.setyPos(origY);
+					stage.getAssets().add(a);
+					User.setSelected(a);
+				}
+			});
+			pasteItem.setEnabled(User.getClipboard() != null);
 			add(pasteItem);
 			
 			JMenuItem zoomInItem = new JMenuItem("Zoom in");
@@ -36,6 +69,8 @@ public class StagePopUp extends JPopupMenu {
 	
 	public static MouseAdapter createAdapter(Stage s){
 		return new MouseAdapter(){
+		
+			
 			 public void mousePressed(MouseEvent e){
 				 if(e.isPopupTrigger()){
 					 doPop(e);
@@ -49,7 +84,7 @@ public class StagePopUp extends JPopupMenu {
 			 }
 			 
 			 private void doPop(MouseEvent e){
-				 StagePopUp menu = new StagePopUp(s.eventOnObject(e) != null);
+				 StagePopUp menu = new StagePopUp(s, e);
 				 menu.show(e.getComponent(), e.getX(), e.getY());
 			 }
 		};

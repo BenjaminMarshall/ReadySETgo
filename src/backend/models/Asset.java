@@ -80,6 +80,14 @@ public abstract class Asset{
         this.yPos = yPos;
     }
 
+    public void incrementYPos(double n) {
+    	this.yPos += n;
+    }
+
+    public void incrementXPos(double n) {
+    	this.xPos += n;
+    }
+    
     public double getAngle() {
         return angle;
     }
