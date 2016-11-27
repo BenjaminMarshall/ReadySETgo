@@ -36,6 +36,8 @@ public abstract class Asset{
 
     public abstract void draw(Graphics g, double x, double y);
     
+    public abstract Asset copyOf();
+    
     public double getPhysicalWidth() {
         return physicalWidth;
     }

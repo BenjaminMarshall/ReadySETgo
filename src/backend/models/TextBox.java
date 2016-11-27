@@ -40,6 +40,8 @@ public class TextBox extends Asset{
 	}
 	
 
-
+	public Asset copyOf() {
+		return new TextBox(this.getPhysicalWidth(),this.getPhysicalLength(),this.getxPos(), this.getyPos(), this.getAngle(), this.getText());
+	}
 	
 }

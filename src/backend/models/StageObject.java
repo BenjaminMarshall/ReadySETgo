@@ -103,7 +103,7 @@ public class StageObject extends Asset {
 		return this.getName();
 	}
 
-	public StageObject copyOf() {
+	public Asset copyOf() {
 		return new StageObject(getName(), getPhysicalWidth(), getPhysicalLength(), getxPos(), getyPos(), getAngle(), getImageRef());
 	}
 

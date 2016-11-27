@@ -44,6 +44,6 @@ public class SingleObjectPanel extends JPanel {
 	}
 
 	public StageObject getCopyOfStageObject() {
-		return stageObject.copyOf();
+		return (StageObject) stageObject.copyOf();
 	}
 }
