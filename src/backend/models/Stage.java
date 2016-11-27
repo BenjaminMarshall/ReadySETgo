@@ -18,6 +18,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 
 import backend.FileManager;
+import backend.UndoManager;
 import readySETgo.User;
 
 /**
@@ -124,13 +125,15 @@ public class Stage {
 	
 	public void cutSelected(){
 		if(User.getSelected() != null) {
+			UndoManager.get().storeCut(User.getSelected(), User.getSelectedState(), User.getSelected());
 			User.setClipboard(User.getSelected().copyOf());
 			this.trashAsset(User.getSelected());
 		}
 	}
 	
 	public void deleteSelected(){
-		if(User.getClipboard() != null) {
+		if(User.getSelected() != null) {
+			UndoManager.get().storeDelete(User.getSelected(), User.getSelectedState(), User.getSelected());
 			this.trashAsset(User.getSelected());
 		}
 	}
@@ -138,6 +141,7 @@ public class Stage {
 	public void pasteFromClipboard(){
 		if(User.getClipboard() != null) {
 			Asset a = User.getClipboard().copyOf();
+			UndoManager.get().storePaste(a, User.getSelectedState(), User.getSelected());
 			double pasteOffset = 10.0;
 			if(User.getSelected() != null) {
 				a.setyPos(User.getSelected().getyPos());
@@ -154,6 +158,7 @@ public class Stage {
 	public void pasteFromClipboard(double xPos, double yPos){
 		if(User.getClipboard() != null) {
 			Asset a = User.getClipboard().copyOf();
+			UndoManager.get().storePaste(a, User.getSelectedState(), User.getSelected());
 			a.setyPos(yPos);
 			a.setxPos(xPos);
 			User.setSelected(a);

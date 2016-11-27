@@ -18,6 +18,7 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
 import backend.StageManager;
+import backend.UndoManager;
 import backend.models.Stage;
 import readySETgo.panels.ContainerPanel;
 import readySETgo.toolbar.FileMenu;
@@ -100,6 +101,15 @@ public class MainFrame extends JFrame {
     		public void actionPerformed(ActionEvent e) {
     			Stage s = StageManager.get().getStage();
     			s.pasteFromClipboard();
+    		}
+    	});
+    	
+    	// Ctrl Z => Undo
+    	KeyStroke ctrlZ = KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.CTRL_DOWN_MASK);
+    	actionMap.put(ctrlZ, new AbstractAction("undo") {
+    		@Override
+    		public void actionPerformed(ActionEvent e) {
+    			UndoManager.get().undo();
     		}
     	});
     	

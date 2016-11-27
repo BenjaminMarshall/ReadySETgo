@@ -17,6 +17,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import backend.StageManager;
+import backend.UndoManager;
 import backend.models.Asset;
 import backend.models.Stage;
 import readySETgo.PrintManager;
@@ -50,6 +51,7 @@ public class StagePanel extends JPanel implements Printable {
                 if(SwingUtilities.isLeftMouseButton(e)){
 	            	Asset a;
 	                if ((a = stage.eventOnObject(e)) != null) {
+	                    UndoManager.get().storeDragStart(a, a.getxPos(), a.getyPos(), User.getSelectedState(), User.getSelected());
 	                    User.setSelected(a);
 	                    User.setSelectedState(SelectedState.DRAGGING);
 	                } else {
@@ -62,6 +64,7 @@ public class StagePanel extends JPanel implements Printable {
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (User.getSelectedState().equals(SelectedState.DRAGGING)) {
+                	UndoManager.get().storeDragEnd();
                     User.setSelectedState(SelectedState.SELECTED);
                 }
 
@@ -74,16 +77,14 @@ public class StagePanel extends JPanel implements Printable {
                 if (User.getSelectedState().equals(SelectedState.DRAGGING)) {
                     if (User.getMouseState(e).equals(MouseState.UP)) {
                         User.setSelectedState(SelectedState.SELECTED);
-                    } else {
-                        //TODO probably need to make sure it hasnt already been added
-                        stage.getAssets().add(User.getSelected());
+                    }
+                    else if(!stage.getAssets().contains(User.getSelected())){
+                        UndoManager.get().storeObjectPlacement(User.getSelected());
+                    	stage.getAssets().add(User.getSelected());
                         System.out.println("Added asset");
                     }
                 }
-
-
             }
-
         });
 
         addMouseMotionListener(new MouseMotionAdapter() {
