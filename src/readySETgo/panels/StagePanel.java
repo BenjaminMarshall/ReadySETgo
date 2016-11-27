@@ -38,7 +38,7 @@ public class StagePanel extends JPanel implements Printable {
         });
         t.start();
 
-        addMouseListener(StagePopUp.createAdapter());
+        addMouseListener(StagePopUp.createAdapter(stage));
         addMouseListener(new MouseAdapter() {
 
             @Override
