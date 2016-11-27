@@ -6,6 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Stroke;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.swing.AbstractAction;
+import javax.swing.JMenuItem;
 
 import backend.FileManager;
 import readySETgo.User;
@@ -112,4 +115,51 @@ public class Stage {
 		}
 		return null;
 	}
+	
+	public void copySelected(){
+		if(User.getSelected() != null) {
+			User.setClipboard(User.getSelected().copyOf());
+		}
+	}
+	
+	public void cutSelected(){
+		if(User.getSelected() != null) {
+			User.setClipboard(User.getSelected().copyOf());
+			this.trashAsset(User.getSelected());
+		}
+	}
+	
+	public void deleteSelected(){
+		if(User.getClipboard() != null) {
+			this.trashAsset(User.getSelected());
+		}
+	}
+
+	public void pasteFromClipboard(){
+		if(User.getClipboard() != null) {
+			Asset a = User.getClipboard().copyOf();
+			double pasteOffset = 10.0;
+			if(User.getSelected() != null) {
+				a.setyPos(User.getSelected().getyPos());
+				a.setxPos(User.getSelected().getxPos());
+			}
+			a.incrementXPos(pasteOffset);
+			a.incrementYPos(pasteOffset);
+			User.setSelected(a);
+			User.setSelectedState(User.SelectedState.SELECTED);
+			this.getAssets().add(a);
+		}
+	}
+	
+	public void pasteFromClipboard(double xPos, double yPos){
+		if(User.getClipboard() != null) {
+			Asset a = User.getClipboard().copyOf();
+			a.setyPos(yPos);
+			a.setxPos(xPos);
+			User.setSelected(a);
+			User.setSelectedState(User.SelectedState.SELECTED);
+			this.getAssets().add(a);
+		}
+	}
+	
 }

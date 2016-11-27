@@ -26,22 +26,21 @@ public class StagePopUp extends JPopupMenu {
 		if(isOnObject) {
 			JMenuItem cutItem = new JMenuItem(new AbstractAction("Cut") {
 				public void actionPerformed(ActionEvent e) {
-					User.setClipboard(User.getSelected().copyOf());
-					stage.trashAsset(User.getSelected());
+					stage.cutSelected();
 				}
 			});
 			add(cutItem);
 			
 			JMenuItem copyItem = new JMenuItem(new AbstractAction("Copy") {
 				public void actionPerformed(ActionEvent e) {
-					User.setClipboard(User.getSelected().copyOf());
+					stage.copySelected();
 				}
 			});
 			add(copyItem);
 			
 			JMenuItem deleteItem = new JMenuItem(new AbstractAction("Delete") {
 				public void actionPerformed(ActionEvent e) {
-					stage.trashAsset(User.getSelected());
+					stage.deleteSelected();
 				}
 			});
 			add(deleteItem);
@@ -49,11 +48,7 @@ public class StagePopUp extends JPopupMenu {
 		else {
 			JMenuItem pasteItem = new JMenuItem(new AbstractAction("Paste") {
 				public void actionPerformed(ActionEvent e) {
-					Asset a = User.getClipboard().copyOf();
-					a.setxPos(origX);
-					a.setyPos(origY);
-					stage.getAssets().add(a);
-					User.setSelected(a);
+					stage.pasteFromClipboard(origX, origY);
 				}
 			});
 			pasteItem.setEnabled(User.getClipboard() != null);
