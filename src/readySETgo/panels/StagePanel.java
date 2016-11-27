@@ -48,8 +48,8 @@ public class StagePanel extends JPanel implements Printable {
 
             @Override
             public void mousePressed(MouseEvent e) { //TODO Store objects original position so if invalid placement it is put back
-                if(SwingUtilities.isLeftMouseButton(e)){
-	            	Asset a;
+                Asset a;
+            	if(SwingUtilities.isLeftMouseButton(e)){
 	                if ((a = stage.eventOnObject(e)) != null) {
 	                    UndoManager.get().storeDragStart(a, a.getxPos(), a.getyPos(), User.getSelectedState(), User.getSelected());
 	                    User.setSelected(a);
@@ -58,6 +58,9 @@ public class StagePanel extends JPanel implements Printable {
 	                    User.setSelectedState(SelectedState.EMPTY);
 	                    User.setSelected(null);
 	                }
+                }
+                else if(SwingUtilities.isRightMouseButton(e) && (a = stage.eventOnObject(e)) != null) {
+                	User.setSelected(a);
                 }
             }
 
