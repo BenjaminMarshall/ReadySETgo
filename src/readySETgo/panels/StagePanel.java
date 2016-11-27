@@ -13,6 +13,7 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import backend.StageManager;
@@ -46,13 +47,15 @@ public class StagePanel extends JPanel implements Printable {
 
             @Override
             public void mousePressed(MouseEvent e) { //TODO Store objects original position so if invalid placement it is put back
-                Asset a;
-                if ((a = stage.eventOnObject(e)) != null) {
-                    User.setSelected(a);
-                    User.setSelectedState(SelectedState.DRAGGING);
-                } else {
-                    User.setSelectedState(SelectedState.EMPTY);
-                    User.setSelected(null);
+                if(SwingUtilities.isLeftMouseButton(e)){
+	            	Asset a;
+	                if ((a = stage.eventOnObject(e)) != null) {
+	                    User.setSelected(a);
+	                    User.setSelectedState(SelectedState.DRAGGING);
+	                } else {
+	                    User.setSelectedState(SelectedState.EMPTY);
+	                    User.setSelected(null);
+	                }
                 }
             }
 
