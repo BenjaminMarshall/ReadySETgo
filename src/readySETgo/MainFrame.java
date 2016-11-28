@@ -131,6 +131,19 @@ public class MainFrame extends JFrame {
     		}
     	});
     	
+    	
+    	// Delete or Backspace => Delete Stage Object
+    	AbstractAction deleteAction = new AbstractAction("print") {
+    		@Override
+    		public void actionPerformed(ActionEvent e) {
+    			StageManager.get().getStage().deleteSelected();
+    		}
+    	};
+    	KeyStroke delete = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0);
+    	actionMap.put(delete, deleteAction);
+    	KeyStroke backspace = KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, 0);
+    	actionMap.put(backspace, deleteAction);
+    	
     	KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager();
     	kfm.addKeyEventDispatcher( new KeyEventDispatcher() {
 	    	@Override
