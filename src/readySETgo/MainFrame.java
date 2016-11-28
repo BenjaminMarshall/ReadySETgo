@@ -122,6 +122,15 @@ public class MainFrame extends JFrame {
     		}
     	});
     	
+    	// Ctrl P => Print
+    	KeyStroke ctrlP = KeyStroke.getKeyStroke(KeyEvent.VK_P, KeyEvent.CTRL_DOWN_MASK);
+    	actionMap.put(ctrlP, new AbstractAction("print") {
+    		@Override
+    		public void actionPerformed(ActionEvent e) {
+    			PrintManager.getManager().print();
+    		}
+    	});
+    	
     	KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager();
     	kfm.addKeyEventDispatcher( new KeyEventDispatcher() {
 	    	@Override
