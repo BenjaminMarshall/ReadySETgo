@@ -9,16 +9,29 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+import backend.ComponentManager;
+import backend.StageManager;
 import backend.models.FlyRail;
 import backend.models.Stage;
 
 public class FlyRailPanel extends JPanel{
 	
-	public FlyRailPanel(Stage s) {
+	public FlyRailPanel() {
 		super();
-	
-		JPanel contentPanel = this.loadFlyRails(s);
-	
+		ComponentManager.registerComp("FlyRailPanel", this);
+		this.loadFlyRails(StageManager.get().getStage());
+	}
+
+	public void loadFlyRails(Stage s) {
+		this.removeAll();
+		
+		JPanel contentPanel = new JPanel();
+		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.PAGE_AXIS));
+		
+		List<FlyRail> rails = s.getFlyRails();
+		this.removeAll();
+		for (FlyRail f : rails) { contentPanel.add(new SingleRailPanel(f)); }
+		
 		GridBagLayout gc = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(gc);
@@ -32,20 +45,9 @@ public class FlyRailPanel extends JPanel{
 		JScrollPane scrollPane = new JScrollPane(contentPanel, 
 				   ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,  
 				   ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		
-		this.add(scrollPane, c);
-	}
-
-	public JPanel loadFlyRails(Stage s) {
-		
-		JPanel ret = new JPanel();
-		ret.setLayout(new BoxLayout(ret, BoxLayout.PAGE_AXIS));
-		
-		List<FlyRail> rails = s.getFlyRails();
-		this.removeAll();
-		for (FlyRail f : rails) { ret.add(new SingleRailPanel(f)); }
-		
-		return ret;
+		this.add(scrollPane, c);		
+		this.validate();
+		this.repaint();
 	}
 
 }

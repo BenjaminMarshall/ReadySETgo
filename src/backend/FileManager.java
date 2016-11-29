@@ -25,6 +25,8 @@ import backend.models.FlyRail;
 import backend.models.Stage;
 import backend.models.StageObject;
 import backend.models.TextBox;
+import readySETgo.panels.FlyRailPanel;
+import readySETgo.panels.ObjectPanel;
 import readySETgo.panels.StagePanel;
 
 //TODO Make XML File paths named constants
@@ -369,6 +371,10 @@ public class FileManager {
     		Stage loaded = FileManager.loadStageFromFile(menu.getSelectedFile());
     		StagePanel sPanel = (StagePanel) ComponentManager.getComp("StagePanel");
     		sPanel.loadStage(loaded);
+    		FlyRailPanel fPanel = (FlyRailPanel) ComponentManager.getComp("FlyRailPanel");
+    		fPanel.loadFlyRails(loaded);
+    		ObjectPanel oPanel = (ObjectPanel) ComponentManager.getComp("ObjectPanel");
+    		oPanel.loadObjects(loaded);
     		UndoManager.get().reset();
           }
     }    

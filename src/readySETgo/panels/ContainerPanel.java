@@ -16,13 +16,10 @@ public class ContainerPanel extends JPanel {
 	public ContainerPanel(){
 		
 		stagePanel = new StagePanel();
-		Stage s = stagePanel.getStage();
-		leftPanel = new FlyRailPanel(s);
-        rightPanel = new ObjectPanel(stagePanel);
+		leftPanel = new FlyRailPanel();
+        rightPanel = new ObjectPanel();
 
         centerPanel = new StageViewPanel(stagePanel);
-        
-        
         
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();

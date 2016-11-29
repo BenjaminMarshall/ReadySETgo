@@ -15,7 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
+import backend.ComponentManager;
 import backend.FileManager;
+import backend.models.Stage;
 import backend.models.StageObject;
 import readySETgo.User;
 import readySETgo.User.MouseState;
@@ -26,15 +28,13 @@ public class ObjectPanel extends JPanel {
 	private JPanel container;
 	private ArrayList<SingleObjectPanel> objects;
 	private ArrayList<StageObject> listModel;
-	private JPanel stagePanel;
 	
-	public ObjectPanel(JPanel p){
+	public ObjectPanel(){
 		super();
+		ComponentManager.registerComp("ObjectPanel", this);
 		container = new JPanel();
 		refresh();
-		
-		stagePanel = p;
-		
+				
 		scroller = new JScrollPane(container, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		GridBagLayout gc = new GridBagLayout();
@@ -50,21 +50,14 @@ public class ObjectPanel extends JPanel {
 		add(scroller, c);
 	}
 	
-
-	private void refresh(){
+	public void loadObjects(Stage s){
 		
 		container.removeAll();
 		objects = new ArrayList<SingleObjectPanel>();
 		
-		
-		if(listModel != null){
-			FileManager.saveListOfObjects(listModel);
-		}
-		
-		listModel = FileManager.getListOfObjects();
+		listModel = (ArrayList<StageObject>)(ArrayList<?>) s.getAssets();
 		
 		Collections.sort(listModel, StageObject.getAlphabeticComparator());
-		
 		
 		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 		
@@ -107,7 +100,84 @@ public class ObjectPanel extends JPanel {
 						Point p = new Point(e.getX(), e.getY());
 						
 						SwingUtilities.convertPointToScreen(p, op);
-						SwingUtilities.convertPointFromScreen(p, stagePanel);
+						SwingUtilities.convertPointFromScreen(p,  ComponentManager.getComp("StagePanel"));
+												
+						User.getSelected().setxPos(p.getX());
+						User.getSelected().setyPos(p.getY());
+					}
+				}
+
+				@Override
+				public void mouseMoved(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
+			objects.add(op);
+			container.add(op);
+		}
+		this.validate();
+		this.repaint();
+	}
+
+	
+	private void refresh(){
+		
+		container.removeAll();
+		objects = new ArrayList<SingleObjectPanel>();
+		
+		
+		if(listModel != null){
+			FileManager.saveListOfObjects(listModel);
+		}
+		
+		listModel = FileManager.getListOfObjects();
+		
+		Collections.sort(listModel, StageObject.getAlphabeticComparator());
+		
+		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+		
+		for(StageObject o: listModel){
+			SingleObjectPanel op = new SingleObjectPanel(o);
+			op.setPreferredSize(new Dimension(200, 100));
+			op.addMouseListener(new MouseAdapter(){
+
+				@Override
+				public void mousePressed(MouseEvent e) {
+					User.setSelected(((SingleObjectPanel) e.getComponent()).getCopyOfStageObject());
+					User.setSelectedState(SelectedState.DRAGGING);
+					
+				}
+
+				@Override
+				public void mouseReleased(MouseEvent e) {
+						User.setSelectedState(SelectedState.SELECTED);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					if(User.getSelectedState().equals(SelectedState.DRAGGING) && User.getMouseState(e).equals(MouseState.UP)){
+						User.setSelectedState(SelectedState.SELECTED);
+					}
+					
+				}
+				
+				public void mouseExited(MouseEvent e){
+					System.out.println("Exited object panel");	
+				}
+				
+			});
+			op.addMouseMotionListener(new MouseMotionListener(){
+
+				@Override
+				public void mouseDragged(MouseEvent e) {
+					if(User.getSelectedState().equals(SelectedState.DRAGGING)){
+						
+						Point p = new Point(e.getX(), e.getY());
+						
+						SwingUtilities.convertPointToScreen(p, op);
+						SwingUtilities.convertPointFromScreen(p,  ComponentManager.getComp("StagePanel"));
 												
 						User.getSelected().setxPos(p.getX());
 						User.getSelected().setyPos(p.getY());

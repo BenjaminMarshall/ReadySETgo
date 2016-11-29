@@ -16,7 +16,7 @@ public class ComponentManager {
 	public ComponentManager() {
 		this.components = new HashMap<String, Component>();
 	}
-	
+
     public static void registerComp(String s, Component c) {
     	manager.components.put(s.toLowerCase(), c);
     }
