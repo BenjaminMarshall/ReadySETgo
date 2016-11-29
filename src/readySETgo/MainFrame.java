@@ -32,7 +32,7 @@ public class MainFrame extends JFrame {
 
     public MainFrame(int width, int height) {
         super();
-        ComponentManager.get().registerMainFrame(this);
+        ComponentManager.registerComp("MainFrame", this);
         
         setSize(width, height);
         try {

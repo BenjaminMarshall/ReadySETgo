@@ -2,7 +2,6 @@ package backend;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
@@ -26,6 +25,7 @@ import backend.models.FlyRail;
 import backend.models.Stage;
 import backend.models.StageObject;
 import backend.models.TextBox;
+import readySETgo.panels.StagePanel;
 
 //TODO Make XML File paths named constants
 
@@ -350,7 +350,7 @@ public class FileManager {
     
     public static void displaySavePrompt() {
     	JFileChooser menu = new JFileChooser();
-    	int retCode = menu.showSaveDialog(ComponentManager.get().getMainFrame());
+    	int retCode = menu.showSaveDialog(ComponentManager.getComp("MainFrame"));
     	
     	if (retCode == JFileChooser.APPROVE_OPTION) {
     		File f = menu.getSelectedFile();
@@ -363,11 +363,12 @@ public class FileManager {
     
     public static void displayOpenPrompt() {
     	JFileChooser menu = new JFileChooser();
-    	int retCode = menu.showOpenDialog(ComponentManager.get().getMainFrame());
+    	int retCode = menu.showOpenDialog(ComponentManager.getComp("MainFrame"));
     	
     	if (retCode == JFileChooser.APPROVE_OPTION) {
     		Stage loaded = FileManager.loadStageFromFile(menu.getSelectedFile());
-    		ComponentManager.get().getStagePanel().loadStage(loaded);
+    		StagePanel sPanel = (StagePanel) ComponentManager.getComp("StagePanel");
+    		sPanel.loadStage(loaded);
     		UndoManager.get().reset();
           }
     }    

@@ -1,35 +1,27 @@
 package backend;
 
+import java.awt.Component;
+import java.util.HashMap;
+
 import javax.swing.JFrame;
 
 import readySETgo.panels.StagePanel;
 
 public class ComponentManager {
 
-	private JFrame mainFrame;
-	private StagePanel stagePanel;
+	private HashMap<String, Component> components;
+	
 	private static ComponentManager manager = new ComponentManager();
 
-    public static ComponentManager get() {
-        return manager;
-    }
-
-    public JFrame getMainFrame() {
-    	return this.mainFrame;
-    }
-    
-    public void registerMainFrame(JFrame f) {
-        this.mainFrame = f;
-    }
-
-    public StagePanel getStagePanel() {
-    	return this.stagePanel;
+	public ComponentManager() {
+		this.components = new HashMap<String, Component>();
+	}
+	
+    public static void registerComp(String s, Component c) {
+    	manager.components.put(s.toLowerCase(), c);
     }
     
-    public void registerStagePanel(StagePanel j) {
-        this.stagePanel = j;
+    public static Component getComp(String s) {
+    	return manager.components.get(s.toLowerCase());
     }
-    
-    
-    
 }

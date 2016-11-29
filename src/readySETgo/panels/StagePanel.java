@@ -35,7 +35,7 @@ public class StagePanel extends JPanel implements Printable {
         PrintManager.getManager().register(this);
         stage = new Stage();
         StageManager.get().registerStage(stage);
-        ComponentManager.get().registerStagePanel(this);
+        ComponentManager.registerComp("StagePanel", this);
         setPreferredSize(new Dimension(900, 300));
         
         Timer t = new Timer(10, new ActionListener() {
