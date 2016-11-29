@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
+import backend.ComponentManager;
 import backend.StageManager;
 import backend.UndoManager;
 import backend.models.Asset;
@@ -34,6 +35,7 @@ public class StagePanel extends JPanel implements Printable {
         PrintManager.getManager().register(this);
         stage = new Stage();
         StageManager.get().registerStage(stage);
+        ComponentManager.get().registerStagePanel(this);
         setPreferredSize(new Dimension(900, 300));
         
         Timer t = new Timer(10, new ActionListener() {
@@ -136,4 +138,10 @@ public class StagePanel extends JPanel implements Printable {
         printAll(graphics);
         return PAGE_EXISTS;
     }
+    
+    public void loadStage(Stage s) {
+        this.stage = s;
+        StageManager.get().registerStage(s);
+    }
+    
 }

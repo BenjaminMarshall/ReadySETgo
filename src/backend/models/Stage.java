@@ -33,6 +33,8 @@ public class Stage {
     private double width;
     private double length;
     
+    private String filePath;
+    
     public Stage(){
     	this.name = "New Stage";
     	this.assets = new ArrayList<Asset>();
@@ -44,6 +46,14 @@ public class Stage {
     	}
     	this.width = 924;
     	this.length = 552; //TODO
+    }
+    
+    public void setFilePath(String s) {
+    	this.filePath = s;
+    }
+    
+    public String getFilePath() {
+    	return this.filePath;
     }
     
     public void draw(Graphics g){

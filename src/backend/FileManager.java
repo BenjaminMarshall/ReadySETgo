@@ -2,9 +2,10 @@ package backend;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collections;
 
+import javax.swing.JFileChooser;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -334,5 +335,42 @@ public class FileManager {
     	return rails;
     }
 
+    public static void attemptSaveSilently() {
+    	Stage s = StageManager.get().getStage();
+    	String path = s.getFilePath();
+    	if(path != null) {
+    		File f = new File(path);
+    		FileManager.saveStage(s, f);
+    	}
+    	else {
+    		FileManager.displaySavePrompt();
+    	}
+    }
+    
+    
+    public static void displaySavePrompt() {
+    	JFileChooser menu = new JFileChooser();
+    	int retCode = menu.showSaveDialog(ComponentManager.get().getMainFrame());
+    	
+    	if (retCode == JFileChooser.APPROVE_OPTION) {
+    		File f = menu.getSelectedFile();
+    		String path = f.getAbsolutePath();
+    		Stage s = StageManager.get().getStage();
+    		s.setFilePath(path);
+    		FileManager.saveStage(s, f);
+          }
+    }
+    
+    public static void displayOpenPrompt() {
+    	JFileChooser menu = new JFileChooser();
+    	int retCode = menu.showOpenDialog(ComponentManager.get().getMainFrame());
+    	
+    	if (retCode == JFileChooser.APPROVE_OPTION) {
+    		Stage loaded = FileManager.loadStageFromFile(menu.getSelectedFile());
+    		ComponentManager.get().getStagePanel().loadStage(loaded);
+    		UndoManager.get().reset();
+          }
+    }    
+    
     
 }

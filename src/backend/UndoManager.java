@@ -36,6 +36,12 @@ public class UndoManager {
 	
     public static UndoManager get() { return manager; }
     
+    
+    public void reset() {
+    	undoStack = new Stack<StageAction>();
+		redoStack = new Stack<StageAction>();
+    }
+    
     public void storeDragStart(Asset dragged, double origX, double origY, User.SelectedState origState, Asset prevSelected) {
     	this.dragged = dragged;
     	this.origX = origX;

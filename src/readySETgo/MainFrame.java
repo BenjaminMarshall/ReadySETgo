@@ -17,6 +17,8 @@ import javax.swing.JMenuBar;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
+import backend.ComponentManager;
+import backend.FileManager;
 import backend.StageManager;
 import backend.UndoManager;
 import backend.models.Stage;
@@ -30,6 +32,8 @@ public class MainFrame extends JFrame {
 
     public MainFrame(int width, int height) {
         super();
+        ComponentManager.get().registerMainFrame(this);
+        
         setSize(width, height);
         try {
             this.setIconImage(ImageIO.read(new File("res/logo.png")));
@@ -128,6 +132,24 @@ public class MainFrame extends JFrame {
     		@Override
     		public void actionPerformed(ActionEvent e) {
     			PrintManager.getManager().print();
+    		}
+    	});
+    	
+    	// Ctrl S => Save
+    	KeyStroke ctrlS = KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK);
+    	actionMap.put(ctrlS, new AbstractAction("save") {
+    		@Override
+    		public void actionPerformed(ActionEvent e) {
+    			FileManager.attemptSaveSilently();
+    		}
+    	});
+    	
+    	// Ctrl O => Open
+    	KeyStroke ctrlO = KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK);
+    	actionMap.put(ctrlO, new AbstractAction("open") {
+    		@Override
+    		public void actionPerformed(ActionEvent e) {
+    			FileManager.displayOpenPrompt();
     		}
     	});
     	
