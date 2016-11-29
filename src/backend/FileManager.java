@@ -337,20 +337,21 @@ public class FileManager {
     	return rails;
     }
 
-    public static void attemptSaveSilently() {
+    public static boolean attemptSaveSilently() {
     	Stage s = StageManager.get().getStage();
     	String path = s.getFilePath();
     	if(path != null) {
     		File f = new File(path);
     		FileManager.saveStage(s, f);
+    		return true;
     	}
     	else {
-    		FileManager.displaySavePrompt();
+    		return FileManager.displaySavePrompt();
     	}
     }
     
     
-    public static void displaySavePrompt() {
+    public static boolean displaySavePrompt() {
     	JFileChooser menu = new JFileChooser();
     	int retCode = menu.showSaveDialog(ComponentManager.getComp("MainFrame"));
     	
@@ -360,7 +361,10 @@ public class FileManager {
     		Stage s = StageManager.get().getStage();
     		s.setFilePath(path);
     		FileManager.saveStage(s, f);
-          }
+    		UndoManager.get().registerSave();
+    		return true;
+        }
+    	return false;
     }
     
     public static void displayOpenPrompt() {

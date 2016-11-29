@@ -4,6 +4,8 @@ import java.awt.KeyEventDispatcher;
 import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
@@ -14,8 +16,10 @@ import javax.swing.Action;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 import backend.ComponentManager;
 import backend.FileManager;
@@ -44,12 +48,42 @@ public class MainFrame extends JFrame {
         createMenuBar();
 
         bindKeyboardShortcuts();
+
+        JFrame mainFrame = this;
+        
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent windowEvent) {
+            	if(UndoManager.get().hasUnsavedChanges()){
+            		UIManager.put("OptionPane.yesButtonText", "Save");
+                	UIManager.put("OptionPane.noButtonText", "Don't Save");
+                	int response = JOptionPane.showConfirmDialog(mainFrame, 
+                            "You have unsaved changes. Would you like to save?", "Save unsaved changes?", 
+                            JOptionPane.YES_NO_CANCEL_OPTION,
+                            JOptionPane.QUESTION_MESSAGE);
+                	if (response == JOptionPane.YES_OPTION){
+                        if(FileManager.attemptSaveSilently()) {
+                    		System.exit(0);
+                        }
+                    }
+                	if (response == JOptionPane.NO_OPTION){
+                        System.exit(0);
+                    }
+            	}
+            	else {
+            		System.exit(0);
+            	}
+            }
+        });
+        
+        
         
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setVisible(true);
     }
 
+    
     private void fill() {
         container = new ContainerPanel();
 

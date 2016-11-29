@@ -27,6 +27,8 @@ public class UndoManager {
 	private User.SelectedState origState;
 	private Asset prevSelected;
 	
+	private StageAction savedAtAction;
+	
 	private static UndoManager manager = new UndoManager();
 
 	private UndoManager() {
@@ -36,10 +38,20 @@ public class UndoManager {
 	
     public static UndoManager get() { return manager; }
     
-    
     public void reset() {
     	undoStack = new Stack<StageAction>();
 		redoStack = new Stack<StageAction>();
+		savedAtAction = null;
+    }
+    
+    public boolean hasUnsavedChanges() {
+    	if(undoStack.isEmpty()) { return false; }
+    	else if (undoStack.peek() == savedAtAction) { return false; }
+    	return true;
+    }
+    
+    public void registerSave() {
+    	savedAtAction = undoStack.peek();
     }
     
     public void storeDragStart(Asset dragged, double origX, double origY, User.SelectedState origState, Asset prevSelected) {
