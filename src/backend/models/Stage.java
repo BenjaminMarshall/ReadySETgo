@@ -44,8 +44,8 @@ public class Stage {
     	} catch (IOException e){
     		e.printStackTrace();
     	}
-    	this.width = 924;
-    	this.length = 552; //TODO
+    	this.width = 77 * 12; // Width in Inches
+    	this.length = 45 * 12; // Len in inches //TODO
     }
     
     public void setFilePath(String s) {
