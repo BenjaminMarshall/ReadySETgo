@@ -102,7 +102,8 @@ public class StagePanel extends JPanel implements Printable {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, getWidth(), getHeight());
         stage.draw(g);
     }
 
