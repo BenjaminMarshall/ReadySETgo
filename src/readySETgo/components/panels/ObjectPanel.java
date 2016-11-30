@@ -60,7 +60,8 @@ public class ObjectPanel extends JPanel {
 		subPanels = new ArrayList<SingleObjectPanel>();
 		// Combine stage object list with the default object list, remove dupes
 		listModel = FileManager.getListOfObjects();
-		listModel.addAll((ArrayList<StageObject>)(ArrayList<?>) (s.getAssets()));
+		// Combination disabled for now
+		//listModel.addAll((ArrayList<StageObject>)(ArrayList<?>) (s.getAssets()));
 		// TODO - Figure out why this isn't removing duplicates
 		Set<StageObject> dupeRemover = new HashSet<>();
 		dupeRemover.addAll(listModel);
