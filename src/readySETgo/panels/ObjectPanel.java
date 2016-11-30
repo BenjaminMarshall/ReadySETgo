@@ -9,6 +9,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -26,7 +28,7 @@ import readySETgo.User.SelectedState;
 public class ObjectPanel extends JPanel {
 	private JScrollPane scroller;
 	private JPanel container;
-	private ArrayList<SingleObjectPanel> objects;
+	private ArrayList<SingleObjectPanel> subPanels;
 	private ArrayList<StageObject> listModel;
 	
 	public ObjectPanel(){
@@ -51,17 +53,24 @@ public class ObjectPanel extends JPanel {
 	}
 	
 	public void loadObjects(Stage s){
-		
+		// Reset container
 		container.removeAll();
-		objects = new ArrayList<SingleObjectPanel>();
-		
-		listModel = (ArrayList<StageObject>)(ArrayList<?>) s.getAssets();
-		
+		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+		// Reset subPanels
+		subPanels = new ArrayList<SingleObjectPanel>();
+		// Combine stage object list with the default object list, remove dupes
+		listModel = FileManager.getListOfObjects();
+		listModel.addAll((ArrayList<StageObject>)(ArrayList<?>) (s.getAssets()));
+		// TODO - Figure out why this isn't removing duplicates
+		Set<StageObject> dupeRemover = new HashSet<>();
+		dupeRemover.addAll(listModel);
+		listModel.clear();
+		listModel.addAll(dupeRemover);
+		// Sort the list
 		Collections.sort(listModel, StageObject.getAlphabeticComparator());
 		
-		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-		
-		for(StageObject o: listModel){
+		// Add the new subPanels
+		for(StageObject o: listModel) {
 			SingleObjectPanel op = new SingleObjectPanel(o);
 			op.setPreferredSize(new Dimension(200, 100));
 			op.addMouseListener(new MouseAdapter(){
@@ -114,7 +123,7 @@ public class ObjectPanel extends JPanel {
 				}
 				
 			});
-			objects.add(op);
+			subPanels.add(op);
 			container.add(op);
 		}
 		this.validate();
@@ -125,7 +134,7 @@ public class ObjectPanel extends JPanel {
 	private void refresh(){
 		
 		container.removeAll();
-		objects = new ArrayList<SingleObjectPanel>();
+		subPanels = new ArrayList<SingleObjectPanel>();
 		
 		
 		if(listModel != null){
@@ -191,7 +200,7 @@ public class ObjectPanel extends JPanel {
 				}
 				
 			});
-			objects.add(op);
+			subPanels.add(op);
 			container.add(op);
 		}
 		
