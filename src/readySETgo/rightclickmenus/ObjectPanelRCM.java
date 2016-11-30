@@ -9,9 +9,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
-import readySETgo.managers.UserManager;
-import readySETgo.models.Stage;
-import readySETgo.models.assets.Asset;
+import readySETgo.dialogs.ImportDialog;
 
 public class ObjectPanelRCM extends JPopupMenu {
 	
@@ -45,7 +43,7 @@ public class ObjectPanelRCM extends JPopupMenu {
 		
 		JMenuItem newObjItem = new JMenuItem(new AbstractAction("Import new stage object ...") {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Hello World!");
+				ImportDialog.createAndShow();				
 			}
 		});
 		this.add(newObjItem);
