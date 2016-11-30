@@ -13,6 +13,7 @@ public class StageObject extends Asset {
 	private Image image;
 	private String imageRef;
 	private String name;
+	private boolean defaultPic = true;
 	
 	public StageObject(){
 		super();
@@ -20,14 +21,16 @@ public class StageObject extends Asset {
 	
 	public StageObject(String name, double w, double l, double x, double y, double a, String imageRef) {
 		super(w, l, x, y, a);
-		System.out.println(imageRef);
-		File file = new File(imageRef);
-		System.out.println(file.getAbsolutePath());
 		
 		try {
 			this.image = ImageIO.read(new File(imageRef));
+			defaultPic = false;
 		} catch (IOException e){
-			this.image = null;
+			try {
+				this.image = ImageIO.read(new File("res/stripes.png"));
+			} catch (IOException e1) {
+				this.image = null;
+			}
 		}
 		
 		this.imageRef = imageRef;
@@ -43,7 +46,11 @@ public class StageObject extends Asset {
 		if(image == null){
 			g.setColor(Color.BLACK);
 			g.fillRect((int) x, (int) y, (int) getPhysicalWidth(), (int) getPhysicalLength());
+		} else if (!defaultPic){
+			g.drawImage(image, (int) x, (int) y, (int) getPhysicalWidth(), (int) getPhysicalLength(), null);
 		} else {
+			g.setColor(Color.BLACK);
+			g.drawRect((int) x, (int) y, (int) getPhysicalWidth(), (int) getPhysicalLength());
 			g.drawImage(image, (int) x, (int) y, (int) getPhysicalWidth(), (int) getPhysicalLength(), null);
 		}
 		
