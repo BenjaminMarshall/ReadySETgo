@@ -2,9 +2,9 @@ package test;
 
 import java.util.ArrayList;
 
-import backend.FileManager;
-import backend.models.FlyRail;
-import backend.models.StageObject;
+import readySETgo.managers.FileManager;
+import readySETgo.models.FlyRail;
+import readySETgo.models.assets.StageObject;
 
 public class FileManagerTest {
 
