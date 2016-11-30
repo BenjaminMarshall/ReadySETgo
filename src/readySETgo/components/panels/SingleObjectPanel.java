@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 
 import readySETgo.models.assets.Asset;
 import readySETgo.models.assets.StageObject;
+import readySETgo.rightclickmenus.ObjectPanelRCM;
 
 public class SingleObjectPanel extends JPanel {
 	private StageObject stageObject;
@@ -15,7 +16,8 @@ public class SingleObjectPanel extends JPanel {
 	public SingleObjectPanel(StageObject o){
 		super();
 		this.setStageObject(o);
-			
+		// Link the Right Click Menu to this panel
+		addMouseListener(ObjectPanelRCM.createAdapter());			
 		this.setSize(50, 100);
 		repaint();
 	}
