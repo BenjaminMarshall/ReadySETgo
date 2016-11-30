@@ -1,21 +1,5 @@
 package readySETgo.panels;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
-
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import javax.swing.Timer;
-
 import backend.ComponentManager;
 import backend.StageManager;
 import backend.UndoManager;
@@ -27,6 +11,13 @@ import readySETgo.User.MouseState;
 import readySETgo.User.SelectedState;
 import readySETgo.contextmenus.StagePopUp;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+
 public class StagePanel extends JPanel implements Printable {
     private Stage stage;
 
@@ -37,7 +28,7 @@ public class StagePanel extends JPanel implements Printable {
         StageManager.get().registerStage(stage);
         ComponentManager.registerComp("StagePanel", this);
         setPreferredSize(new Dimension(900, 300));
-        
+
         Timer t = new Timer(10, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 repaint();
@@ -51,25 +42,24 @@ public class StagePanel extends JPanel implements Printable {
             @Override
             public void mousePressed(MouseEvent e) { //TODO Store objects original position so if invalid placement it is put back
                 Asset a;
-            	if(SwingUtilities.isLeftMouseButton(e)){
-	                if ((a = stage.eventOnObject(e)) != null) {
-	                    UndoManager.get().storeDragStart(a, a.getxPos(), a.getyPos(), User.getSelectedState(), User.getSelected());
-	                    User.setSelected(a);
-	                    User.setSelectedState(SelectedState.DRAGGING);
-	                } else {
-	                    User.setSelectedState(SelectedState.EMPTY);
-	                    User.setSelected(null);
-	                }
-                }
-                else if(SwingUtilities.isRightMouseButton(e) && (a = stage.eventOnObject(e)) != null) {
-                	User.setSelected(a);
+                if (SwingUtilities.isLeftMouseButton(e)) {
+                    if ((a = stage.eventOnObject(e)) != null) {
+                        UndoManager.get().storeDragStart(a, a.getxPos(), a.getyPos(), User.getSelectedState(), User.getSelected());
+                        User.setSelected(a);
+                        User.setSelectedState(SelectedState.DRAGGING);
+                    } else {
+                        User.setSelectedState(SelectedState.EMPTY);
+                        User.setSelected(null);
+                    }
+                } else if (SwingUtilities.isRightMouseButton(e) && (a = stage.eventOnObject(e)) != null) {
+                    User.setSelected(a);
                 }
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (User.getSelectedState().equals(SelectedState.DRAGGING)) {
-                	UndoManager.get().storeDragEnd();
+                    UndoManager.get().storeDragEnd();
                     User.setSelectedState(SelectedState.SELECTED);
                 }
 
@@ -82,10 +72,9 @@ public class StagePanel extends JPanel implements Printable {
                 if (User.getSelectedState().equals(SelectedState.DRAGGING)) {
                     if (User.getMouseState(e).equals(MouseState.UP)) {
                         User.setSelectedState(SelectedState.SELECTED);
-                    }
-                    else if(!stage.getAssets().contains(User.getSelected())){
+                    } else if (!stage.getAssets().contains(User.getSelected())) {
                         UndoManager.get().storeObjectPlacement(User.getSelected());
-                    	stage.getAssets().add(User.getSelected());
+                        stage.getAssets().add(User.getSelected());
                         System.out.println("Added asset");
                     }
                 }
@@ -130,18 +119,21 @@ public class StagePanel extends JPanel implements Printable {
         if (pageIndex > 0) {
             return NO_SUCH_PAGE;
         }
+        graphics.getClip();
         Graphics2D g2d = (Graphics2D) graphics;
-        double scale = 0.6;
-        g2d.scale(scale,scale);
+        double xScale = 0.79;
+        double yScale = 0.9;
 
+        g2d.scale(xScale, yScale);
+        pageFormat.setOrientation(PageFormat.LANDSCAPE);
         g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
         printAll(graphics);
         return PAGE_EXISTS;
     }
-    
+
     public void loadStage(Stage s) {
         this.stage = s;
         StageManager.get().registerStage(s);
     }
-    
+
 }
