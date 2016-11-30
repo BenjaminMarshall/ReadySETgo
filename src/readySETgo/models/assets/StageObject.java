@@ -43,17 +43,17 @@ public class StageObject extends Asset {
 	
 	@Override
 	public void draw(Graphics g, double x, double y) {
-		g.setColor(Color.WHITE);
-		
+	
 		if(image == null){
 			g.setColor(Color.BLACK);
-			g.fillRect((int) x, (int) y, (int) getPhysicalWidth(), (int) getPhysicalLength());	
+			g.fillRect((int) x, (int) y, (int) getPhysicalWidth(), (int) getPhysicalLength());
 		} else if (!defaultPic){
 			g.drawImage(image, (int) x, (int) y, (int) getPhysicalWidth(), (int) getPhysicalLength(), null);
 		} else {
+			g.setColor(Color.WHITE);
+			g.fillRect((int) x, (int) y, (int) getPhysicalWidth(), (int) getPhysicalLength());
 			g.setColor(Color.BLACK);
 			g.drawRect((int) x, (int) y, (int) getPhysicalWidth(), (int) getPhysicalLength());
-			g.fillRect((int) x, (int) y, (int) getPhysicalWidth(), (int) getPhysicalLength());
 			g.drawImage(image, (int) x, (int) y, (int) getPhysicalWidth(), (int) getPhysicalLength(), null);
 		}
 		
