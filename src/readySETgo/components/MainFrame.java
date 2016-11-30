@@ -61,7 +61,7 @@ public class MainFrame extends JFrame {
                 	int response = JOptionPane.showConfirmDialog(mainFrame, 
                             "You have unsaved changes. Would you like to save?", "Save unsaved changes?", 
                             JOptionPane.YES_NO_CANCEL_OPTION,
-                            JOptionPane.QUESTION_MESSAGE);
+                            JOptionPane.WARNING_MESSAGE);
                 	if (response == JOptionPane.YES_OPTION){
                         if(FileManager.attemptSaveSilently()) {
                     		System.exit(0);
