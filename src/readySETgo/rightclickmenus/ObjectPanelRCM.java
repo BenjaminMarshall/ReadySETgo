@@ -9,6 +9,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
+import readySETgo.dialogs.CloneDialog;
 import readySETgo.dialogs.EditDialog;
 import readySETgo.dialogs.ImportDialog;
 import readySETgo.models.assets.StageObject;
@@ -36,7 +37,7 @@ public class ObjectPanelRCM extends JPopupMenu {
 		
 		JMenuItem cloneItem = new JMenuItem(new AbstractAction("Clone this stage object ...") {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Hello World!");
+				CloneDialog.createAndShow(obj);
 			}
 		});
 		this.add(cloneItem);
