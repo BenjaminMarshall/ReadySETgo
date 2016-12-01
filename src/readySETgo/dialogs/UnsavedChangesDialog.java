@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
+import readySETgo.managers.ComponentManager;
 import readySETgo.managers.FileManager;
 
 public class UnsavedChangesDialog extends JOptionPane {
@@ -19,7 +20,7 @@ public class UnsavedChangesDialog extends JOptionPane {
 		// Custom yes/no button text
 		UIManager.put("OptionPane.yesButtonText", "Save");
     	UIManager.put("OptionPane.noButtonText", "Don't Save");
-    	int response = JOptionPane.showConfirmDialog(null, 
+    	int response = JOptionPane.showConfirmDialog(ComponentManager.getComp("MainFrame"), 
     			UnsavedChangesDialog.WINDOW_MSG,
     			UnsavedChangesDialog.WINDOW_TITLE, 
                 JOptionPane.YES_NO_CANCEL_OPTION,

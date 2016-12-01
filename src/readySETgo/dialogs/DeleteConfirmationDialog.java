@@ -3,6 +3,7 @@ package readySETgo.dialogs;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
+import readySETgo.managers.ComponentManager;
 import readySETgo.managers.FileManager;
 import readySETgo.models.assets.StageObject;
 
@@ -20,7 +21,7 @@ public class DeleteConfirmationDialog extends JOptionPane {
     	
     	String name = obj.getName();
     	
-    	int response = JOptionPane.showConfirmDialog(null, 
+    	int response = JOptionPane.showConfirmDialog(ComponentManager.getComp("MainFrame"), 
     			String.format(DeleteConfirmationDialog.WINDOW_MSG, name),
     			String.format(DeleteConfirmationDialog.WINDOW_TITLE, name), 
                 JOptionPane.YES_NO_OPTION,

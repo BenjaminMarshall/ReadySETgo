@@ -103,7 +103,7 @@ public class EditDialog extends JOptionPane {
 		        new JLabel(_lengthText), objLength,
 		        new JLabel(_imgText), objImageRef, imgButtons
 		};
-		int res = EditDialog.showConfirmDialog(null, inputs, EditDialog.WINDOW_TITLE, JOptionPane.YES_NO_OPTION);
+		int res = EditDialog.showConfirmDialog(ComponentManager.getComp("MainFrame"), inputs, EditDialog.WINDOW_TITLE, JOptionPane.YES_NO_OPTION);
 		if (res == JOptionPane.OK_OPTION) {
 			// Save the object, or create a new dialog showing errors
 			// TODO - Fix this horrible mess

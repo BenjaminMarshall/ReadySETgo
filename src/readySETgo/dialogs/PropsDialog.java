@@ -64,6 +64,6 @@ public class PropsDialog extends JOptionPane {
 		        new JLabel(PropsDialog.IMAGE_LABEL_TXT), objImageRef
 		};
 		
-		PropsDialog.showConfirmDialog(null, inputs, PropsDialog.WINDOW_TITLE, JOptionPane.DEFAULT_OPTION);
+		PropsDialog.showConfirmDialog(ComponentManager.getComp("MainFrame"), inputs, PropsDialog.WINDOW_TITLE, JOptionPane.DEFAULT_OPTION);
 	}
 }

@@ -86,7 +86,7 @@ public class ImportDialog extends JOptionPane {
 		        new JLabel(_lengthText), objLength,
 		        new JLabel(_imgText), objImageRef, imageSelect
 		};
-		int res = ImportDialog.showConfirmDialog(null, inputs, ImportDialog.WINDOW_TITLE, JOptionPane.YES_NO_OPTION);
+		int res = ImportDialog.showConfirmDialog(ComponentManager.getComp("MainFrame"), inputs, ImportDialog.WINDOW_TITLE, JOptionPane.YES_NO_OPTION);
 		if (res == JOptionPane.OK_OPTION) {
 			// Save the object, or create a new dialog showing errors
 			// TODO - Fix this horrible mess

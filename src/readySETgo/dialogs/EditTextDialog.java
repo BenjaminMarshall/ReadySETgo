@@ -7,6 +7,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 
+import readySETgo.managers.ComponentManager;
 import readySETgo.managers.UndoManager;
 import readySETgo.models.assets.TextBox;
 
@@ -36,7 +37,7 @@ public class EditTextDialog extends JOptionPane {
 		        new JLabel(TEXT_LABEL_TXT), scrollPane
 		};
 		
-		int res = EditTextDialog.showConfirmDialog(null, inputs, EditTextDialog.WINDOW_TITLE, JOptionPane.YES_NO_OPTION);
+		int res = EditTextDialog.showConfirmDialog(ComponentManager.getComp("MainFrame"), inputs, EditTextDialog.WINDOW_TITLE, JOptionPane.YES_NO_OPTION);
 		if (res == JOptionPane.OK_OPTION) {
 			
 			UndoManager.get().storeEditText(l, l.getText(), text.getText());

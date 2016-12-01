@@ -103,7 +103,7 @@ public class CloneDialog extends JOptionPane {
 		        new JLabel(_lengthText), objLength,
 		        new JLabel(_imgText), objImageRef, imgButtons
 		};
-		int res = CloneDialog.showConfirmDialog(null, inputs, CloneDialog.WINDOW_TITLE, JOptionPane.YES_NO_OPTION);
+		int res = CloneDialog.showConfirmDialog(ComponentManager.getComp("MainFrame"), inputs, CloneDialog.WINDOW_TITLE, JOptionPane.YES_NO_OPTION);
 		if (res == JOptionPane.OK_OPTION) {
 			// Save the object, or create a new dialog showing errors
 			// TODO - Fix this horrible mess
