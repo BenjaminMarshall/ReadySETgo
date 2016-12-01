@@ -51,12 +51,7 @@ public class ToolsMenu extends JMenu {
 				s.createTextBox(sp.getWidth()/2, sp.getHeight()/2);
 			}
 		}));
-        
-        this.add(MenuItemFactory.createJMenuItem("Edit Textbox", "Edit a textbox"));
-
-        
-       
-        
+                
 	}
 
 }
