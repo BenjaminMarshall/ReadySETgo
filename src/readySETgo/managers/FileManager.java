@@ -387,28 +387,34 @@ public class FileManager {
     
     public static void addObjectToDefaults(String objName, double objWidth, double objLength, String objImageRef) {
     	ArrayList<StageObject> objects = FileManager.getListOfObjects();
-    	File original = new File(objImageRef);
-    	String newPath = "res/" + original.getName();
-    	File ourCopy = new File(newPath);
-    	try {
-        	Files.copy(original.toPath(), ourCopy.toPath());
-        	StageObject newObj = new StageObject(objName, objWidth, objLength, 0, 0, 0, newPath);
+    	if(objImageRef != null && !objImageRef.equals("")) {
+    		File original = new File(objImageRef);
+        	String newPath = "res/" + original.getName();
+        	File ourCopy = new File(newPath);
+        	try {
+            	Files.copy(original.toPath(), ourCopy.toPath());
+            	StageObject newObj = new StageObject(objName, objWidth, objLength, 0, 0, 0, newPath);
+            	objects.add(newObj);
+        	}
+        	catch(IOException e) {
+        		System.out.println("TODO - Add error handling code");
+        	}
+    	}
+    	else {
+    		StageObject newObj = new StageObject(objName, objWidth, objLength, 0, 0, 0, "");
         	objects.add(newObj);
-        	FileManager.saveListOfObjects(objects);
-    		ObjectPanel oPanel = (ObjectPanel) ComponentManager.getComp("ObjectPanel");
-    		oPanel.loadObjects(StageManager.get().getStage());
     	}
-    	catch(IOException e) {
-    		System.out.println("TODO - Add error handling code");
-    	}
+    	FileManager.saveListOfObjects(objects);
+		ObjectPanel oPanel = (ObjectPanel) ComponentManager.getComp("ObjectPanel");
+		oPanel.loadObjects(StageManager.get().getStage());
     }
     
     public static void removeObjectFromDefaults(StageObject obj) {
     	ArrayList<StageObject> objects = FileManager.getListOfObjects();
     	objects.remove(obj);
     	FileManager.saveListOfObjects(objects);
-		ObjectPanel oPanel = (ObjectPanel) ComponentManager.getComp("ObjectPanel");
-		oPanel.loadObjects(StageManager.get().getStage());    	
+    	ObjectPanel oPanel = (ObjectPanel) ComponentManager.getComp("ObjectPanel");
+    	oPanel.loadObjects(StageManager.get().getStage());    	
     }
     
     public static void replaceObjectInDefaults(StageObject obj, String objName, double objWidth, double objLength, String objImageRef) {
