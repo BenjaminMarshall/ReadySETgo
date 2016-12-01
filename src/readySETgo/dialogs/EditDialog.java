@@ -64,7 +64,6 @@ public class EditDialog extends JOptionPane {
 		objImageRef.setEnabled(false);
 		if(imgInput != null) {objImageRef.setText(imgInput);}
 		else{ objImageRef.setText(obj.getImageRef()); }
-		System.out.println(obj.getImageRef());
 		
 		
 		JButton imageSelect = new JButton("Select Image");

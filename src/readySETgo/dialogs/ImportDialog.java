@@ -132,7 +132,6 @@ public class ImportDialog extends JOptionPane {
 //			}
 			
 			if(noErrors) {
-				System.out.println("Input is valid! Yes!!!!");
 				FileManager.addObjectToDefaults(objName.getText(), Double.parseDouble(objWidth.getText()), Double.parseDouble(objLength.getText()), objImageRef.getText());
 			}
 			// Create another dialog displaying errors

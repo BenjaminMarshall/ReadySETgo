@@ -96,14 +96,12 @@ public class StagePanel extends JPanel implements Printable {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                System.out.println("Entered stage");
                 if (UserManager.getSelectedState().equals(SelectedState.DRAGGING)) {
                     if (UserManager.getMouseState(e).equals(MouseState.UP)) {
                         UserManager.setSelectedState(SelectedState.EMPTY);
                     } else if (!stage.getAssets().contains(UserManager.getSelected())) {
                         UndoManager.get().storeObjectPlacement(UserManager.getSelected());
                         stage.getAssets().add(UserManager.getSelected());
-                        System.out.println("Added asset");
                     }
                 }
             }

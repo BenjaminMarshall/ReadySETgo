@@ -31,7 +31,6 @@ public class UserManager {
 	
 	public static void setSelectedState(SelectedState s){
 		state = s;
-		System.out.println("State set to: " + s.name());
 	}
 	
 	public static Asset getSelected(){

@@ -35,7 +35,6 @@ public class FlyRail {
 	}
 
 	private void updateDrawable() {
-		System.out.println(imageRef);
 		this.drawable = new StageObject(this.name, this.w, this.l, this.posx, this.posy, 0, imageRef);
 	} 
 	
@@ -44,7 +43,6 @@ public class FlyRail {
 	}
 	
 	public FlyRail(String name, double w, double l, double posx, double posy, boolean isFlownIn, String imageRef){
-		System.out.println(imageRef);
 		this.w = w;
 		this.l = l;
 		this.name = name;

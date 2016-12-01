@@ -97,7 +97,6 @@ public class ObjectPanel extends JPanel {
 				}
 				
 				public void mouseExited(MouseEvent e){
-					System.out.println("Exited object panel");	
 				}
 				
 			});
@@ -174,7 +173,6 @@ public class ObjectPanel extends JPanel {
 				}
 				
 				public void mouseExited(MouseEvent e){
-					System.out.println("Exited object panel");	
 				}
 				
 			});
