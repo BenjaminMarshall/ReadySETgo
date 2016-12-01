@@ -92,6 +92,7 @@ public class StagePanel extends JPanel implements Printable {
                 System.out.println("Entered stage");
                 if (UserManager.getSelectedState().equals(SelectedState.DRAGGING)) {
                     if (UserManager.getMouseState(e).equals(MouseState.UP)) {
+                    	//DELETE
                         UserManager.setSelectedState(SelectedState.SELECTED);
                     } else if (!stage.getAssets().contains(UserManager.getSelected())) {
                         UndoManager.get().storeObjectPlacement(UserManager.getSelected());
