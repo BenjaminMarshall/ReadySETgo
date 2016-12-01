@@ -2,7 +2,9 @@ package readySETgo.managers;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFileChooser;
 import javax.xml.parsers.DocumentBuilder;
@@ -382,6 +384,24 @@ public class FileManager {
     		UndoManager.get().reset();
           }
     }    
+    
+    public static void addObjectToDefaults(String objName, double objWidth, double objLength, String objImageRef) {
+    	ArrayList<StageObject> objects = FileManager.getListOfObjects();
+    	File original = new File(objImageRef);
+    	String newPath = "res/" + original.getName();
+    	File ourCopy = new File(newPath);
+    	try {
+        	Files.copy(original.toPath(), ourCopy.toPath());
+        	StageObject newObj = new StageObject(objName, objWidth, objLength, 0, 0, 0, newPath);
+        	objects.add(newObj);
+        	FileManager.saveListOfObjects(objects);
+    		ObjectPanel oPanel = (ObjectPanel) ComponentManager.getComp("ObjectPanel");
+    		oPanel.loadObjects(StageManager.get().getStage());
+    	}
+    	catch(IOException e) {
+    		System.out.println("TODO - Add error handling code");
+    	}
+    }
     
     
 }
