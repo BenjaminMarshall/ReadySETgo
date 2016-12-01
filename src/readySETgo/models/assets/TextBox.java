@@ -9,7 +9,6 @@ import javax.swing.JLabel;
 
 public class TextBox extends Asset{
 	private JLabel label;
-	private int width;
 	private String text;
 	
 	public TextBox(){
