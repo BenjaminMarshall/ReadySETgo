@@ -45,6 +45,10 @@ public class FlyRailPanel extends JPanel{
 		JScrollPane scrollPane = new JScrollPane(contentPanel, 
 				   ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,  
 				   ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		
+		// Increase scroll speed from default
+		scrollPane.getVerticalScrollBar().setUnitIncrement(15);
+
 		this.add(scrollPane, c);		
 		this.validate();
 		this.repaint();

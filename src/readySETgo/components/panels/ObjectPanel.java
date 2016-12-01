@@ -38,7 +38,9 @@ public class ObjectPanel extends JPanel {
 		refresh();
 				
 		scroller = new JScrollPane(container, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		
+		// Increase scroll speed from default
+		scroller.getVerticalScrollBar().setUnitIncrement(15);
+
 		GridBagLayout gc = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
 		setLayout(gc);
