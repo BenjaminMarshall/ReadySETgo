@@ -13,7 +13,7 @@ import readySETgo.models.assets.TextBox;
 
 public class EditTextDialog extends JOptionPane {
 
-	public static final String WINDOW_TITLE = "Edit Label Text";
+	public static final String WINDOW_TITLE = "Edit Textbox";
 	public static final String TEXT_LABEL_TXT = "Text";
 
 			
