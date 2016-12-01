@@ -69,12 +69,6 @@ public class StagePanelRCM extends JPopupMenu {
 				}
 			});
 			add(addLabelItem);
-			
-			JMenuItem zoomInItem = new JMenuItem("Zoom in");
-			add(zoomInItem);
-			
-			JMenuItem zoomOutItem = new JMenuItem("Zoom out");
-			add(zoomOutItem);
 		}
 	}
 	

@@ -41,7 +41,8 @@ public class ToolsMenu extends JMenu {
 				StageManager.get().getStage().pasteFromClipboard();
 			}
 		}));
-        this.add(MenuItemFactory.createJMenuItem("Zoom", "Zoom in or out probs add stuff here"));
+        
+        // TODO - Link to rotation implementation
         this.add(MenuItemFactory.createJMenuItem("Rotate", "Rotate stage view"));
         
         this.add(MenuItemFactory.createJMenuItem("Add Textbox", "Create a new textbox", new ActionListener() {
