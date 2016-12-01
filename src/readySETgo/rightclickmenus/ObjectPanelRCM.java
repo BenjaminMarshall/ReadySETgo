@@ -10,6 +10,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
 import readySETgo.dialogs.CloneDialog;
+import readySETgo.dialogs.DeleteConfirmationDialog;
 import readySETgo.dialogs.EditDialog;
 import readySETgo.dialogs.ImportDialog;
 import readySETgo.dialogs.PropsDialog;
@@ -56,7 +57,7 @@ public class ObjectPanelRCM extends JPopupMenu {
 		
 		JMenuItem deleteItem = new JMenuItem(new AbstractAction("Delete this stage object") {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Goodbye World!");
+				DeleteConfirmationDialog.createAndShow(obj);
 			}
 		});
 		this.add(deleteItem);
