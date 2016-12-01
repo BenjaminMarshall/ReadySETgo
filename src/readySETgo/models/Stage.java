@@ -144,6 +144,8 @@ public class Stage {
 		if(UserManager.getSelected() != null) {
 			UndoManager.get().storeDelete(UserManager.getSelected(), UserManager.getSelectedState(), UserManager.getSelected());
 			this.trashAsset(UserManager.getSelected());
+			UserManager.setSelectedState(UserManager.SelectedState.EMPTY);
+			UserManager.setSelected(null);
 		}
 	}
 
