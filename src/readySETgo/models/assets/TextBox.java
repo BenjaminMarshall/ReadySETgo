@@ -14,12 +14,20 @@ public class TextBox extends Asset{
 	
 	public TextBox(){
 		super();
-		this.width = 100;
-		this.text = "Default Text";
-		this.label = new JLabel("<html><body style='width: " + width + "px; padding: 5px;'>"
-                + text + "</html>");
+		setText("Default Text");
+		
 	}
 	
+	private String convertTextToTag(String text) {
+		String[] lines = text.split("\n");
+		String tag = "";
+		for(String s: lines){
+			String line = "<p>" + s + "<p>";
+			tag += line;
+		}
+		return tag;
+	}
+
 	@Override
 	public void toXML() {
 		// TODO Auto-generated method stub
@@ -32,8 +40,6 @@ public class TextBox extends Asset{
 		
 		label.setSize(label.getPreferredSize());
 		 Dimension d = label.getPreferredSize();
-		 this.setPhysicalWidth(d.getWidth());
-		 this.setPhysicalLength(d.getHeight());
          BufferedImage bi = new BufferedImage(
              d.width,
              d.height,
@@ -53,8 +59,7 @@ public class TextBox extends Asset{
 	
 	public TextBox(double w, double l, double x, double y, double a, String text){
 		super(w, l, x, y, a);
-		this.width = 100;
-		this.label = new JLabel(text);
+		setText(text);
 	}
 	
 	public JLabel getLabel(){
@@ -67,8 +72,24 @@ public class TextBox extends Asset{
 	
 	public void setText(String text){
 		this.text = text;
-		label = new JLabel("<html><body style='width: " + width + "px; padding: 5px;'>"
-                + text + "</html>");
+		String formatText = convertTextToTag(text);
+		
+		this.label = new JLabel("<html><body style='padding: 5px;'>"
+                + formatText + "</html>");
+		
+		label.setSize(label.getPreferredSize());
+		 Dimension d = label.getPreferredSize();
+		 if(d.getWidth() > 157){
+			 this.label = new JLabel("<html><body style='width:157px; padding: 5px;'>"
+		                + formatText + "</html>");
+				 d = label.getPreferredSize();
+				 this.setPhysicalWidth(d.getWidth());
+				 this.setPhysicalLength(d.getHeight());
+		 } else {
+			 this.setPhysicalWidth(d.getWidth());
+			 this.setPhysicalLength(d.getHeight());
+		 }
+		 
 	}
 	
 
