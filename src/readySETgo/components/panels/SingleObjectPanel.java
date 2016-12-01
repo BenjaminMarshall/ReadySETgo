@@ -17,7 +17,7 @@ public class SingleObjectPanel extends JPanel {
 		super();
 		this.setStageObject(o);
 		// Link the Right Click Menu to this panel
-		addMouseListener(ObjectPanelRCM.createAdapter());			
+		addMouseListener(ObjectPanelRCM.createAdapter(o));			
 		this.setSize(50, 100);
 		repaint();
 	}

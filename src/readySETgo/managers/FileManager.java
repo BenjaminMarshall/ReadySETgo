@@ -403,5 +403,16 @@ public class FileManager {
     	}
     }
     
+    public static void removeObjectFromDefaults(StageObject obj) {
+    	ArrayList<StageObject> objects = FileManager.getListOfObjects();
+    	objects.remove(obj);
+    	FileManager.saveListOfObjects(objects);
+		ObjectPanel oPanel = (ObjectPanel) ComponentManager.getComp("ObjectPanel");
+		oPanel.loadObjects(StageManager.get().getStage());    	
+    }
     
+    public static void replaceObjectInDefaults(StageObject obj, String objName, double objWidth, double objLength, String objImageRef) {
+    	FileManager.removeObjectFromDefaults(obj);
+    	FileManager.addObjectToDefaults(objName, objWidth, objLength, objImageRef);
+    }
 }

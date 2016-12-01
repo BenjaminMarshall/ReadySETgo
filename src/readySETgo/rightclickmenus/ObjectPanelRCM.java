@@ -9,12 +9,14 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
+import readySETgo.dialogs.EditDialog;
 import readySETgo.dialogs.ImportDialog;
+import readySETgo.models.assets.StageObject;
 
 public class ObjectPanelRCM extends JPopupMenu {
 	
 	
-	public ObjectPanelRCM(MouseEvent e){
+	public ObjectPanelRCM(MouseEvent e, StageObject obj){
 
 		JMenuItem viewPropsItem = new JMenuItem(new AbstractAction("View object properties ...") {
 			public void actionPerformed(ActionEvent e) {
@@ -27,7 +29,7 @@ public class ObjectPanelRCM extends JPopupMenu {
 		
 		JMenuItem editItem = new JMenuItem(new AbstractAction("Edit this stage object ...") {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Hello World!");
+				EditDialog.createAndShow(obj);
 			}
 		});
 		this.add(editItem);
@@ -59,7 +61,7 @@ public class ObjectPanelRCM extends JPopupMenu {
 		
 	}
 	
-	public static MouseAdapter createAdapter(){
+	public static MouseAdapter createAdapter(StageObject obj){
 		return new MouseAdapter(){
 				
 			 public void mouseReleased(MouseEvent e){
@@ -69,7 +71,7 @@ public class ObjectPanelRCM extends JPopupMenu {
 			 }
 			 
 			 private void doPop(MouseEvent e){
-				 ObjectPanelRCM menu = new ObjectPanelRCM(e);
+				 ObjectPanelRCM menu = new ObjectPanelRCM(e, obj);
 				 menu.show(e.getComponent(), e.getX(), e.getY());
 			 }
 		};
