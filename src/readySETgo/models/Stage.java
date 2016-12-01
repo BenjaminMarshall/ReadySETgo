@@ -1,12 +1,10 @@
 package readySETgo.models;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Stroke;
-import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
@@ -14,13 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.swing.AbstractAction;
-import javax.swing.JMenuItem;
 
 import readySETgo.managers.FileManager;
 import readySETgo.managers.UndoManager;
 import readySETgo.managers.UserManager;
 import readySETgo.models.assets.Asset;
+import readySETgo.models.assets.TextBox;
 
 /**
  * @author Ksenia Belikova
@@ -71,8 +68,7 @@ public class Stage {
     			int botLeftY = (int)(a.getyPos() + a.getPhysicalLength() + 2);
     			int botRightX = (int)(a.getxPos() + a.getPhysicalWidth() + 2);
     			int botRightY = (int)(a.getyPos() + a.getPhysicalLength() + 2);
-    			Graphics2D g2 = (Graphics2D) g.create();
-    			g2.setColor(Color.black);
+    			Graphics2D g2 = (Graphics2D) g.create();    	        
     	        Stroke dashed = new BasicStroke(2, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 1, new float[]{5}, 0);
     	        g2.setStroke(dashed);
     	        g2.drawLine(topLeftX,topLeftY,topRightX,topRightY);
@@ -165,6 +161,16 @@ public class Stage {
 			UserManager.setSelectedState(UserManager.SelectedState.SELECTED);
 			this.getAssets().add(a);
 		}
+	}
+	
+	public void createTextBox(double xPos, double yPos){
+		TextBox a = new TextBox();
+		a.setxPos(xPos);
+		a.setyPos(yPos);
+		UndoManager.get().storeObjectPlacement(a);
+		UserManager.setSelected(a);
+		UserManager.setSelectedState(UserManager.SelectedState.SELECTED);
+		this.getAssets().add(a);
 	}
 	
 	public void pasteFromClipboard(double xPos, double yPos){
