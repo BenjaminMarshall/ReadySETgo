@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -345,6 +346,7 @@ public class FileManager {
     	if(path != null) {
     		File f = new File(path);
     		FileManager.saveStage(s, f);
+    		UndoManager.get().registerSave();
     		return true;
     	}
     	else {

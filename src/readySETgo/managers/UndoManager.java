@@ -52,7 +52,8 @@ public class UndoManager {
     }
     
     public void registerSave() {
-    	savedAtAction = undoStack.peek();
+    	if(!undoStack.isEmpty()) savedAtAction = undoStack.peek();
+    	else savedAtAction = null;
     }
     
     public void storeDragStart(Asset dragged, double origX, double origY, UserManager.SelectedState origState, Asset prevSelected) {
