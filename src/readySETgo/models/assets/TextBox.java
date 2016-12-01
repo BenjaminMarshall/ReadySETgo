@@ -10,12 +10,14 @@ import javax.swing.JLabel;
 public class TextBox extends Asset{
 	private JLabel label;
 	private int width;
+	private String text;
 	
 	public TextBox(){
 		super();
 		this.width = 100;
+		this.text = "Default Text";
 		this.label = new JLabel("<html><body style='width: " + width + "px; padding: 5px;'>"
-                + "Default Text </html>");
+                + text + "</html>");
 	}
 	
 	@Override
@@ -64,13 +66,18 @@ public class TextBox extends Asset{
 	}
 	
 	public void setText(String text){
-		label = new JLabel("<html><body style='width: 200px; padding: 5px;'>"
+		this.text = text;
+		label = new JLabel("<html><body style='width: " + width + "px; padding: 5px;'>"
                 + text + "</html>");
 	}
 	
 
 	public Asset copyOf() {
 		return new TextBox(this.getPhysicalWidth(),this.getPhysicalLength(),this.getxPos(), this.getyPos(), this.getAngle(), this.getLabel().getText());
+	}
+
+	public String getText() {
+		return text;
 	}
 	
 }

@@ -1,5 +1,23 @@
 package readySETgo.components.panels;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
+
+import readySETgo.dialogs.EditTextDialog;
 import readySETgo.managers.ComponentManager;
 import readySETgo.managers.PrintManager;
 import readySETgo.managers.StageManager;
@@ -9,14 +27,8 @@ import readySETgo.managers.UserManager.MouseState;
 import readySETgo.managers.UserManager.SelectedState;
 import readySETgo.models.Stage;
 import readySETgo.models.assets.Asset;
+import readySETgo.models.assets.TextBox;
 import readySETgo.rightclickmenus.StagePanelRCM;
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
 
 public class StagePanel extends JPanel implements Printable {
     private Stage stage;
@@ -65,6 +77,15 @@ public class StagePanel extends JPanel implements Printable {
 
             }
 
+            public void mouseClicked(MouseEvent e){
+            	if(e.getClickCount()==2){
+                    if(UserManager.getSelectedState().equals(SelectedState.SELECTED)){
+                    	if(UserManager.getSelected() instanceof TextBox){
+                    		stage.editSelectedTextBox();
+                    	}
+                    }
+                }
+            }
 
             @Override
             public void mouseEntered(MouseEvent e) {

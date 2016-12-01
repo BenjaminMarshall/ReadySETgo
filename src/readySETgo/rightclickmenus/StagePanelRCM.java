@@ -10,7 +10,7 @@ import javax.swing.JPopupMenu;
 
 import readySETgo.managers.UserManager;
 import readySETgo.models.Stage;
-import readySETgo.models.assets.Asset;
+import readySETgo.models.assets.TextBox;
 
 public class StagePanelRCM extends JPopupMenu {
 	
@@ -37,6 +37,15 @@ public class StagePanelRCM extends JPopupMenu {
 				}
 			});
 			add(copyItem);
+			
+			if(UserManager.getSelected() instanceof TextBox){
+				JMenuItem editItem = new JMenuItem(new AbstractAction("Edit"){
+					public void actionPerformed(ActionEvent e){
+						stage.editSelectedTextBox();
+					}
+				});
+				add(editItem);
+			}
 			
 			JMenuItem deleteItem = new JMenuItem(new AbstractAction("Delete") {
 				public void actionPerformed(ActionEvent e) {

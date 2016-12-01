@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import readySETgo.dialogs.EditTextDialog;
 import readySETgo.managers.FileManager;
 import readySETgo.managers.UndoManager;
 import readySETgo.managers.UserManager;
@@ -183,6 +184,10 @@ public class Stage {
 			UserManager.setSelectedState(UserManager.SelectedState.SELECTED);
 			this.getAssets().add(a);
 		}
+	}
+
+	public void editSelectedTextBox() {
+		EditTextDialog.createAndShow((TextBox) UserManager.getSelected());
 	}
 	
 }
