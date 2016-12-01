@@ -71,7 +71,8 @@ public class Stage {
     			int botLeftY = (int)(a.getyPos() + a.getPhysicalLength() + 2);
     			int botRightX = (int)(a.getxPos() + a.getPhysicalWidth() + 2);
     			int botRightY = (int)(a.getyPos() + a.getPhysicalLength() + 2);
-    			Graphics2D g2 = (Graphics2D) g.create();    	        
+    			Graphics2D g2 = (Graphics2D) g.create();
+    			g2.setColor(Color.black);
     	        Stroke dashed = new BasicStroke(2, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 1, new float[]{5}, 0);
     	        g2.setStroke(dashed);
     	        g2.drawLine(topLeftX,topLeftY,topRightX,topRightY);
