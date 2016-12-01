@@ -4,10 +4,12 @@ import java.util.Stack;
 
 import readySETgo.components.panels.SingleRailPanel;
 import readySETgo.models.assets.Asset;
+import readySETgo.models.assets.TextBox;
 import readySETgo.models.stageactions.CreationAction;
 import readySETgo.models.stageactions.CutAction;
 import readySETgo.models.stageactions.DeleteAction;
 import readySETgo.models.stageactions.DragAction;
+import readySETgo.models.stageactions.EditTextAction;
 import readySETgo.models.stageactions.PasteAction;
 import readySETgo.models.stageactions.RailToggleAction;
 import readySETgo.models.stageactions.StageAction;
@@ -92,6 +94,11 @@ public class UndoManager {
     	redoStack.removeAllElements();
     }
     
+    public void storeEditText(TextBox l, String text, String text2) {
+		undoStack.push(new EditTextAction(l, text, text2));
+		redoStack.removeAllElements();
+	}
+    
     public void undo() {
     	if(!undoStack.isEmpty()) {
     		StageAction a = undoStack.pop();
@@ -107,6 +114,8 @@ public class UndoManager {
     		undoStack.push(a);
     	}
     }
+
+	
     
 }
 
