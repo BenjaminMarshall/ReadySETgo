@@ -357,11 +357,14 @@ public class FileManager {
     
     public static boolean displaySavePrompt() {
     	JFileChooser menu = new JFileChooser();
+    	menu.setFileFilter(new FileNameExtensionFilter("Stage Plan Files", "stg"));
     	int retCode = menu.showSaveDialog(ComponentManager.getComp("MainFrame"));
     	
     	if (retCode == JFileChooser.APPROVE_OPTION) {
     		File f = menu.getSelectedFile();
     		String path = f.getAbsolutePath();
+    		if(!path.endsWith(".stg")) { path += ".stg"; }
+    		f = new File(path);
     		Stage s = StageManager.get().getStage();
     		s.setFilePath(path);
     		FileManager.saveStage(s, f);
@@ -373,6 +376,7 @@ public class FileManager {
     
     public static void displayOpenPrompt() {
     	JFileChooser menu = new JFileChooser();
+    	menu.setFileFilter(new FileNameExtensionFilter("Stage Plan Files", "stg"));
     	int retCode = menu.showOpenDialog(ComponentManager.getComp("MainFrame"));
     	
     	if (retCode == JFileChooser.APPROVE_OPTION) {
