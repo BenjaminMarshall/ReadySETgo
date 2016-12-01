@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -13,11 +15,11 @@ import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
-import readySETgo.dialogs.EditTextDialog;
 import readySETgo.managers.ComponentManager;
 import readySETgo.managers.PrintManager;
 import readySETgo.managers.StageManager;
@@ -71,7 +73,7 @@ public class StagePanel extends JPanel implements Printable {
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (UserManager.getSelectedState().equals(SelectedState.DRAGGING)) {
-                	if(e.getX() < 0 || e.getY() < 0 || e.getX() > getWidth() || e.getY() > getHeight()){
+                	if(e.getX() < 0 || e.getY() < 0 || e.getX() > ((StageViewPanel) ComponentManager.getComp("StageViewPanel")).getScrollPane().getWidth() || e.getY() > ((StageViewPanel) ComponentManager.getComp("StageViewPanel")).getScrollPane().getHeight()){
                 		stage.deleteSelected();
                 	} else {
                 		UndoManager.get().storeDragEnd();
@@ -111,6 +113,14 @@ public class StagePanel extends JPanel implements Printable {
 
             public void mouseDragged(MouseEvent e) {
                 if (UserManager.getSelectedState().equals(SelectedState.DRAGGING)) {
+                	if(e.getX() < 0 || e.getY() < 0 || e.getX() > getWidth() || e.getY() > getHeight()) {
+                		//ComponentManager.getComp("MainFrame").
+                		//setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
+                		//		new ImageIcon("res/x.png").getImage(),
+                		//		new Point(0,0),"custom cursor"));
+                	} else {
+                		
+                	}
                     UserManager.getSelected().setxPos(e.getX());
                     UserManager.getSelected().setyPos(e.getY());
                 }
