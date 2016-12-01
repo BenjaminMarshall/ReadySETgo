@@ -3,6 +3,7 @@ package readySETgo.dialogs;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.UIManager;
 
@@ -23,11 +24,16 @@ public class EditTextDialog extends JOptionPane {
 		UIManager.put("OptionPane.yesButtonText", "Confirm");
     	UIManager.put("OptionPane.noButtonText", "Cancel");
 			
-    	JTextArea text = new JTextArea(5, 5);
+    	JTextArea text = new JTextArea();
+    	text.setRows(5);
+    	text.setLineWrap(true);
+    	text.setWrapStyleWord(true);
     	text.setText(l.getText());
     	
+    	JScrollPane scrollPane = new JScrollPane(text);
+    	
 		final JComponent[] inputs = new JComponent[] {
-		        new JLabel(TEXT_LABEL_TXT), text
+		        new JLabel(TEXT_LABEL_TXT), scrollPane
 		};
 		
 		int res = EditTextDialog.showConfirmDialog(null, inputs, EditTextDialog.WINDOW_TITLE, JOptionPane.YES_NO_OPTION);
