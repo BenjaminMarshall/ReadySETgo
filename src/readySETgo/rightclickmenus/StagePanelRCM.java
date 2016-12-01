@@ -8,8 +8,11 @@ import javax.swing.AbstractAction;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import readySETgo.dialogs.PropsDialog;
 import readySETgo.managers.UserManager;
 import readySETgo.models.Stage;
+import readySETgo.models.assets.Asset;
+import readySETgo.models.assets.StageObject;
 import readySETgo.models.assets.TextBox;
 
 public class StagePanelRCM extends JPopupMenu {
@@ -22,7 +25,8 @@ public class StagePanelRCM extends JPopupMenu {
 		double origX = e.getX();
 		double origY = e.getY();
 		
-		Boolean isOnObject = stage.eventOnObject(e) != null;
+		Asset obj = stage.eventOnObject(e);
+		Boolean isOnObject = (obj != null);
 		if(isOnObject) {
 			JMenuItem cutItem = new JMenuItem(new AbstractAction("Cut") {
 				public void actionPerformed(ActionEvent e) {
@@ -45,6 +49,14 @@ public class StagePanelRCM extends JPopupMenu {
 					}
 				});
 				add(editItem);
+			}
+			else {
+				JMenuItem propsItem = new JMenuItem(new AbstractAction("Properties") {
+					public void actionPerformed(ActionEvent e) {
+						PropsDialog.createAndShow(((StageObject) (obj)));
+					}
+				});
+				add(propsItem);
 			}
 			
 			JMenuItem deleteItem = new JMenuItem(new AbstractAction("Delete") {
