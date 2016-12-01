@@ -72,10 +72,24 @@ public class FileManagerTest {
 		
 		
 		try {
+//			w l x y
+			rails.add(new FlyRail("Cyc", 640, 5, 115, 10,  false, "res/black.png"));
+			rails.add(new FlyRail("Upstage Traveler", 660, 12, 115, 20,  false, "res/curtain.png"));
+			rails.add(new FlyRail("4th Legs", 840, 12, 25, 50,  false, "res/legs.png"));
+			rails.add(new FlyRail("5th Electric", 640, 2, 115, 60,  false, "res/black.png"));
+			rails.add(new FlyRail("4th Electric", 640, 2, 115, 80,  false, "res/black.png"));
+			rails.add(new FlyRail("3rd Legs", 840, 12, 25, 105,  false, "res/legs.png"));
+			rails.add(new FlyRail("3rd Electric", 640, 2, 115, 120,  false, "res/black.png"));
+			rails.add(new FlyRail("2nd Legs", 840, 12, 25, 140,  false, "res/legs.png"));
+			rails.add(new FlyRail("Mid Traveler", 660, 12, 115, 160,  false, "res/curtain.png"));
+			rails.add(new FlyRail("Screen", 200, 5, 315, 170,  false, "res/black.png"));
+			//rails.add(new FlyRail("Banners", 640, 12, 115, 170,  false, "res/curtain.png"));
+			rails.add(new FlyRail("2nd Electric", 640, 2, 115, 190,  false, "res/black.png"));
+			rails.add(new FlyRail("1st Legs", 840, 12, 25, 200,  false, "res/legs.png"));
+			rails.add(new FlyRail("1st Electric", 640, 2, 115, 230,  false, "res/black.png"));
+			rails.add(new FlyRail("Main Curtain", 660, 12, 115, 320,  false, "res/curtain.png"));
 
-			for(int i = 0; i < 4; i++) {
-				rails.add(new FlyRail("Curtain "+(i+1), 640, 12, 115, (i*100),  (i % 2 == 0), "res/curtain.png"));
-			}
+			
 			
 			System.out.println("Saving...");
 			FileManager.saveListOfFlyRails(rails);
@@ -96,5 +110,6 @@ public class FileManagerTest {
 	
 	public static void main(String[] args){
 		flyRailTest();
+		objectTest();
 	}
 }
