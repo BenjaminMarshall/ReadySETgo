@@ -63,7 +63,7 @@ public class StagePanelRCM extends JPopupMenu {
 			pasteItem.setEnabled(UserManager.getClipboard() != null);
 			add(pasteItem);
 			
-			JMenuItem addLabelItem = new JMenuItem(new AbstractAction("Add Label") {
+			JMenuItem addLabelItem = new JMenuItem(new AbstractAction("Add Textbox") {
 				public void actionPerformed(ActionEvent e){
 					stage.createTextBox(origX, origY);
 				}

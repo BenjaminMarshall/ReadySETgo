@@ -117,4 +117,20 @@ public class StageObject extends Asset {
 		return new StageObject(getName(), getPhysicalWidth(), getPhysicalLength(), getxPos(), getyPos(), getAngle(), getImageRef());
 	}
 
+	public boolean equals(Object _that) {
+		if(this.getClass().equals(_that.getClass())) {
+			StageObject that = (StageObject) _that;
+			return (this.getName().equals(that.getName()) &&
+					this.getPhysicalWidth() == that.getPhysicalWidth() &&
+					this.getPhysicalLength() == that.getPhysicalLength() &&
+					this.getyPos() == that.getyPos() &&
+					this.getxPos() == that.getxPos() &&
+					this.getAngle() == that.getAngle() &&
+					this.getImageRef().equals(that.getImageRef()));
+		}
+		else return false;
+	}
+		
+	
+	
 }

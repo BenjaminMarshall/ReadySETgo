@@ -6,8 +6,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 
 import readySETgo.MenuItemFactory;
+import readySETgo.components.panels.StagePanel;
+import readySETgo.managers.ComponentManager;
 import readySETgo.managers.StageManager;
 import readySETgo.managers.UndoManager;
+import readySETgo.models.Stage;
 
 public class ToolsMenu extends JMenu {
 	public ToolsMenu() {
@@ -40,8 +43,20 @@ public class ToolsMenu extends JMenu {
 		}));
         this.add(MenuItemFactory.createJMenuItem("Zoom", "Zoom in or out probs add stuff here"));
         this.add(MenuItemFactory.createJMenuItem("Rotate", "Rotate stage view"));
-        this.add(MenuItemFactory.createJMenuItem("Edit Label", "Edit a text label"));
+        
+        this.add(MenuItemFactory.createJMenuItem("Add Textbox", "Create a new textbox", new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Stage s = StageManager.get().getStage();
+				StagePanel sp = (StagePanel) ComponentManager.getComp("StagePanel");
+				s.createTextBox(sp.getWidth()/2, sp.getHeight()/2);
+			}
+		}));
+        
+        this.add(MenuItemFactory.createJMenuItem("Edit Textbox", "Edit a textbox"));
 
+        
+       
+        
 	}
 
 }
