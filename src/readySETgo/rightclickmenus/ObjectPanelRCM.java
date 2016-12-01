@@ -10,8 +10,10 @@ import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
 import readySETgo.dialogs.CloneDialog;
+import readySETgo.dialogs.DeleteConfirmationDialog;
 import readySETgo.dialogs.EditDialog;
 import readySETgo.dialogs.ImportDialog;
+import readySETgo.dialogs.PropsDialog;
 import readySETgo.models.assets.StageObject;
 
 public class ObjectPanelRCM extends JPopupMenu {
@@ -21,7 +23,7 @@ public class ObjectPanelRCM extends JPopupMenu {
 
 		JMenuItem viewPropsItem = new JMenuItem(new AbstractAction("View object properties ...") {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Hello World!");
+				PropsDialog.createAndShow(obj);
 			}
 		});
 		this.add(viewPropsItem);
@@ -55,7 +57,7 @@ public class ObjectPanelRCM extends JPopupMenu {
 		
 		JMenuItem deleteItem = new JMenuItem(new AbstractAction("Delete this stage object") {
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("Goodbye World!");
+				DeleteConfirmationDialog.createAndShow(obj);
 			}
 		});
 		this.add(deleteItem);
