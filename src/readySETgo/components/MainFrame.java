@@ -16,12 +16,11 @@ import javax.swing.Action;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 import readySETgo.components.panels.ContainerPanel;
+import readySETgo.dialogs.UnsavedChangesDialog;
 import readySETgo.managers.ComponentManager;
 import readySETgo.managers.FileManager;
 import readySETgo.managers.PrintManager;
@@ -56,20 +55,7 @@ public class MainFrame extends JFrame {
             @Override
             public void windowClosing(WindowEvent windowEvent) {
             	if(UndoManager.get().hasUnsavedChanges()){
-            		UIManager.put("OptionPane.yesButtonText", "Save");
-                	UIManager.put("OptionPane.noButtonText", "Don't Save");
-                	int response = JOptionPane.showConfirmDialog(mainFrame, 
-                            "You have unsaved changes. Would you like to save?", "Save unsaved changes?", 
-                            JOptionPane.YES_NO_CANCEL_OPTION,
-                            JOptionPane.QUESTION_MESSAGE);
-                	if (response == JOptionPane.YES_OPTION){
-                        if(FileManager.attemptSaveSilently()) {
-                    		System.exit(0);
-                        }
-                    }
-                	if (response == JOptionPane.NO_OPTION){
-                        System.exit(0);
-                    }
+            		UnsavedChangesDialog.createAndShow();
             	}
             	else {
             		System.exit(0);
