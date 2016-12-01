@@ -52,7 +52,7 @@ public class StagePanel extends JPanel implements Printable {
         addMouseListener(new MouseAdapter() {
 
             @Override
-            public void mousePressed(MouseEvent e) { //TODO Store objects original position so if invalid placement it is put back
+            public void mousePressed(MouseEvent e) { 
                 Asset a;
                 if (SwingUtilities.isLeftMouseButton(e)) {
                     if ((a = stage.eventOnObject(e)) != null) {
@@ -71,8 +71,13 @@ public class StagePanel extends JPanel implements Printable {
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (UserManager.getSelectedState().equals(SelectedState.DRAGGING)) {
-                    UndoManager.get().storeDragEnd();
-                    UserManager.setSelectedState(SelectedState.SELECTED);
+                	if(e.getX() < 0 || e.getY() < 0 || e.getX() > getWidth() || e.getY() > getHeight()){
+                		stage.deleteSelected();
+                	} else {
+                		UndoManager.get().storeDragEnd();
+                        UserManager.setSelectedState(SelectedState.SELECTED);
+                	}
+                    
                 }
 
             }
@@ -92,8 +97,7 @@ public class StagePanel extends JPanel implements Printable {
                 System.out.println("Entered stage");
                 if (UserManager.getSelectedState().equals(SelectedState.DRAGGING)) {
                     if (UserManager.getMouseState(e).equals(MouseState.UP)) {
-                    	//DELETE
-                        UserManager.setSelectedState(SelectedState.SELECTED);
+                        UserManager.setSelectedState(SelectedState.EMPTY);
                     } else if (!stage.getAssets().contains(UserManager.getSelected())) {
                         UndoManager.get().storeObjectPlacement(UserManager.getSelected());
                         stage.getAssets().add(UserManager.getSelected());
