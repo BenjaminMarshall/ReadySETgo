@@ -1,18 +1,19 @@
 package readySETgo.dialogs;
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 
-import javax.activation.MimetypesFileTypeMap;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -74,6 +75,15 @@ public class ImportDialog extends JOptionPane {
 		    	}
 			}
 		});
+		JButton imageWipe = new JButton("Clear Image");
+		imageWipe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				objImageRef.setText("");
+			}
+		});
+		JPanel imgButtons = new JPanel(new GridLayout(0,2));
+		imgButtons.add(imageSelect);
+		imgButtons.add(imageWipe);
 		
 		if(_nameText == null) {_nameText = ImportDialog.NAME_LABEL_TXT;}
 		if(_widthText == null) {_widthText = ImportDialog.WIDTH_LABEL_TXT;}
@@ -84,7 +94,7 @@ public class ImportDialog extends JOptionPane {
 		        new JLabel(_nameText), objName,
 		        new JLabel(_widthText), objWidth,
 		        new JLabel(_lengthText), objLength,
-		        new JLabel(_imgText), objImageRef, imageSelect
+		        new JLabel(_imgText), objImageRef, imgButtons
 		};
 		int res = ImportDialog.showConfirmDialog(ComponentManager.getComp("MainFrame"), inputs, ImportDialog.WINDOW_TITLE, JOptionPane.YES_NO_OPTION);
 		if (res == JOptionPane.OK_OPTION) {
@@ -117,11 +127,7 @@ public class ImportDialog extends JOptionPane {
 				noErrors = false;
 				lengthText = ImportDialog.generateErrorStr(lengthText, "Cannot be Zero");
 			}
-			if(objImageRef.getText().isEmpty()) {
-				noErrors = false;
-				imgText = ImportDialog.generateErrorStr(imgText, "No file selected");
-			}
-			else if(!(new File(objImageRef.getText())).exists() ) {
+			if(!objImageRef.getText().isEmpty() && !(new File(objImageRef.getText())).exists() ) {
 				noErrors = false;
 				imgText = ImportDialog.generateErrorStr(imgText, "File does not exist");
 			}
