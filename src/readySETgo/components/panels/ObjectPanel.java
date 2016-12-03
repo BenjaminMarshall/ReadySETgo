@@ -83,7 +83,7 @@ public class ObjectPanel extends JPanel {
 		for(StageObject o: listModel) {
 			SingleObjectPanel op = new SingleObjectPanel(o);
 			op.setPreferredSize(new Dimension(200, 100));
-			op.addMouseListener(new ObjPanelMouseAdapter());
+			op.addMouseListener(new ObjPanelMouseAdapter(op));
 			op.addMouseMotionListener(new ObjPanelMotionListener(op));
 			subPanels.add(op);
 			container.add(op);
@@ -112,7 +112,7 @@ public class ObjectPanel extends JPanel {
 		for(StageObject o: listModel){
 			SingleObjectPanel op = new SingleObjectPanel(o);
 			op.setPreferredSize(new Dimension(200, 100));
-			op.addMouseListener(new ObjPanelMouseAdapter());
+			op.addMouseListener(new ObjPanelMouseAdapter(op));
 			op.addMouseMotionListener(new ObjPanelMotionListener(op));
 			
 			subPanels.add(op);
@@ -123,6 +123,13 @@ public class ObjectPanel extends JPanel {
 	
 	
 	class ObjPanelMouseAdapter extends MouseAdapter {
+		
+		private SingleObjectPanel sop;
+		
+		public ObjPanelMouseAdapter(SingleObjectPanel sop) {
+			this.sop = sop;
+		}
+		
 		@Override
 		public void mousePressed(MouseEvent e) {
 			UserManager.setSelected(((SingleObjectPanel) e.getComponent()).getCopyOfStageObject());
@@ -141,7 +148,7 @@ public class ObjectPanel extends JPanel {
 					
 					StagePanel sp = (StagePanel) ComponentManager.getComp("StagePanel");
 					
-					SwingUtilities.convertPointToScreen(p, ObjectPanel.this);
+					SwingUtilities.convertPointToScreen(p, sop);
 					SwingUtilities.convertPointFromScreen(p,  sp);		
 					
 					if(sp.getStage().getAssets().contains(UserManager.getSelected())){
