@@ -2,11 +2,8 @@ package readySETgo;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import readySETgo.components.MainFrame;
-import test.FileManagerTest;
 
 public class Driver {
 	

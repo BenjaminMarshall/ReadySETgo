@@ -1,4 +1,4 @@
-package test;
+package readySETgo.devutils;
 
 import java.util.ArrayList;
 
@@ -6,10 +6,9 @@ import readySETgo.managers.FileManager;
 import readySETgo.models.FlyRail;
 import readySETgo.models.assets.StageObject;
 
-public class FileManagerTest {
+public class XMLFileGenerator {
 
-	
-	public static void objectTest() {
+	public static void generateObjectFile() {
 		ArrayList<StageObject> objects = new ArrayList<StageObject>();
 		
 		
@@ -67,7 +66,7 @@ public class FileManagerTest {
 		
 	}
 	
-	public static void flyRailTest() {
+	public static void generateFlyRailFile() {
 		ArrayList<FlyRail> rails = new ArrayList<FlyRail>();
 		
 		
@@ -106,10 +105,9 @@ public class FileManagerTest {
 			e.printStackTrace();
 		}
 	}
-	
-	
+		
 	public static void main(String[] args){
-		flyRailTest();
-		objectTest();
+		generateFlyRailFile();
+		generateObjectFile();
 	}
 }
