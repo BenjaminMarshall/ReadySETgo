@@ -1,11 +1,9 @@
 package readySETgo.components.panels;
 
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JPanel;
-
-import readySETgo.models.Stage;
 
 public class ContainerPanel extends JPanel {
 	private JPanel leftPanel;
@@ -14,29 +12,17 @@ public class ContainerPanel extends JPanel {
 	private StagePanel stagePanel;
 	
 	public ContainerPanel(){
+        this.setLayout(new BorderLayout());
 		
-		stagePanel = new StagePanel();
-		leftPanel = new FlyRailPanel();
-        rightPanel = new ObjectPanel();
+		this.stagePanel = new StagePanel();
+		this.leftPanel = new FlyRailPanel();
+        this.rightPanel = new ObjectPanel();
 
-        setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
+        this.leftPanel.setPreferredSize(new Dimension(225, 0));
+        this.rightPanel.setPreferredSize(new Dimension(150, 0));
         
-        c.gridx = 0;
-        c.gridy = 0;
-        c.weightx = .2;
-        c.weighty = 1;  
-        c.fill = c.BOTH;
-        add(leftPanel, c);
-       
-        
-        c.gridx = 1;
-        c.weightx = .6;
-        add(stagePanel, c);
-        
-        
-        c.gridx = 2;
-        c.weightx = .2;
-        add(rightPanel, c);
+        this.add(leftPanel, BorderLayout.WEST);
+        this.add(stagePanel, BorderLayout.CENTER);
+        this.add(rightPanel, BorderLayout.EAST);
 	}
 }
