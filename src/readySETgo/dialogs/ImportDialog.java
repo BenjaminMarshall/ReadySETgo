@@ -119,6 +119,10 @@ public class ImportDialog extends JOptionPane {
 				noErrors = false;
 				widthText = ImportDialog.generateErrorStr(widthText, "Cannot be Zero");
 			}
+			else if(Double.parseDouble(objWidth.getText()) < 0) {
+				noErrors = false;
+				widthText = ImportDialog.generateErrorStr(widthText, "Cannot be Negative");
+			}
 			if(objLength.getText().isEmpty()) {
 				noErrors = false;
 				lengthText = ImportDialog.generateErrorStr(lengthText, "Cannot be empty");
@@ -126,6 +130,10 @@ public class ImportDialog extends JOptionPane {
 			else if(Double.parseDouble(objLength.getText()) == 0) {
 				noErrors = false;
 				lengthText = ImportDialog.generateErrorStr(lengthText, "Cannot be Zero");
+			}
+			else if(Double.parseDouble(objLength.getText()) < 0) {
+				noErrors = false;
+				lengthText = ImportDialog.generateErrorStr(lengthText, "Cannot be Negative");
 			}
 			if(!objImageRef.getText().isEmpty() && !(new File(objImageRef.getText())).exists() ) {
 				noErrors = false;

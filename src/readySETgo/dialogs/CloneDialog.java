@@ -125,6 +125,10 @@ public class CloneDialog extends JOptionPane {
 				noErrors = false;
 				widthText = CloneDialog.generateErrorStr(widthText, "Cannot be Zero");
 			}
+			else if(Double.parseDouble(objWidth.getText()) < 0) {
+				noErrors = false;
+				widthText = CloneDialog.generateErrorStr(widthText, "Cannot be Negative");
+			}
 			if(objLength.getText().isEmpty()) {
 				noErrors = false;
 				lengthText = CloneDialog.generateErrorStr(lengthText, "Cannot be empty");
@@ -132,6 +136,10 @@ public class CloneDialog extends JOptionPane {
 			else if(Double.parseDouble(objLength.getText()) == 0) {
 				noErrors = false;
 				lengthText = CloneDialog.generateErrorStr(lengthText, "Cannot be Zero");
+			}
+			else if(Double.parseDouble(objLength.getText()) < 0) {
+				noErrors = false;
+				lengthText = CloneDialog.generateErrorStr(lengthText, "Cannot be Negative");
 			}
 			if(!objImageRef.getText().isEmpty() && !(new File(objImageRef.getText())).exists() ) {
 				noErrors = false;
