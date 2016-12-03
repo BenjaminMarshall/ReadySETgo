@@ -142,10 +142,7 @@ public class ObjectPanel extends JPanel {
 					StagePanel sp = (StagePanel) ComponentManager.getComp("StagePanel");
 					
 					SwingUtilities.convertPointToScreen(p, ObjectPanel.this);
-					SwingUtilities.convertPointFromScreen(p,  sp);
-											
-					UserManager.getSelected().setxPos(p.getX() / scale);
-					UserManager.getSelected().setyPos(p.getY() / scale);		
+					SwingUtilities.convertPointFromScreen(p,  sp);		
 					
 					if(sp.getStage().getAssets().contains(UserManager.getSelected())){
 						if(p.getX() < 0 || p.getY() < 0 || p.getX() > sp.getWidth() || p.getY() > sp.getHeight()) {
