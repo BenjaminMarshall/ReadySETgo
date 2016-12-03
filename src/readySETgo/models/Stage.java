@@ -68,31 +68,14 @@ public class Stage {
     	double scale = (stagePanel.getWidth() / this.width);
     	g.drawImage(stageImage, 0, 0, (int) (width*scale), (int) (length*scale), null);
     	for(Asset a: assets){
-    		a.draw(g, scale);
-    		if(UserManager.getSelectedState() == UserManager.SelectedState.SELECTED && UserManager.getSelected() == a) {
-    			//Highlight the selected object by drawing a dashed border around it
-    			int topLeftX = (int)(a.getxPos()*scale - 4);
-    			int topLeftY = (int)(a.getyPos()*scale - 4);
-    			int topRightX = (int)(a.getxPos()*scale + a.getPhysicalWidth()*scale + 4);
-    			int topRightY = (int)(a.getyPos()*scale - 4);
-    			int botLeftX = (int)(a.getxPos()*scale - 4);
-    			int botLeftY = (int)(a.getyPos()*scale + a.getPhysicalLength()*scale + 4);
-    			int botRightX = (int)(a.getxPos()*scale + a.getPhysicalWidth()*scale + 4);
-    			int botRightY = (int)(a.getyPos()*scale + a.getPhysicalLength()*scale + 4);
-    			Graphics2D g2 = (Graphics2D) g.create();    	        
-    	        Stroke dashed = new BasicStroke(2, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 1, new float[]{5}, 0);
-    	        g2.setStroke(dashed);
-    	        g2.drawLine(topLeftX,topLeftY,topRightX,topRightY);
-    	        g2.drawLine(topRightX,topRightY,botRightX,botRightY);
-    	        g2.drawLine(botRightX,botRightY,botLeftX,botLeftY);
-    	        g2.drawLine(botLeftX,botLeftY,topLeftX,topLeftY);
-    	        g2.dispose();
-    		}
+    		
+    		a.draw(g, scale, UserManager.getSelectedState() == UserManager.SelectedState.SELECTED && UserManager.getSelected() == a);
+    	
     	}
     	for(FlyRail f: flyRails){
     		if(f.isFlownIn()) {
     			Asset a = f.getDrawable();
-    			a.draw(g, scale);
+    			a.draw(g, scale, false);
     		}
     	}
     }
