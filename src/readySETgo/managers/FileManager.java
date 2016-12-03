@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -143,7 +146,7 @@ public class FileManager {
         		double angle = Double.parseDouble(e.getAttribute("angle"));
         		
         		if(type.equals("StageObject")){
-        			String imageRef = e.getAttribute("imageRef");
+        			String imageRef = e.getAttribute("ref");
         			String name = e.getTextContent();
         			StageObject o = new StageObject(name, width, length, xpos, ypos, angle, imageRef);
         			stageAssets.add(o);
@@ -391,20 +394,95 @@ public class FileManager {
           }
     }    
     
+    public static HashMap loadImageMap(){
+    	HashMap map = new HashMap();
+    	try {
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		 	DocumentBuilder builder = factory.newDocumentBuilder();
+		 	Document doc = builder.parse(new File("res/ImgMap.xml"));
+		 	doc.getDocumentElement().normalize();
+		 	
+		 	NodeList entries = doc.getElementsByTagName("entries");
+		 	for(int i = 0; i < entries.getLength(); i++) {
+		 		Node n = entries.item(i);
+		 		Element e = (Element) n;
+			
+		 		String hash = e.getAttribute("hash");
+		 		String ref = e.getAttribute("ref");
+		 		map.put(hash, ref);
+		 	}             
+    	}
+    	catch (Exception e) { e.printStackTrace(); }
+        return map;
+    }
+    
+    public static void saveImageMap(HashMap _map) {
+    	try {
+    		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        	DocumentBuilder builder = factory.newDocumentBuilder();
+        	Document doc = builder.newDocument();
+        	
+        	Element root = doc.createElement("root");
+        	Element entries = doc.createElement("entries");
+        	
+        	Set set = _map.entrySet();
+            Iterator i = set.iterator();
+            
+            while(i.hasNext()) {
+            	Map.Entry entry = (Map.Entry) i.next();
+            	
+        		Element xmlEntry = doc.createElement("entry");
+        		
+        		xmlEntry.setAttribute("hash", (String) (entry.getKey()));
+        		xmlEntry.setAttribute("ref", (String) (entry.getValue()));
+        		
+        		entries.appendChild(xmlEntry);
+        	}
+        	
+        	root.appendChild(entries);
+        	doc.appendChild(root);
+        	
+        	TransformerFactory transformerFactory = TransformerFactory.newInstance();
+            Transformer transformer = transformerFactory.newTransformer();
+            DOMSource source = new DOMSource(doc);
+            StreamResult result = new StreamResult(new File("res/ImgMap.xml"));
+            transformer.transform(source, result);
+    	}
+    	catch (Exception e){ e.printStackTrace(); }
+    }
+    
     public static void addObjectToDefaults(String objName, double objWidth, double objLength, String objImageRef) {
     	ArrayList<StageObject> objects = FileManager.getListOfObjects();
     	if(objImageRef != null && !objImageRef.equals("")) {
     		File original = new File(objImageRef);
-        	String newPath = "res/" + original.getName();
-        	File ourCopy = new File(newPath);
-        	try {
-            	Files.copy(original.toPath(), ourCopy.toPath());
-            	StageObject newObj = new StageObject(objName, objWidth, objLength, 0, 0, 0, newPath);
+    		
+    		String fileHash = HashManager.computeFileHashString(original);
+    		boolean fileAlreadyImported = HashManager.getMap().containsKey(fileHash);
+    		if(fileAlreadyImported) {
+    			String existingFilePath = (String) (HashManager.getMap().get(fileHash));
+    			StageObject newObj = new StageObject(objName, objWidth, objLength, 0, 0, 0, existingFilePath);
             	objects.add(newObj);
-        	}
-        	catch(IOException e) {
-        		System.out.println("TODO - Add error handling code");
-        	}
+    		}
+    		else {
+    			String newPath = "res/" + original.getName();
+            	File ourCopy = new File(newPath);
+            	int i = 0;
+            	while(ourCopy.exists()) {
+            		newPath = "res/" + i + original.getName();
+                	ourCopy = new File(newPath);
+                	i++;
+            	}
+            	try {
+                	Files.copy(original.toPath(), ourCopy.toPath());
+                	StageObject newObj = new StageObject(objName, objWidth, objLength, 0, 0, 0, newPath);
+                	HashManager.getMap().put(fileHash, newPath);
+                	FileManager.saveImageMap(HashManager.getMap());
+                	objects.add(newObj);
+            	}
+            	catch(IOException e) {
+            		e.printStackTrace();
+            	}
+    		}
     	}
     	else {
     		StageObject newObj = new StageObject(objName, objWidth, objLength, 0, 0, 0, "");

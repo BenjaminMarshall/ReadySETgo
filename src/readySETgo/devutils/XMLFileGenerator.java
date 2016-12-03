@@ -1,8 +1,11 @@
 package readySETgo.devutils;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import readySETgo.managers.FileManager;
+import readySETgo.managers.HashManager;
 import readySETgo.models.FlyRail;
 import readySETgo.models.assets.StageObject;
 
@@ -66,6 +69,26 @@ public class XMLFileGenerator {
 		
 	}
 	
+	public static void generateImageMapFile() {
+		String[] imageRefs = {"res/black.png",
+							  "res/chair.png",
+							  "res/curtain.png",
+							  "res/legs.png",
+							  "res/logo.png",
+							  "res/stage.png",
+							  "res/stripes.png",
+							  "res/no.png"};
+		
+		HashMap map = new HashMap();
+		
+		for(String ref : imageRefs) {
+			String hash = HashManager.computeFileHashString(new File(ref));
+			map.put(hash, ref);
+		}
+
+		FileManager.saveImageMap(map);
+	}
+	
 	public static void generateFlyRailFile() {
 		ArrayList<FlyRail> rails = new ArrayList<FlyRail>();
 		
@@ -109,5 +132,6 @@ public class XMLFileGenerator {
 	public static void main(String[] args){
 		generateFlyRailFile();
 		generateObjectFile();
+		generateImageMapFile();
 	}
 }
