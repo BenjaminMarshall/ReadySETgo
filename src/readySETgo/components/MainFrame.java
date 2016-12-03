@@ -104,7 +104,7 @@ public class MainFrame extends JFrame {
     	actionMap.put(ctrlX, new AbstractAction("cut") {
     		@Override
     		public void actionPerformed(ActionEvent e) {
-    			Stage s = StageManager.get().getStage();
+    			Stage s = StageManager.getStage();
     			s.cutSelected();
     		}
     	});
@@ -114,7 +114,7 @@ public class MainFrame extends JFrame {
     	actionMap.put(ctrlC, new AbstractAction("copy") {
     		@Override
     		public void actionPerformed(ActionEvent e) {
-    			Stage s = StageManager.get().getStage();
+    			Stage s = StageManager.getStage();
     			s.copySelected();
     		}
     	});
@@ -124,7 +124,7 @@ public class MainFrame extends JFrame {
     	actionMap.put(ctrlV, new AbstractAction("paste") {
     		@Override
     		public void actionPerformed(ActionEvent e) {
-    			Stage s = StageManager.get().getStage();
+    			Stage s = StageManager.getStage();
     			s.pasteFromClipboard();
     		}
     	});
@@ -179,7 +179,7 @@ public class MainFrame extends JFrame {
     	AbstractAction deleteAction = new AbstractAction("delete") {
     		@Override
     		public void actionPerformed(ActionEvent e) {
-    			StageManager.get().getStage().deleteSelected();
+    			StageManager.getStage().deleteSelected();
     		}
     	};
     	KeyStroke delete = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0);

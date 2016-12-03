@@ -40,7 +40,7 @@ public class StagePanel extends JPanel implements Printable {
         super();
         PrintManager.getManager().register(this);
         stage = new Stage();
-        StageManager.get().registerStage(stage);
+        StageManager.registerStage(stage);
         ComponentManager.registerComp("StagePanel", this);
 
         Timer t = new Timer(10, new ActionListener() {
@@ -124,7 +124,7 @@ public class StagePanel extends JPanel implements Printable {
                 		ComponentManager.getComp("MainFrame").
                 		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 	}
-                	Stage s = StageManager.get().getStage();
+                	Stage s = StageManager.getStage();
                 	Double scale = s.getScale();
                     UserManager.getSelected().setxPos(e.getX() / scale);
                     UserManager.getSelected().setyPos(e.getY() / scale);
@@ -133,7 +133,7 @@ public class StagePanel extends JPanel implements Printable {
 
             public void mouseMoved(MouseEvent e) {
                 if (UserManager.getSelectedState().equals(SelectedState.DRAGGING)) {
-                	Stage s = StageManager.get().getStage();
+                	Stage s = StageManager.getStage();
                 	Double scale = s.getScale();
                 	UserManager.getSelected().setxPos(e.getX() / scale);
                     UserManager.getSelected().setyPos(e.getY() / scale);
@@ -177,7 +177,7 @@ public class StagePanel extends JPanel implements Printable {
 
     public void loadStage(Stage s) {
         this.stage = s;
-        StageManager.get().registerStage(s);
+        StageManager.registerStage(s);
     }
 
 }

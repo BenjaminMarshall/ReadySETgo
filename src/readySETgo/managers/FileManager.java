@@ -341,7 +341,7 @@ public class FileManager {
     }
 
     public static boolean attemptSaveSilently() {
-    	Stage s = StageManager.get().getStage();
+    	Stage s = StageManager.getStage();
     	String path = s.getFilePath();
     	if(path != null) {
     		File f = new File(path);
@@ -365,7 +365,7 @@ public class FileManager {
     		String path = f.getAbsolutePath();
     		if(!path.endsWith(".stg")) { path += ".stg"; }
     		f = new File(path);
-    		Stage s = StageManager.get().getStage();
+    		Stage s = StageManager.getStage();
     		s.setFilePath(path);
     		FileManager.saveStage(s, f);
     		UndoManager.get().registerSave();
@@ -412,7 +412,7 @@ public class FileManager {
     	}
     	FileManager.saveListOfObjects(objects);
 		ObjectPanel oPanel = (ObjectPanel) ComponentManager.getComp("ObjectPanel");
-		oPanel.loadObjects(StageManager.get().getStage());
+		oPanel.loadObjects(StageManager.getStage());
     }
     
     public static void removeObjectFromDefaults(StageObject obj) {
@@ -420,7 +420,7 @@ public class FileManager {
     	objects.remove(obj);
     	FileManager.saveListOfObjects(objects);
     	ObjectPanel oPanel = (ObjectPanel) ComponentManager.getComp("ObjectPanel");
-    	oPanel.loadObjects(StageManager.get().getStage());    	
+    	oPanel.loadObjects(StageManager.getStage());    	
     }
     
     public static void replaceObjectInDefaults(StageObject obj, String objName, double objWidth, double objLength, String objImageRef) {

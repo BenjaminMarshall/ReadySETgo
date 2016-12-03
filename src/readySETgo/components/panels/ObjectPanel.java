@@ -142,7 +142,7 @@ public class ObjectPanel extends JPanel {
 				
 				
 				if(UserManager.getSelectedState().equals(SelectedState.DRAGGING)){
-					double scale = StageManager.get().getStage().getScale();
+					double scale = StageManager.getStage().getScale();
 					
 					Point p = new Point(e.getX(), e.getY());
 					
@@ -182,7 +182,7 @@ public class ObjectPanel extends JPanel {
 		
 		public void mouseDragged(MouseEvent e) {
 			if(UserManager.getSelectedState().equals(SelectedState.DRAGGING)){
-				double scale = StageManager.get().getStage().getScale();
+				double scale = StageManager.getStage().getScale();
 				
 				Point p = new Point(e.getX(), e.getY());
 				
@@ -195,7 +195,7 @@ public class ObjectPanel extends JPanel {
 				UserManager.getSelected().setyPos(p.getY() / scale);
 				
 				
-				List<Asset> assets = StageManager.get().getStage().getAssets();
+				List<Asset> assets = StageManager.getStage().getAssets();
 				if(assets != null && assets.contains(UserManager.getSelected())){
 					if(p.getX() < 0 || p.getY() < 0 || p.getX() > sp.getWidth() || p.getY() > sp.getHeight()) {
                 		ComponentManager.getComp("MainFrame").

@@ -18,13 +18,13 @@ public class DeleteAction extends StageAction {
 	
 	@Override
 	public void undoAction() {
-		StageManager.get().getStage().getAssets().add(this.deleted);
+		StageManager.getStage().getAssets().add(this.deleted);
 		UserManager.setSelectedState(this.prevState);
 		UserManager.setSelected(this.prevSelected);
 	}
 
 	public void redoAction() {
-		StageManager.get().getStage().getAssets().remove(this.deleted);
+		StageManager.getStage().getAssets().remove(this.deleted);
 		UserManager.setSelectedState(UserManager.SelectedState.EMPTY);
 		UserManager.setSelected(null);
 	}

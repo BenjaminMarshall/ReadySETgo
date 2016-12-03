@@ -18,13 +18,13 @@ public class PasteAction extends StageAction {
 	
 	@Override
 	public void undoAction() {
-		StageManager.get().getStage().getAssets().remove(this.pasted);
+		StageManager.getStage().getAssets().remove(this.pasted);
 		UserManager.setSelectedState(this.prevState);
 		UserManager.setSelected(this.prevSelected);
 	}
 
 	public void redoAction() {
-		StageManager.get().getStage().getAssets().add(this.pasted);
+		StageManager.getStage().getAssets().add(this.pasted);
 		UserManager.setSelectedState(UserManager.SelectedState.SELECTED);
 		UserManager.setSelected(this.pasted);
 	}

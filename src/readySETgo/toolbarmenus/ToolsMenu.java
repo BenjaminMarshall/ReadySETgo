@@ -28,17 +28,17 @@ public class ToolsMenu extends JMenu {
 		}));
         this.add(MenuItemFactory.createJMenuItem("Cut", "Cut something", new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				StageManager.get().getStage().cutSelected();
+				StageManager.getStage().cutSelected();
 			}
 		}));
         this.add(MenuItemFactory.createJMenuItem("Copy", "Copy something", new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				StageManager.get().getStage().copySelected();
+				StageManager.getStage().copySelected();
 			}
 		}));
         this.add(MenuItemFactory.createJMenuItem("Paste", "Paste whatcha copied", new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				StageManager.get().getStage().pasteFromClipboard();
+				StageManager.getStage().pasteFromClipboard();
 			}
 		}));
         
@@ -47,7 +47,7 @@ public class ToolsMenu extends JMenu {
         
         this.add(MenuItemFactory.createJMenuItem("Add Textbox", "Create a new textbox", new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Stage s = StageManager.get().getStage();
+				Stage s = StageManager.getStage();
 				StagePanel sp = (StagePanel) ComponentManager.getComp("StagePanel");
 				s.createTextBox(sp.getWidth()/2, sp.getHeight()/2);
 			}

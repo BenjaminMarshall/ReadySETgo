@@ -13,13 +13,13 @@ public class CreationAction extends StageAction {
 	}
 	
 	public void undoAction() {
-		StageManager.get().getStage().getAssets().remove(this.created);
+		StageManager.getStage().getAssets().remove(this.created);
 		UserManager.setSelectedState(UserManager.SelectedState.EMPTY);
 		UserManager.setSelected(null);
 	}
 	
 	public void redoAction() {
-		StageManager.get().getStage().getAssets().add(this.created);
+		StageManager.getStage().getAssets().add(this.created);
 		UserManager.setSelectedState(UserManager.SelectedState.SELECTED);
 		UserManager.setSelected(this.created);
 	}

@@ -18,13 +18,13 @@ public class CutAction extends StageAction {
 	
 	@Override
 	public void undoAction() {
-		StageManager.get().getStage().getAssets().add(this.cutted);
+		StageManager.getStage().getAssets().add(this.cutted);
 		UserManager.setSelectedState(this.prevState);
 		UserManager.setSelected(this.prevSelected);
 	}
 
 	public void redoAction() {
-		StageManager.get().getStage().getAssets().remove(this.cutted);
+		StageManager.getStage().getAssets().remove(this.cutted);
 		UserManager.setSelectedState(UserManager.SelectedState.EMPTY);
 		UserManager.setSelected(null);
 	}

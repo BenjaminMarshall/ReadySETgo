@@ -19,7 +19,7 @@ public class FlyRailPanel extends JPanel{
 	public FlyRailPanel() {
 		super();
 		ComponentManager.registerComp("FlyRailPanel", this);
-		this.loadFlyRails(StageManager.get().getStage());
+		this.loadFlyRails(StageManager.getStage());
 	}
 
 	public void loadFlyRails(Stage s) {
