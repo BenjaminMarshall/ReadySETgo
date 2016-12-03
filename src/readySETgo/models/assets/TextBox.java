@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JLabel;
@@ -39,32 +40,39 @@ public class TextBox extends Asset{
 	@Override
 	public void draw(Graphics stageGraphics, double scale, boolean selected) {
 		
+		//Graphics2D cast
 		Graphics2D stg2D = (Graphics2D) stageGraphics;
 		stg2D.setColor(Color.BLACK);
 		
+		
 		label.setSize(label.getPreferredSize());
-		 Dimension d = label.getPreferredSize();
-         BufferedImage bi = new BufferedImage(
-             d.width,
-             d.height,
-             BufferedImage.TYPE_INT_ARGB);
-		 Graphics g2 = bi.createGraphics();
-         g2.setColor(Color.black);
-         label.paint(g2);
+		Dimension d = label.getPreferredSize();
+        BufferedImage bi = new BufferedImage(d.width, d.height, BufferedImage.TYPE_INT_ARGB);
+		Graphics g = bi.createGraphics();
+		 
+		//BufferedImage drawing
+        g.setColor(Color.black);
+        label.paint(g);
          
+        //Rotate Transform stg2D
+     	AffineTransform old = stg2D.getTransform();
+		AffineTransform rotateTransform = new AffineTransform();
+		rotateTransform.rotate(Math.toRadians(getAngle()), (int) (this.getxPos()*scale), (int) (this.getyPos()*scale));
+		stg2D.transform(rotateTransform);
          
-         if(selected){
-			
-			Graphics2D g3 = (Graphics2D) stg2D.create();
+        stg2D.drawImage(bi, (int) (this.getxPos() * scale), (int) (this.getyPos() * scale), null);
+         
+        
+        if(selected){
+        	Graphics2D g3 = (Graphics2D) stg2D.create();
 			g3.setColor(Color.BLACK);
 			Stroke dashed = new BasicStroke(2, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 1, new float[]{5}, 0);
 			g3.setStroke(dashed);
 			g3.drawRect((int) (this.getxPos()*scale) - 4, (int) (this.getyPos()*scale) - 4, bi.getWidth() + 8, bi.getHeight() + 8);
 			g3.dispose();
-		}
-         
-         stg2D.drawImage(bi, (int) (this.getxPos() * scale), (int) (this.getyPos() * scale), null);
-         
+		}   
+        
+        stg2D.transform(old);
          
 	}
 	

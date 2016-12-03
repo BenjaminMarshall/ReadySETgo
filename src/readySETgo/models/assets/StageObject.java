@@ -59,7 +59,7 @@ public class StageObject extends Asset {
 		Graphics2D g = bi.createGraphics();
 		
 		
-			 
+		//BufferedImage drawing
 		if(image == null){
 			g.setColor(Color.BLACK);
 			g.fillRect(0, 0, (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale));
@@ -73,13 +73,13 @@ public class StageObject extends Asset {
 			g.drawImage(image, 0, 0, (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale), null);
 		}	
 		
+		//Rotation Transform
 		AffineTransform old = stg2D.getTransform();
 		AffineTransform rotateTransform = new AffineTransform();
-		
 		rotateTransform.rotate(Math.toRadians(getAngle()), (int) (this.getxPos()*scale), (int) (this.getyPos()*scale));
-		
-		
 		stg2D.transform(rotateTransform);
+		
+		
 		
 		stg2D.drawImage(bi, (int) (this.getxPos()*scale), (int) (this.getyPos()*scale), null);
 		
@@ -92,6 +92,8 @@ public class StageObject extends Asset {
 			g3.drawRect((int) (this.getxPos()*scale) - 4, (int) (this.getyPos()*scale) - 4, bi.getWidth() + 8, bi.getHeight() + 8);
 			g3.dispose();
 		}
+		
+		//Reset and dispose
 		stg2D.setTransform(old);
 		g.dispose();
 	}
