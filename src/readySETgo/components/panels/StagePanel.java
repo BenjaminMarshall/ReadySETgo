@@ -41,7 +41,6 @@ public class StagePanel extends JPanel implements Printable {
         stage = new Stage();
         StageManager.get().registerStage(stage);
         ComponentManager.registerComp("StagePanel", this);
-        setPreferredSize(new Dimension(900, 300));
 
         Timer t = new Timer(10, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -73,7 +72,7 @@ public class StagePanel extends JPanel implements Printable {
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (UserManager.getSelectedState().equals(SelectedState.DRAGGING)) {
-                	if(e.getX() < 0 || e.getY() < 0 || e.getX() > ((StageViewPanel) ComponentManager.getComp("StageViewPanel")).getScrollPane().getWidth() || e.getY() > ((StageViewPanel) ComponentManager.getComp("StageViewPanel")).getScrollPane().getHeight()){
+                	if(e.getX() < 0 || e.getY() < 0 || e.getX() > ((StagePanel) ComponentManager.getComp("StagePanel")).getWidth() || e.getY() > ((StagePanel) ComponentManager.getComp("StagePanel")).getHeight()){
                 		stage.deleteSelected();
                 	} else {
                 		UndoManager.get().storeDragEnd();
@@ -119,15 +118,19 @@ public class StagePanel extends JPanel implements Printable {
                 	} else {
                 		
                 	}
-                    UserManager.getSelected().setxPos(e.getX());
-                    UserManager.getSelected().setyPos(e.getY());
+                	Stage s = StageManager.get().getStage();
+                	Double scale = s.getScale();
+                    UserManager.getSelected().setxPos(e.getX() / scale);
+                    UserManager.getSelected().setyPos(e.getY() / scale);
                 }
             }
 
             public void mouseMoved(MouseEvent e) {
                 if (UserManager.getSelectedState().equals(SelectedState.DRAGGING)) {
-                    UserManager.getSelected().setxPos(e.getX());
-                    UserManager.getSelected().setyPos(e.getY());
+                	Stage s = StageManager.get().getStage();
+                	Double scale = s.getScale();
+                	UserManager.getSelected().setxPos(e.getX() / scale);
+                    UserManager.getSelected().setyPos(e.getY() / scale);
                 }
             }
 

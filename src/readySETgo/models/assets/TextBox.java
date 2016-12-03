@@ -34,7 +34,7 @@ public class TextBox extends Asset{
 	}
 
 	@Override
-	public void draw(Graphics g, double x, double y) {
+	public void draw(Graphics g, double scale) {
 		g.setColor(Color.BLACK);
 		
 		label.setSize(label.getPreferredSize());
@@ -47,7 +47,7 @@ public class TextBox extends Asset{
          g2.setColor(Color.black);
          label.paint(g2);
          
-         g.drawImage(bi, (int) x, (int) y, null);
+         g.drawImage(bi, (int) (this.getxPos() * scale), (int) (this.getyPos() * scale), null);
          
          
 	}

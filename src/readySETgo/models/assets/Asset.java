@@ -34,7 +34,7 @@ public abstract class Asset{
     
     public abstract void toXML();
 
-    public abstract void draw(Graphics g, double x, double y);
+    public abstract void draw(Graphics g, double scale);
     
     public abstract Asset copyOf();
     

@@ -42,19 +42,19 @@ public class StageObject extends Asset {
 	}
 	
 	@Override
-	public void draw(Graphics g, double x, double y) {
+	public void draw(Graphics g, double scale) {
 	
 		if(image == null){
 			g.setColor(Color.BLACK);
-			g.fillRect((int) x, (int) y, (int) getPhysicalWidth(), (int) getPhysicalLength());
+			g.fillRect((int) (this.getxPos()*scale), (int) (this.getyPos()*scale), (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale));
 		} else if (!defaultPic){
-			g.drawImage(image, (int) x, (int) y, (int) getPhysicalWidth(), (int) getPhysicalLength(), null);
+			g.drawImage(image, (int) (this.getxPos()*scale), (int) (this.getyPos()*scale), (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale), null);
 		} else {
 			g.setColor(Color.WHITE);
-			g.fillRect((int) x, (int) y, (int) getPhysicalWidth(), (int) getPhysicalLength());
+			g.fillRect((int) (this.getxPos()*scale), (int) (this.getyPos()*scale), (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale));
 			g.setColor(Color.BLACK);
-			g.drawRect((int) x, (int) y, (int) getPhysicalWidth(), (int) getPhysicalLength());
-			g.drawImage(image, (int) x, (int) y, (int) getPhysicalWidth(), (int) getPhysicalLength(), null);
+			g.drawRect((int) (this.getxPos()*scale), (int) (this.getyPos()*scale), (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale));
+			g.drawImage(image, (int) (this.getxPos()*scale), (int) (this.getyPos()*scale), (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale), null);
 		}
 		
 	}

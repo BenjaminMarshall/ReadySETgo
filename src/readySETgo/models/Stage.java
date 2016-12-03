@@ -13,7 +13,9 @@ import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import readySETgo.components.panels.StagePanel;
 import readySETgo.dialogs.EditTextDialog;
+import readySETgo.managers.ComponentManager;
 import readySETgo.managers.FileManager;
 import readySETgo.managers.UndoManager;
 import readySETgo.managers.UserManager;
@@ -47,6 +49,12 @@ public class Stage {
     	this.length = 45 * 12; // Len in inches //TODO
     }
     
+    public double getScale() {
+    	StagePanel stagePanel = (StagePanel) ComponentManager.getComp("StagePanel");
+    	double scale = (stagePanel.getWidth() / this.width);
+    	return scale;
+    }
+    
     public void setFilePath(String s) {
     	this.filePath = s;
     }
@@ -56,9 +64,11 @@ public class Stage {
     }
     
     public void draw(Graphics g){
-    	g.drawImage(stageImage, 0, 0, (int) width, (int) length, null);
+    	StagePanel stagePanel = (StagePanel) ComponentManager.getComp("StagePanel");
+    	double scale = (stagePanel.getWidth() / this.width);
+    	g.drawImage(stageImage, 0, 0, (int) (width*scale), (int) (length*scale), null);
     	for(Asset a: assets){
-    		a.draw(g, a.getxPos(), a.getyPos());
+    		a.draw(g, scale);
     		if(UserManager.getSelectedState() == UserManager.SelectedState.SELECTED && UserManager.getSelected() == a) {
     			//Highlight the selected object by drawing a dashed border around it
     			int topLeftX = (int)(a.getxPos() - 2);
@@ -82,7 +92,7 @@ public class Stage {
     	for(FlyRail f: flyRails){
     		if(f.isFlownIn()) {
     			Asset a = f.getDrawable();
-    			a.draw(g, a.getxPos(), a.getyPos());
+    			a.draw(g, scale);
     		}
     	}
     }
@@ -116,12 +126,20 @@ public class Stage {
 	}
 
 	public Asset eventOnObject(MouseEvent e) {
-		for(Asset a: assets){
-			if(e.getX() > a.getxPos() && e.getX() < a.getxPos() + a.getPhysicalWidth()){
-				if(e.getY() > a.getyPos() && e.getY() < a.getyPos() + a.getPhysicalLength()){
-					return a;
-				}
-			}
+		for(Asset a : assets) {
+			double scale = this.getScale();
+			double assetX = a.getxPos() * scale;
+			double assetY = a.getyPos() * scale;
+			double assetHeight = a.getPhysicalLength() * scale;
+			double assetWidth = a.getPhysicalWidth() * scale;
+			double clickX = e.getX();
+			double clickY = e.getY();
+			
+			boolean insideXBounds = (clickX > assetX) && (clickX < (assetX + assetWidth));
+			boolean insideYBounds = (clickY > assetY) && (clickY < (assetY + assetHeight));
+			boolean inside = insideXBounds && insideYBounds;
+			
+			if(inside){ return a; }
 		}
 		return null;
 	}

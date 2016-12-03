@@ -19,8 +19,6 @@ public class ContainerPanel extends JPanel {
 		leftPanel = new FlyRailPanel();
         rightPanel = new ObjectPanel();
 
-        centerPanel = new StageViewPanel(stagePanel);
-        
         setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
         
@@ -34,7 +32,7 @@ public class ContainerPanel extends JPanel {
         
         c.gridx = 1;
         c.weightx = .6;
-        add(centerPanel, c);
+        add(stagePanel, c);
         
         
         c.gridx = 2;
