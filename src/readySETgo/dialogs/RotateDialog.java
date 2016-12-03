@@ -7,13 +7,10 @@ import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
 import readySETgo.managers.ComponentManager;
-import readySETgo.managers.FileManager;
 import readySETgo.managers.UndoManager;
 import readySETgo.models.assets.Asset;
 

@@ -47,14 +47,18 @@ public class StageObject extends Asset {
 	}
 	
 	@Override
-	public void draw(Graphics g2, double scale, boolean selected) {
+	public void draw(Graphics stageGraphics, double scale, boolean selected) {
 	
+		Graphics2D stg2D = (Graphics2D) stageGraphics;
+		stg2D.setColor(Color.BLACK);
 		
 		BufferedImage bi = new BufferedImage(
 	            (!defaultPic ? (int) (getPhysicalWidth() * scale) : (int) (getPhysicalWidth() * scale) + 1),
 	            (!defaultPic ? (int) (getPhysicalLength() * scale) : (int) (getPhysicalLength() * scale) + 1),
 	            BufferedImage.TYPE_INT_ARGB);
-		Graphics g = bi.createGraphics();
+		Graphics2D g = bi.createGraphics();
+		
+		
 			 
 		if(image == null){
 			g.setColor(Color.BLACK);
@@ -69,19 +73,26 @@ public class StageObject extends Asset {
 			g.drawImage(image, 0, 0, (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale), null);
 		}	
 		
-		AffineTransform old = ((Graphics2D) g2).getTransform();
-		((Graphics2D) g2).rotate(Math.toRadians(getAngle()));
-		g2.drawImage(bi, (int) (this.getxPos()*scale), (int) (this.getyPos()*scale), null);
-		((Graphics2D) g2).setTransform(old);
+		AffineTransform old = stg2D.getTransform();
+		AffineTransform rotateTransform = new AffineTransform();
+		
+		rotateTransform.rotate(Math.toRadians(getAngle()), (int) (this.getxPos()*scale), (int) (this.getyPos()*scale));
+		
+		
+		stg2D.transform(rotateTransform);
+		
+		stg2D.drawImage(bi, (int) (this.getxPos()*scale), (int) (this.getyPos()*scale), null);
+		
 		
 		if(selected){
-			Graphics2D g3 = (Graphics2D) g2.create();
+			Graphics2D g3 = (Graphics2D) stg2D.create();
 			g3.setColor(Color.BLACK);
 			Stroke dashed = new BasicStroke(2, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 1, new float[]{5}, 0);
 			g3.setStroke(dashed);
 			g3.drawRect((int) (this.getxPos()*scale) - 4, (int) (this.getyPos()*scale) - 4, bi.getWidth() + 8, bi.getHeight() + 8);
 			g3.dispose();
 		}
+		stg2D.setTransform(old);
 		g.dispose();
 	}
 	
