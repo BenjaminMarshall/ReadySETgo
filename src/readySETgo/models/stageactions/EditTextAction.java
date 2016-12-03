@@ -1,9 +1,7 @@
 package readySETgo.models.stageactions;
-import readySETgo.managers.UserManager;
 import readySETgo.models.assets.TextBox;
 
 public class EditTextAction extends StageAction {
-	
 	TextBox edited;
 	String origText;
 	String newText;

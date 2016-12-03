@@ -1,10 +1,7 @@
 package readySETgo.models;
 
-import java.awt.BasicStroke;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Stroke;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import readySETgo.components.panels.StagePanel;
 import readySETgo.dialogs.EditTextDialog;
+import readySETgo.dialogs.RotateDialog;
 import readySETgo.managers.ComponentManager;
 import readySETgo.managers.FileManager;
 import readySETgo.managers.UndoManager;
@@ -191,6 +189,11 @@ public class Stage {
 
 	public void editSelectedTextBox() {
 		EditTextDialog.createAndShow((TextBox) UserManager.getSelected());
+	}
+
+	public void rotateSelectedAsset() {
+		RotateDialog.createAndShow(UserManager.getSelected());
+		
 	}
 	
 }

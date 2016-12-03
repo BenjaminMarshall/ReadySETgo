@@ -12,6 +12,7 @@ import readySETgo.models.stageactions.DragAction;
 import readySETgo.models.stageactions.EditTextAction;
 import readySETgo.models.stageactions.PasteAction;
 import readySETgo.models.stageactions.RailToggleAction;
+import readySETgo.models.stageactions.RotateAction;
 import readySETgo.models.stageactions.StageAction;
 
 /**
@@ -100,6 +101,11 @@ public class UndoManager {
 		redoStack.removeAllElements();
 	}
     
+	public void storeRotate(Asset a, double angle, double newAngle) {
+		undoStack.push(new RotateAction(a, angle, newAngle));
+		redoStack.removeAllElements();
+	}
+	
     public void undo() {
     	if(!undoStack.isEmpty()) {
     		StageAction a = undoStack.pop();
@@ -115,6 +121,8 @@ public class UndoManager {
     		undoStack.push(a);
     	}
     }
+
+
 
 	
     

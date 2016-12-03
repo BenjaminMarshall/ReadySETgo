@@ -59,6 +59,13 @@ public class StagePanelRCM extends JPopupMenu {
 				add(propsItem);
 			}
 			
+			JMenuItem rotateItem = new JMenuItem(new AbstractAction("Rotate"){
+				public void actionPerformed(ActionEvent e){
+					stage.rotateSelectedAsset();
+				}
+			});
+			add(rotateItem);
+			
 			JMenuItem deleteItem = new JMenuItem(new AbstractAction("Delete") {
 				public void actionPerformed(ActionEvent e) {
 					stage.deleteSelected();

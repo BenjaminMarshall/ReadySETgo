@@ -2,11 +2,11 @@ package readySETgo.models.assets;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Stroke;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -69,7 +69,10 @@ public class StageObject extends Asset {
 			g.drawImage(image, 0, 0, (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale), null);
 		}	
 		
+		AffineTransform old = ((Graphics2D) g2).getTransform();
+		((Graphics2D) g2).rotate(Math.toRadians(getAngle()));
 		g2.drawImage(bi, (int) (this.getxPos()*scale), (int) (this.getyPos()*scale), null);
+		((Graphics2D) g2).setTransform(old);
 		
 		if(selected){
 			Graphics2D g3 = (Graphics2D) g2.create();
