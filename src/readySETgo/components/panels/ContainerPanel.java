@@ -7,7 +7,6 @@ import javax.swing.JPanel;
 
 public class ContainerPanel extends JPanel {
 	private JPanel leftPanel;
-	private StageViewPanel centerPanel;
 	private JPanel rightPanel;
 	private StagePanel stagePanel;
 	
