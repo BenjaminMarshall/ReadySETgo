@@ -18,7 +18,7 @@ public class ContainerPanel extends JPanel {
 		this.leftPanel = new FlyRailPanel();
         this.rightPanel = new ObjectPanel();
 
-        this.leftPanel.setPreferredSize(new Dimension(225, 0));
+        this.leftPanel.setPreferredSize(new Dimension(215, 0));
         this.rightPanel.setPreferredSize(new Dimension(150, 0));
         
         this.add(leftPanel, BorderLayout.WEST);
