@@ -71,14 +71,14 @@ public class Stage {
     		a.draw(g, scale);
     		if(UserManager.getSelectedState() == UserManager.SelectedState.SELECTED && UserManager.getSelected() == a) {
     			//Highlight the selected object by drawing a dashed border around it
-    			int topLeftX = (int)(a.getxPos() - 2);
-    			int topLeftY = (int)(a.getyPos() - 2);
-    			int topRightX = (int)(a.getxPos() + a.getPhysicalWidth() + 2);
-    			int topRightY = (int)(a.getyPos() - 2);
-    			int botLeftX = (int)(a.getxPos() - 2);
-    			int botLeftY = (int)(a.getyPos() + a.getPhysicalLength() + 2);
-    			int botRightX = (int)(a.getxPos() + a.getPhysicalWidth() + 2);
-    			int botRightY = (int)(a.getyPos() + a.getPhysicalLength() + 2);
+    			int topLeftX = (int)(a.getxPos()*scale - 4);
+    			int topLeftY = (int)(a.getyPos()*scale - 4);
+    			int topRightX = (int)(a.getxPos()*scale + a.getPhysicalWidth()*scale + 4);
+    			int topRightY = (int)(a.getyPos()*scale - 4);
+    			int botLeftX = (int)(a.getxPos()*scale - 4);
+    			int botLeftY = (int)(a.getyPos()*scale + a.getPhysicalLength()*scale + 4);
+    			int botRightX = (int)(a.getxPos()*scale + a.getPhysicalWidth()*scale + 4);
+    			int botRightY = (int)(a.getyPos()*scale + a.getPhysicalLength()*scale + 4);
     			Graphics2D g2 = (Graphics2D) g.create();    	        
     	        Stroke dashed = new BasicStroke(2, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 1, new float[]{5}, 0);
     	        g2.setStroke(dashed);
