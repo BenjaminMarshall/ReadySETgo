@@ -32,9 +32,21 @@ public class SingleObjectPanel extends JPanel {
 		g.setColor(Color.BLACK);
 		g.drawRect(0, 0, getWidth(), getHeight());
 		
-		g.drawString(stageObject.getName(), 5, 10);
+		int xOffset = 5;
+		int yOffset = 15;
 		
-		stageObject.draw(g, 1, 5, 15);
+		g.drawString(stageObject.getName(), xOffset, yOffset);
+		
+		
+		double desiredImageBoxLength = 50;
+		double greaterDimension = Math.max(stageObject.getPhysicalLength(), stageObject.getPhysicalWidth());
+		double scale = desiredImageBoxLength / greaterDimension;
+		stageObject.draw(g, scale, xOffset, yOffset + 3);
+		
+		g.drawString("Actual Length: "+stageObject.getPhysicalLength()+ "in", xOffset, (int) (30+desiredImageBoxLength));
+		g.drawString("Actual Width: "+stageObject.getPhysicalWidth()+ "in", xOffset, (int) (30+desiredImageBoxLength+12));
+		
+		
 	}
 
 	public StageObject getStageObject() {
