@@ -19,6 +19,7 @@ import javax.swing.SwingUtilities;
 
 import readySETgo.managers.ComponentManager;
 import readySETgo.managers.FileManager;
+import readySETgo.managers.StageManager;
 import readySETgo.managers.UserManager;
 import readySETgo.managers.UserManager.MouseState;
 import readySETgo.managers.UserManager.SelectedState;
@@ -76,55 +77,8 @@ public class ObjectPanel extends JPanel {
 		for(StageObject o: listModel) {
 			SingleObjectPanel op = new SingleObjectPanel(o);
 			op.setPreferredSize(new Dimension(200, 100));
-			op.addMouseListener(new MouseAdapter(){
-
-				@Override
-				public void mousePressed(MouseEvent e) {
-					UserManager.setSelected(((SingleObjectPanel) e.getComponent()).getCopyOfStageObject());
-					UserManager.setSelectedState(SelectedState.DRAGGING);
-					
-				}
-
-				@Override
-				public void mouseReleased(MouseEvent e) {
-						UserManager.setSelectedState(SelectedState.SELECTED);
-				}
-
-				@Override
-				public void mouseEntered(MouseEvent e) {
-					if(UserManager.getSelectedState().equals(SelectedState.DRAGGING) && UserManager.getMouseState(e).equals(MouseState.UP)){
-						UserManager.setSelectedState(SelectedState.SELECTED);
-					}
-					
-				}
-				
-				public void mouseExited(MouseEvent e){
-				}
-				
-			});
-			op.addMouseMotionListener(new MouseMotionListener(){
-
-				@Override
-				public void mouseDragged(MouseEvent e) {
-					if(UserManager.getSelectedState().equals(SelectedState.DRAGGING)){
-						
-						Point p = new Point(e.getX(), e.getY());
-						
-						SwingUtilities.convertPointToScreen(p, op);
-						SwingUtilities.convertPointFromScreen(p,  ComponentManager.getComp("StagePanel"));
-												
-						UserManager.getSelected().setxPos(p.getX());
-						UserManager.getSelected().setyPos(p.getY());
-					}
-				}
-
-				@Override
-				public void mouseMoved(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-			});
+			op.addMouseListener(new ObjPanelMouseAdapter());
+			op.addMouseMotionListener(new ObjPanelMotionListener(op));
 			subPanels.add(op);
 			container.add(op);
 		}
@@ -152,59 +106,63 @@ public class ObjectPanel extends JPanel {
 		for(StageObject o: listModel){
 			SingleObjectPanel op = new SingleObjectPanel(o);
 			op.setPreferredSize(new Dimension(200, 100));
-			op.addMouseListener(new MouseAdapter(){
-
-				@Override
-				public void mousePressed(MouseEvent e) {
-					UserManager.setSelected(((SingleObjectPanel) e.getComponent()).getCopyOfStageObject());
-					UserManager.setSelectedState(SelectedState.DRAGGING);
-					
-				}
-
-				@Override
-				public void mouseReleased(MouseEvent e) {
-						UserManager.setSelectedState(SelectedState.SELECTED);
-				}
-
-				@Override
-				public void mouseEntered(MouseEvent e) {
-					if(UserManager.getSelectedState().equals(SelectedState.DRAGGING) && UserManager.getMouseState(e).equals(MouseState.UP)){
-						UserManager.setSelectedState(SelectedState.SELECTED);
-					}
-					
-				}
-				
-				public void mouseExited(MouseEvent e){
-				}
-				
-			});
-			op.addMouseMotionListener(new MouseMotionListener(){
-
-				@Override
-				public void mouseDragged(MouseEvent e) {
-					if(UserManager.getSelectedState().equals(SelectedState.DRAGGING)){
-						
-						Point p = new Point(e.getX(), e.getY());
-						
-						SwingUtilities.convertPointToScreen(p, op);
-						SwingUtilities.convertPointFromScreen(p,  ComponentManager.getComp("StagePanel"));
-												
-						UserManager.getSelected().setxPos(p.getX());
-						UserManager.getSelected().setyPos(p.getY());
-					}
-				}
-
-				@Override
-				public void mouseMoved(MouseEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-				
-			});
+			op.addMouseListener(new ObjPanelMouseAdapter());
+			op.addMouseMotionListener(new ObjPanelMotionListener(op));
+			
 			subPanels.add(op);
 			container.add(op);
 		}
 		
+	}
+	
+	
+	class ObjPanelMouseAdapter extends MouseAdapter {
+		@Override
+		public void mousePressed(MouseEvent e) {
+			UserManager.setSelected(((SingleObjectPanel) e.getComponent()).getCopyOfStageObject());
+			UserManager.setSelectedState(SelectedState.DRAGGING);
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+				UserManager.setSelectedState(SelectedState.SELECTED);
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			if(UserManager.getSelectedState().equals(SelectedState.DRAGGING) && UserManager.getMouseState(e).equals(MouseState.UP)){
+				UserManager.setSelectedState(SelectedState.SELECTED);
+			}
+		}
+		
+		//public void mouseExited(MouseEvent e) {}
+	}
+	
+	class ObjPanelMotionListener implements MouseMotionListener {
+
+		private SingleObjectPanel op;
+		
+		public ObjPanelMotionListener(SingleObjectPanel _op) {
+			this.op = _op;
+		}
+		
+		public void mouseDragged(MouseEvent e) {
+			if(UserManager.getSelectedState().equals(SelectedState.DRAGGING)){
+				double scale = StageManager.get().getStage().getScale();
+				
+				Point p = new Point(e.getX(), e.getY());
+				
+				SwingUtilities.convertPointToScreen(p, op);
+				SwingUtilities.convertPointFromScreen(p,  ComponentManager.getComp("StagePanel"));
+										
+				UserManager.getSelected().setxPos(p.getX() / scale);
+				UserManager.getSelected().setyPos(p.getY() / scale);
+			}
+		}
+
+		// The interface requires it but we don't need it
+		public void mouseMoved(MouseEvent e) {}
 	}
 	
 }
