@@ -146,7 +146,7 @@ public class FileManager {
         		double angle = Double.parseDouble(e.getAttribute("angle"));
         		
         		if(type.equals("StageObject")){
-        			String imageRef = e.getAttribute("imageRef");
+        			String imageRef = e.getAttribute("ref");
         			String name = e.getTextContent();
         			StageObject o = new StageObject(name, width, length, xpos, ypos, angle, imageRef);
         			stageAssets.add(o);
