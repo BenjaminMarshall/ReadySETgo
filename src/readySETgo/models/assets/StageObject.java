@@ -1,8 +1,13 @@
 package readySETgo.models.assets;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Stroke;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Comparator;
@@ -42,35 +47,63 @@ public class StageObject extends Asset {
 	}
 	
 	@Override
-	public void draw(Graphics g, double scale) {
+	public void draw(Graphics g2, double scale, boolean selected) {
 	
+		
+		BufferedImage bi = new BufferedImage(
+	            (!defaultPic ? (int) (getPhysicalWidth() * scale) : (int) (getPhysicalWidth() * scale) + 1),
+	            (!defaultPic ? (int) (getPhysicalLength() * scale) : (int) (getPhysicalLength() * scale) + 1),
+	            BufferedImage.TYPE_INT_ARGB);
+		Graphics g = bi.createGraphics();
+			 
 		if(image == null){
 			g.setColor(Color.BLACK);
-			g.fillRect((int) (this.getxPos()*scale), (int) (this.getyPos()*scale), (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale));
+			g.fillRect(0, 0, (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale));
 		} else if (!defaultPic){
-			g.drawImage(image, (int) (this.getxPos()*scale), (int) (this.getyPos()*scale), (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale), null);
+			g.drawImage(image, 0, 0, (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale), null);
 		} else {
 			g.setColor(Color.WHITE);
-			g.fillRect((int) (this.getxPos()*scale), (int) (this.getyPos()*scale), (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale));
+			g.fillRect(0, 0, (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale));
 			g.setColor(Color.BLACK);
-			g.drawRect((int) (this.getxPos()*scale), (int) (this.getyPos()*scale), (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale));
-			g.drawImage(image, (int) (this.getxPos()*scale), (int) (this.getyPos()*scale), (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale), null);
+			g.drawRect(0, 0, (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale));
+			g.drawImage(image, 0, 0, (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale), null);
 		}	
+		
+		g2.drawImage(bi, (int) (this.getxPos()*scale), (int) (this.getyPos()*scale), null);
+		
+		if(selected){
+			Graphics2D g3 = (Graphics2D) g2.create();
+			g3.setColor(Color.BLACK);
+			Stroke dashed = new BasicStroke(2, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 1, new float[]{5}, 0);
+			g3.setStroke(dashed);
+			g3.drawRect((int) (this.getxPos()*scale) - 4, (int) (this.getyPos()*scale) - 4, bi.getWidth() + 8, bi.getHeight() + 8);
+			g3.dispose();
+		}
+		g.dispose();
 	}
 	
-	public void draw(Graphics g, double scale, double x, double y) {
+	public void draw(Graphics g2, double scale, double x, double y) {
+       
+		BufferedImage bi = new BufferedImage(
+            (!defaultPic ? (int) (getPhysicalWidth() * scale) : (int) (getPhysicalWidth() * scale) + 1),
+            (!defaultPic ? (int) (getPhysicalLength() * scale) : (int) (getPhysicalLength() * scale) + 1),
+            BufferedImage.TYPE_INT_ARGB);
+		 Graphics g = bi.createGraphics();
+		
 		if(image == null){
 			g.setColor(Color.BLACK);
-			g.fillRect((int) (x), (int) (y), (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale));
+			g.fillRect(0, 0, (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale));
 		} else if (!defaultPic){
-			g.drawImage(image, (int) (x), (int) (y), (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale), null);
+			g.drawImage(image, 0, 0, (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale), null);
 		} else {
 			g.setColor(Color.WHITE);
-			g.fillRect((int) (x), (int) (y), (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale));
+			g.fillRect(0, 0, (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale));
 			g.setColor(Color.BLACK);
-			g.drawRect((int) (x), (int) (y), (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale));
-			g.drawImage(image, (int) (x), (int) (y), (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale), null);
+			g.drawImage(image, 0, 0, (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale), null);
+			g.drawRect(0, 0, (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale));
 		}	
+		
+		g2.drawImage(bi, (int) (x), (int) (y), null);
 	}
 	
 	@Override
