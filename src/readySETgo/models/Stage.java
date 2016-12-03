@@ -176,8 +176,8 @@ public class Stage {
 	
 	public void createTextBox(double xPos, double yPos){
 		TextBox a = new TextBox();
-		a.setxPos(xPos);
-		a.setyPos(yPos);
+		a.setxPos(xPos / getScale());
+		a.setyPos(yPos / getScale());
 		UndoManager.get().storeObjectPlacement(a);
 		UserManager.setSelected(a);
 		UserManager.setSelectedState(UserManager.SelectedState.SELECTED);
@@ -190,6 +190,7 @@ public class Stage {
 			UndoManager.get().storePaste(a, UserManager.getSelectedState(), UserManager.getSelected());
 			a.setyPos(yPos);
 			a.setxPos(xPos);
+			
 			UserManager.setSelected(a);
 			UserManager.setSelectedState(UserManager.SelectedState.SELECTED);
 			this.getAssets().add(a);
