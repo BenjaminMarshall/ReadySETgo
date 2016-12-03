@@ -34,7 +34,7 @@ public class SingleObjectPanel extends JPanel {
 		
 		g.drawString(stageObject.getName(), 5, 10);
 		
-		stageObject.draw(g, 1);
+		stageObject.draw(g, 1, 5, 15);
 	}
 
 	public StageObject getStageObject() {

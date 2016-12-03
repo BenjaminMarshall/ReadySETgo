@@ -55,8 +55,22 @@ public class StageObject extends Asset {
 			g.setColor(Color.BLACK);
 			g.drawRect((int) (this.getxPos()*scale), (int) (this.getyPos()*scale), (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale));
 			g.drawImage(image, (int) (this.getxPos()*scale), (int) (this.getyPos()*scale), (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale), null);
-		}
-		
+		}	
+	}
+	
+	public void draw(Graphics g, double scale, double x, double y) {
+		if(image == null){
+			g.setColor(Color.BLACK);
+			g.fillRect((int) (x), (int) (y), (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale));
+		} else if (!defaultPic){
+			g.drawImage(image, (int) (x), (int) (y), (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale), null);
+		} else {
+			g.setColor(Color.WHITE);
+			g.fillRect((int) (x), (int) (y), (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale));
+			g.setColor(Color.BLACK);
+			g.drawRect((int) (x), (int) (y), (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale));
+			g.drawImage(image, (int) (x), (int) (y), (int) (getPhysicalWidth()*scale), (int) (getPhysicalLength()*scale), null);
+		}	
 	}
 	
 	@Override
