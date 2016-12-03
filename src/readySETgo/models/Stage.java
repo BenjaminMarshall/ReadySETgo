@@ -2,7 +2,11 @@ package readySETgo.models;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -107,21 +111,26 @@ public class Stage {
 	}
 
 	public Asset eventOnObject(MouseEvent e) {
+		try{
 		for(Asset a : assets) {
 			double scale = this.getScale();
-			double assetX = a.getxPos() * scale;
-			double assetY = a.getyPos() * scale;
-			double assetHeight = a.getPhysicalLength() * scale;
-			double assetWidth = a.getPhysicalWidth() * scale;
-			double clickX = e.getX();
-			double clickY = e.getY();
 			
-			boolean insideXBounds = (clickX > assetX) && (clickX < (assetX + assetWidth));
-			boolean insideYBounds = (clickY > assetY) && (clickY < (assetY + assetHeight));
-			boolean inside = insideXBounds && insideYBounds;
-			
-			if(inside){ return a; }
-		}
+			double x = a.getxPos() * scale;
+			double y = a.getyPos() * scale;
+			double w = a.getPhysicalWidth() * scale;
+			double l = a.getPhysicalLength() * scale;
+			Rectangle r = new Rectangle((int)x,(int) y,(int) w,(int) l);
+			AffineTransform rotateTransform = new AffineTransform();			
+			rotateTransform.rotate(Math.toRadians(a.getAngle()), (int) (x), (int) (y));
+			Point2D dest = new Point();
+			rotateTransform.inverseTransform(e.getPoint(), dest);
+
+			if(r.contains(dest)) {
+				return a;
+			}
+
+		
+		}}catch (Exception ex){}
 		return null;
 	}
 	
