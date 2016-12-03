@@ -37,7 +37,6 @@ public class SingleObjectPanel extends JPanel {
 		
 		g.drawString(stageObject.getName(), xOffset, yOffset);
 		
-		
 		double desiredImageBoxLength = 50;
 		double greaterDimension = Math.max(stageObject.getPhysicalLength(), stageObject.getPhysicalWidth());
 		double scale = desiredImageBoxLength / greaterDimension;

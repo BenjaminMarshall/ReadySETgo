@@ -1,22 +1,27 @@
 package readySETgo.components.panels;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
+import readySETgo.components.MainFrame;
 import readySETgo.managers.ComponentManager;
 import readySETgo.managers.FileManager;
 import readySETgo.managers.StageManager;
@@ -24,6 +29,7 @@ import readySETgo.managers.UserManager;
 import readySETgo.managers.UserManager.MouseState;
 import readySETgo.managers.UserManager.SelectedState;
 import readySETgo.models.Stage;
+import readySETgo.models.assets.Asset;
 import readySETgo.models.assets.StageObject;
 
 public class ObjectPanel extends JPanel {
@@ -126,7 +132,32 @@ public class ObjectPanel extends JPanel {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
+				
+				
+				if(UserManager.getSelectedState().equals(SelectedState.DRAGGING)){
+					double scale = StageManager.get().getStage().getScale();
+					
+					Point p = new Point(e.getX(), e.getY());
+					
+					StagePanel sp = (StagePanel) ComponentManager.getComp("StagePanel");
+					
+					SwingUtilities.convertPointToScreen(p, ObjectPanel.this);
+					SwingUtilities.convertPointFromScreen(p,  sp);
+											
+					UserManager.getSelected().setxPos(p.getX() / scale);
+					UserManager.getSelected().setyPos(p.getY() / scale);		
+					
+					if(sp.getStage().getAssets().contains(UserManager.getSelected())){
+						if(p.getX() < 0 || p.getY() < 0 || p.getX() > sp.getWidth() || p.getY() > sp.getHeight()) {
+							sp.getStage().deleteSelected();
+							ComponentManager.getComp("MainFrame").
+	                		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	                	} 
+					}
+				}
+				
 				UserManager.setSelectedState(SelectedState.SELECTED);
+				
 		}
 
 		@Override
@@ -135,11 +166,9 @@ public class ObjectPanel extends JPanel {
 				UserManager.setSelectedState(SelectedState.SELECTED);
 			}
 		}
-		
-		//public void mouseExited(MouseEvent e) {}
 	}
 	
-	class ObjPanelMotionListener implements MouseMotionListener {
+	class ObjPanelMotionListener extends MouseMotionAdapter {
 
 		private SingleObjectPanel op;
 		
@@ -153,16 +182,30 @@ public class ObjectPanel extends JPanel {
 				
 				Point p = new Point(e.getX(), e.getY());
 				
+				StagePanel sp = (StagePanel) ComponentManager.getComp("StagePanel");
+				
 				SwingUtilities.convertPointToScreen(p, op);
-				SwingUtilities.convertPointFromScreen(p,  ComponentManager.getComp("StagePanel"));
+				SwingUtilities.convertPointFromScreen(p,  sp);
 										
 				UserManager.getSelected().setxPos(p.getX() / scale);
 				UserManager.getSelected().setyPos(p.getY() / scale);
+				
+				
+				List<Asset> assets = StageManager.get().getStage().getAssets();
+				if(assets != null && assets.contains(UserManager.getSelected())){
+					if(p.getX() < 0 || p.getY() < 0 || p.getX() > sp.getWidth() || p.getY() > sp.getHeight()) {
+                		ComponentManager.getComp("MainFrame").
+                		setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
+                				new ImageIcon("res/no.png").getImage(),
+                				new Point(0,0),"custom cursor"));
+                	} else {
+                		ComponentManager.getComp("MainFrame").
+                		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                	}
+				}
 			}
 		}
 
-		// The interface requires it but we don't need it
-		public void mouseMoved(MouseEvent e) {}
 	}
 	
 }

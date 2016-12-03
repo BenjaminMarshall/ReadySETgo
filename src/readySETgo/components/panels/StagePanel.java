@@ -1,6 +1,7 @@
 package readySETgo.components.panels;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -72,8 +73,12 @@ public class StagePanel extends JPanel implements Printable {
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (UserManager.getSelectedState().equals(SelectedState.DRAGGING)) {
-                	if(e.getX() < 0 || e.getY() < 0 || e.getX() > ((StagePanel) ComponentManager.getComp("StagePanel")).getWidth() || e.getY() > ((StagePanel) ComponentManager.getComp("StagePanel")).getHeight()){
+                	if(e.getX() < 0 || e.getY() < 0 || e.getX() > StagePanel.this.getWidth() || e.getY() > StagePanel.this.getHeight()){
                 		stage.deleteSelected();
+                		
+                        ComponentManager.getComp("MainFrame").
+                    	setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                        
                 	} else {
                 		UndoManager.get().storeDragEnd();
                         UserManager.setSelectedState(SelectedState.SELECTED);
@@ -111,18 +116,19 @@ public class StagePanel extends JPanel implements Printable {
             public void mouseDragged(MouseEvent e) {
                 if (UserManager.getSelectedState().equals(SelectedState.DRAGGING)) {
                 	if(e.getX() < 0 || e.getY() < 0 || e.getX() > getWidth() || e.getY() > getHeight()) {
-                		//ComponentManager.getComp("MainFrame").
-                		//setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
-                		//		new ImageIcon("res/x.png").getImage(),
-                		//		new Point(0,0),"custom cursor"));
+                		ComponentManager.getComp("MainFrame").
+                		setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
+                				new ImageIcon("res/no.png").getImage(),
+                				new Point(0,0),"custom cursor"));
                 	} else {
-                		
+                		ComponentManager.getComp("MainFrame").
+                		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 	}
                 	Stage s = StageManager.get().getStage();
                 	Double scale = s.getScale();
                     UserManager.getSelected().setxPos(e.getX() / scale);
                     UserManager.getSelected().setyPos(e.getY() / scale);
-                }
+                } 
             }
 
             public void mouseMoved(MouseEvent e) {
@@ -131,7 +137,7 @@ public class StagePanel extends JPanel implements Printable {
                 	Double scale = s.getScale();
                 	UserManager.getSelected().setxPos(e.getX() / scale);
                     UserManager.getSelected().setyPos(e.getY() / scale);
-                }
+                } 
             }
 
         });
