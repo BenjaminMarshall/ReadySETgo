@@ -15,7 +15,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 
 import readySETgo.components.panels.StagePanel;
-import readySETgo.dialogs.EditTextDialog;
+import readySETgo.dialogs.EditLabelDialog;
 import readySETgo.dialogs.RotateDialog;
 import readySETgo.managers.ComponentManager;
 import readySETgo.managers.FileManager;
@@ -119,6 +119,12 @@ public class Stage {
 			double y = a.getyPos() * scale;
 			double w = a.getPhysicalWidth() * scale;
 			double l = a.getPhysicalLength() * scale;
+			
+			if(a instanceof TextBox){
+				//Apply font scaling
+				w *= ((TextBox) a).getFontScale();
+				l *= ((TextBox) a).getFontScale();
+			}
 			Rectangle r = new Rectangle((int)x,(int) y,(int) w,(int) l);
 			AffineTransform rotateTransform = new AffineTransform();			
 			rotateTransform.rotate(Math.toRadians(a.getAngle()), (int) (x), (int) (y));
@@ -174,6 +180,8 @@ public class Stage {
 		}
 	}
 	
+	
+	
 	public void createTextBox(double xPos, double yPos){
 		TextBox a = new TextBox();
 		a.setxPos(xPos / getScale());
@@ -198,12 +206,15 @@ public class Stage {
 	}
 
 	public void editSelectedTextBox() {
-		EditTextDialog.createAndShow((TextBox) UserManager.getSelected());
+		EditLabelDialog.createAndShow((TextBox) UserManager.getSelected());
 	}
+
 
 	public void rotateSelectedAsset() {
 		RotateDialog.createAndShow(UserManager.getSelected());
 		
 	}
+
+
 	
 }

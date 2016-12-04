@@ -15,10 +15,12 @@ import javax.swing.JLabel;
 public class TextBox extends Asset{
 	private JLabel label;
 	private String text;
+	private float fontScale;
+	
 	public TextBox(){
 		super();
 		setText("Default Text");
-		
+		this.setFontScale(1);
 	}
 	
 	private String convertTextToTag(String text) {
@@ -58,14 +60,14 @@ public class TextBox extends Asset{
 		rotateTransform.rotate(Math.toRadians(getAngle()), (int) (this.getxPos()*scale), (int) (this.getyPos()*scale));
 		stg2D.transform(rotateTransform);
          
-        stg2D.drawImage(bi, (int) (this.getxPos() * scale), (int) (this.getyPos() * scale), (int) (this.getPhysicalWidth() * scale), (int)(this.getPhysicalLength() * scale), null);
+        stg2D.drawImage(bi, (int) (this.getxPos() * scale), (int) (this.getyPos() * scale), (int) (this.getPhysicalWidth() * scale * fontScale), (int)(this.getPhysicalLength() * scale * fontScale), null);
         
         if(selected){
         	Graphics2D g3 = (Graphics2D) stg2D.create();
 			g3.setColor(Color.BLACK);
 			Stroke dashed = new BasicStroke(2, BasicStroke.CAP_SQUARE, BasicStroke.JOIN_MITER, 1, new float[]{5}, 0);
 			g3.setStroke(dashed);
-			g3.drawRect((int) (this.getxPos()*scale) - 4, (int) (this.getyPos()*scale) - 4, (int) (this.getPhysicalWidth() * scale) + 8, (int) (this.getPhysicalLength() * scale) + 8);
+			g3.drawRect((int) (this.getxPos()*scale) - 4, (int) (this.getyPos()*scale) - 4, (int) (this.getPhysicalWidth() * scale * fontScale) + 8, (int) (this.getPhysicalLength() * scale * fontScale) + 8);
 			g3.dispose();
 		}   
         
@@ -117,6 +119,14 @@ public class TextBox extends Asset{
 
 	public String getText() {
 		return text;
+	}
+
+	public float getFontScale() {
+		return fontScale;
+	}
+
+	public void setFontScale(float fontScale) {
+		this.fontScale = fontScale;
 	}
 	
 }
