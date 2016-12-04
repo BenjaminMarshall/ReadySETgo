@@ -83,14 +83,6 @@ public class TextBox extends Asset{
 		setText(text);
 	}
 	
-	public JLabel getLabel(){
-		return label;
-	}
-	
-	public void setLabel(JLabel label){
-		this.label = label;
-	}
-	
 	public void setText(String text){
 		this.text = text;
 		String formatText = convertTextToTag(text);
@@ -120,7 +112,7 @@ public class TextBox extends Asset{
 	
 
 	public Asset copyOf() {
-		return new TextBox(this.getPhysicalWidth(),this.getPhysicalLength(),this.getxPos(), this.getyPos(), this.getAngle(), this.getLabel().getText());
+		return new TextBox(this.getPhysicalWidth(),this.getPhysicalLength(),this.getxPos(), this.getyPos(), this.getAngle(), this.getText());
 	}
 
 	public String getText() {
