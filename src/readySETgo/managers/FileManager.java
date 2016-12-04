@@ -78,7 +78,7 @@ public class FileManager {
 
         		} else {
         			type.setValue("TextBox");
-        			asset.appendChild(doc.createTextNode(((TextBox) a).getLabel().getText()));
+        			asset.appendChild(doc.createTextNode(((TextBox) a).getText()));
         		}
         		
         		asset.setAttributeNode(type);
