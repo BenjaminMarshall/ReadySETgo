@@ -5,25 +5,38 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JMenu;
 
-import readySETgo.MenuItemFactory;
 import readySETgo.components.panels.StagePanel;
+import readySETgo.factories.MenuItemFactory;
 import readySETgo.managers.ComponentManager;
 import readySETgo.managers.StageManager;
 import readySETgo.managers.UndoManager;
 import readySETgo.models.Stage;
 
+/**
+ * 
+ * The Tools menu for the MainFrame
+ * 
+ * @author ReadySETgo
+ * @version Beta 3
+ * @since 2016-12-04
+ * 
+ */
 public class ToolsMenu extends JMenu {
+	
+	/**
+	 * Default constructor
+	 */
 	public ToolsMenu() {
 		super("Tools");
 
         this.add(MenuItemFactory.createJMenuItem("Undo","Undo last action", new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				UndoManager.get().undo();
+				UndoManager.undo();
 			}
 		}));
         this.add(MenuItemFactory.createJMenuItem("Redo", "Redo last action", new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				UndoManager.get().redo();
+				UndoManager.redo();
 			}
 		}));
         this.add(MenuItemFactory.createJMenuItem("Cut", "Cut something", new ActionListener() {

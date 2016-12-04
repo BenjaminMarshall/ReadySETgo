@@ -1,27 +1,26 @@
 package readySETgo.dialogs;
 
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 
-import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JFileChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import readySETgo.managers.ComponentManager;
-import readySETgo.managers.FileManager;
 import readySETgo.models.assets.StageObject;
 
+/**
+ * 
+ * Dialog for displaying StageObject properties
+ * 
+ * @author ReadySETgo
+ * @version Beta 3
+ * @since 2016-12-04
+ * 
+ */
 public class PropsDialog extends JOptionPane {
 
 	public static final String WINDOW_TITLE = "Stage object properties";
@@ -31,8 +30,13 @@ public class PropsDialog extends JOptionPane {
 	public static final String LENGTH_LABEL_TXT = "Length (in)";
 	public static final String IMAGE_LABEL_TXT = "Image Location";
 			
+	// Disable default constructor
 	private PropsDialog() {}
 	
+	/**
+	 * Creates and shows the dialog
+	 * @param obj The StageObject to display properties of
+	 */
 	public static void createAndShow(StageObject obj) {
 		PropsDialog.createDialog(obj);
 	}

@@ -30,64 +30,68 @@ import readySETgo.models.Stage;
 import readySETgo.toolbarmenus.FileMenu;
 import readySETgo.toolbarmenus.ToolsMenu;
 
-
+/**
+ * 
+ * MainFrame class for Stage Plan
+ * 
+ * Initializes subpanels, registers self with the 
+ * ComponentManager, binds application wide keyboard
+ * shortcuts, and creates app toolbars and close action
+ * 
+ * @author ReadySETgo
+ * @version Beta 3
+ * @since 2016-12-04
+ * 
+ */
 public class MainFrame extends JFrame {
-    private ContainerPanel container;
-    private boolean areKbShortcutsEnabled;
+
+	private ContainerPanel container;
+    // Switched to false whenever a dialog is open
+	private boolean areKbShortcutsEnabled;
     
+	/**
+	 * MainFrame Constructor
+	 * 
+	 * Initializes subpanels, registers self with the 
+	 * ComponentManager, binds application wide keyboard
+	 * shortcuts, and creates app toolbars and close action
+	 * 
+	 * @param width Desired frame width
+	 * @param height Desired frame height
+	 */
     public MainFrame(int width, int height) {
         super();
         ComponentManager.registerComp("MainFrame", this);
         this.areKbShortcutsEnabled = true;
-        setSize(width, height);
-        try {
-            this.setIconImage(ImageIO.read(new File("res/logo.png")));
-        } catch (IOException e) {
-        }
+        this.setSize(width, height);
+        try { this.setIconImage(ImageIO.read(new File("res/logo.png"))); }
+        catch (IOException e) { /* TODO - Error Logging */ }
         this.setTitle("Stage Plan");
-        fill();
-        createMenuBar();
-
-        bindKeyboardShortcuts();
-
-        JFrame mainFrame = this;
+        // Create/add subPanel
+        this.fill();
+        // Create/add file & tools menus
+        this.createMenuBar();
+        this.bindKeyboardShortcuts();
+        // Enables save on close option, disables KB shortcuts when dialogs are open
+        this.addWindowListener(new MainFrameWindowAdapter());
+        // For our windowListener to work properly we must disable the default close action
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         
-        this.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent windowEvent) {
-            	if(UndoManager.get().hasUnsavedChanges()){
-            		UnsavedChangesDialog.createAndShow();
-            	}
-            	else {
-            		System.exit(0);
-            	}
-            }
-            
-            @Override
-            public void windowActivated(WindowEvent windowEvent) {
-            	MainFrame.this.areKbShortcutsEnabled = true;
-            }
-            
-            @Override
-            public void windowDeactivated(WindowEvent windowEvent) {
-            	MainFrame.this.areKbShortcutsEnabled = false;
-            }
-        });
-        
-        
-        
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        setVisible(true);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 
-    
+    /**
+     * Creates subPanel and adds it to frame
+     */
     private void fill() {
         container = new ContainerPanel();
-
-        add(container);
+        this.add(container);
     }
 
+    /**
+     * Creates and adds file and tools menus
+     */
     private void createMenuBar() {
         // Create MenuBar
         JMenuBar menuBar = new JMenuBar();
@@ -101,13 +105,18 @@ public class MainFrame extends JFrame {
         menuBar.add(toolsMenu);
 
         // Register menu bar
-        setJMenuBar(menuBar);
+        this.setJMenuBar(menuBar);
     }
 
-    
+    /**
+     * Creates and binds keyboard shortcuts to main frame
+     *
+     * Thanks to Daniel Kullman whose solution on StackOverflow
+     * we adapted to fit our needs
+     * http://stackoverflow.com/a/8485873
+     */
     private void bindKeyboardShortcuts() {
-    	// Keyboard shortcut handling code credit to Daniel Kullmann
-    	// http://stackoverflow.com/a/8485873
+
     	HashMap<KeyStroke, Action> actionMap = new HashMap<KeyStroke, Action>();
 
     	// Ctrl X => Cut
@@ -145,7 +154,7 @@ public class MainFrame extends JFrame {
     	actionMap.put(ctrlZ, new AbstractAction("undo") {
     		@Override
     		public void actionPerformed(ActionEvent e) {
-    			UndoManager.get().undo();
+    			UndoManager.undo();
     		}
     	});
 
@@ -154,7 +163,7 @@ public class MainFrame extends JFrame {
     	actionMap.put(ctrlY, new AbstractAction("redo") {
     		@Override
     		public void actionPerformed(ActionEvent e) {
-    			UndoManager.get().redo();
+    			UndoManager.redo();
     		}
     	});
     	
@@ -163,7 +172,7 @@ public class MainFrame extends JFrame {
     	actionMap.put(ctrlP, new AbstractAction("print") {
     		@Override
     		public void actionPerformed(ActionEvent e) {
-    			PrintManager.getManager().print();
+    			PrintManager.print();
     		}
     	});
     	
@@ -208,14 +217,14 @@ public class MainFrame extends JFrame {
     	actionMap.put(ctrlBackspace, deleteAction);
     	
     	KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-    	kfm.addKeyEventDispatcher( new KeyEventDispatcher() {
+    	kfm.addKeyEventDispatcher(new KeyEventDispatcher() {
 	    	@Override
 	    	public boolean dispatchKeyEvent(KeyEvent e) {
 	    		KeyStroke keyStroke = KeyStroke.getKeyStrokeForEvent(e);
-	    		if ( actionMap.containsKey(keyStroke) && MainFrame.this.areKbShortcutsEnabled) {
+	    		if (actionMap.containsKey(keyStroke) && MainFrame.this.areKbShortcutsEnabled) {
 	    			final Action a = actionMap.get(keyStroke);
-	    			final ActionEvent ae = new ActionEvent(e.getSource(), e.getID(), null );
-	    			SwingUtilities.invokeLater( new Runnable() {
+	    			final ActionEvent ae = new ActionEvent(e.getSource(), e.getID(), null);
+	    			SwingUtilities.invokeLater(new Runnable() {
 				    	@Override
 				    	public void run() {
 				    		a.actionPerformed(ae);
@@ -227,5 +236,38 @@ public class MainFrame extends JFrame {
 	    	}
 	    });    	
     }
-    
+
+    /**
+     * Custom WindowAdapter to handle prompting to save on exit,
+     * as well as disabling keyboard shortcuts when dialogs are open
+     */
+    private class MainFrameWindowAdapter extends WindowAdapter {
+
+		/**
+		 * Prompt to save on exit if there are unsaved changes
+		 */
+        @Override
+        public void windowClosing(WindowEvent windowEvent) {
+        	if(UndoManager.hasUnsavedChanges()) {
+        		UnsavedChangesDialog.createAndShow();
+        	}
+        	else { System.exit(0); }
+        }
+        
+        /**
+         * Enable keyboard shortcuts when dialogs are closed
+         */
+        @Override
+        public void windowActivated(WindowEvent windowEvent) {
+        	MainFrame.this.areKbShortcutsEnabled = true;
+        }
+
+        /**
+         * Disable keyboard shortcuts when dialogs are opened
+         */
+        @Override
+        public void windowDeactivated(WindowEvent windowEvent) {
+        	MainFrame.this.areKbShortcutsEnabled = false;
+        }
+    }
 }

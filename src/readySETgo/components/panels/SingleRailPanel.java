@@ -1,7 +1,6 @@
 package readySETgo.components.panels;
 
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,6 +12,15 @@ import javax.swing.JPanel;
 import readySETgo.managers.UndoManager;
 import readySETgo.models.FlyRail;
 
+/**
+ * 
+ * Panel for one flyrail
+ * 
+ * @author ReadySETgo
+ * @version Beta 3
+ * @since 2016-12-04
+ * 
+ */
 public class SingleRailPanel extends JPanel {
 		
 		private FlyRail rail;
@@ -20,23 +28,25 @@ public class SingleRailPanel extends JPanel {
 		private JLabel railState;
 		private JButton railToggle;
 		
-		private String getTitleLabel() {
-			return rail.getName() + ": ";
-		}
+		private String getTitleLabel() { return rail.getName() + ": "; }
 		
 		private String getStateLabel() {
 			return (rail.isFlownIn() ? "<html><font color=green>Flown In</font></html>" : "<html><font color=red>Flown Out</font></html>");
 		}
 		
-		private String getToggleLabel() {
-			return (rail.isFlownIn() ? "Fly Out" : "Fly In");
-		}
+		private String getToggleLabel() { return (rail.isFlownIn() ? "Fly Out" : "Fly In"); }
 		
+		/**
+		 * Toggles the rail's state between flown in and flown out. Creates an entry in the UndoManager
+		 */
 		public void toggleRail() {
-			UndoManager.get().storeRailToggle(this);
+			UndoManager.storeRailToggle(this);
 			toggleRailWithoutUndoReport();
 		}
 		
+		/**
+		 * Toggle the rail's state without creating an entry in the UndoManager
+		 */
 		public void toggleRailWithoutUndoReport() {
 			this.rail.setFlownIn(!this.rail.isFlownIn());
 			this.updateLabels();
@@ -48,6 +58,10 @@ public class SingleRailPanel extends JPanel {
 			this.railState.setText(this.getStateLabel());
 		}
 		
+		/**
+		 * Default Constructor
+		 * @param f The FlyRail to be contained by the panel
+		 */
 		public SingleRailPanel(FlyRail f) {
 			super();
 			this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -64,12 +78,8 @@ public class SingleRailPanel extends JPanel {
 			labelPanelHolder.add(labelPanel);
 			
 			this.railToggle = new JButton(this.getToggleLabel());
-			railToggle.addActionListener(new ActionListener()
-			{
-			  public void actionPerformed(ActionEvent e)
-			  {
-			    toggleRail();
-			  }
+			this.railToggle.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) { toggleRail(); }
 			});
 			this.railToggle.setPreferredSize(new Dimension(75, 30));
 			JPanel toggleHolder = new JPanel();
@@ -80,5 +90,4 @@ public class SingleRailPanel extends JPanel {
 			this.add(toggleHolder);
 			this.setPreferredSize(new Dimension(0, 35));
 		}
-
 }

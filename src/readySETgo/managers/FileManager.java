@@ -35,13 +35,22 @@ import readySETgo.models.assets.Asset;
 import readySETgo.models.assets.StageObject;
 import readySETgo.models.assets.TextBox;
 
-//TODO Make XML File paths named constants
-
 /**
- * @author Ksenia Belikova
- * @version 11/3/2016.
+ * 
+ * Manager for loading and saving files
+ * 
+ * @author ReadySETgo
+ * @version Beta 3
+ * @since 2016-12-04
+ * 
  */
 public class FileManager {
+	
+	/**
+	 * Saves specified Stage to specified File
+	 * @param stage The Stage to save
+	 * @param file The File to save to
+	 */
     public static void saveStage(Stage stage, File file) {
         try {
         	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -128,6 +137,11 @@ public class FileManager {
         }
     }
 
+    /**
+     * Loads Stage from File
+     * @param file The File to load from
+     * @return The loaded Stage
+     */
     public static Stage loadStageFromFile(File file) {
         Stage stage = null;
         try {
@@ -187,6 +201,13 @@ public class FileManager {
         	stage.setAssets(stageAssets);
         	stage.setFlyRails(flyRails);
             
+        	String path = file.getAbsolutePath();
+    		stage.setFilePath(path);
+
+    		UserManager.setSelectedState(UserManager.SelectedState.EMPTY);
+    		UserManager.setSelected(null);
+    		UndoManager.reset();
+        	
         } catch (Exception ex) {
             ex.printStackTrace();
            
@@ -194,7 +215,11 @@ public class FileManager {
         return stage;
     }
     
-    public static void saveListOfObjects(ArrayList<StageObject> list){
+    /**
+     * Saves List of StageObjects to Objects file
+     * @param list The List to save
+     */
+    public static void saveListOfObjects(ArrayList<StageObject> list) {
     	
     	try {
     		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -230,9 +255,12 @@ public class FileManager {
     	
     }
     
-    public static ArrayList<StageObject> getListOfObjects(){
+    /**
+     * Loads List of StageObjects from the Objects file
+     * @return ArrayList of StageObjects
+     */
+    public static ArrayList<StageObject> loadListOfObjects() {
     	ArrayList<StageObject> objects = null;
-    	
     	
 		try {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -270,6 +298,10 @@ public class FileManager {
     	return objects;
     }
 
+    /**
+     * Saves specified List of FlyRails to FlyRails file
+     * @param list The List of FlyRails to save
+     */
     public static void saveListOfFlyRails(ArrayList<FlyRail> list){
     	
     	try {
@@ -308,7 +340,11 @@ public class FileManager {
     	}
     }
     
-    public static ArrayList<FlyRail> getListOfFlyRails(){
+    /**
+     * Loads list of FlyRails from the FlyRails file
+     * @return ArrayList of the FlyRails
+     */
+    public static ArrayList<FlyRail> loadListOfFlyRails(){
     	ArrayList<FlyRail> rails = null;
     	
 		try {
@@ -349,13 +385,17 @@ public class FileManager {
     	return rails;
     }
 
+    /**
+     * Attempts to save, prompting the user if needed
+     * @return Whether Stage was saved
+     */
     public static boolean attemptSaveSilently() {
     	Stage s = StageManager.getStage();
     	String path = s.getFilePath();
     	if(path != null) {
     		File f = new File(path);
     		FileManager.saveStage(s, f);
-    		UndoManager.get().registerSave();
+    		UndoManager.registerSave();
     		return true;
     	}
     	else {
@@ -363,7 +403,10 @@ public class FileManager {
     	}
     }
     
-    
+    /**
+     * Displays save prompt to user
+     * @return Whether stage was saved
+     */
     public static boolean displaySavePrompt() {
     	JFileChooser menu = new JFileChooser();
     	menu.setFileFilter(new FileNameExtensionFilter("Stage Plan Files", "stg"));
@@ -377,12 +420,15 @@ public class FileManager {
     		Stage s = StageManager.getStage();
     		s.setFilePath(path);
     		FileManager.saveStage(s, f);
-    		UndoManager.get().registerSave();
+    		UndoManager.registerSave();
     		return true;
         }
     	return false;
     }
     
+    /**
+     * Displays open Stage file prompt
+     */
     public static void displayOpenPrompt() {
     	JFileChooser menu = new JFileChooser();
     	menu.setFileFilter(new FileNameExtensionFilter("Stage Plan Files", "stg"));
@@ -394,12 +440,14 @@ public class FileManager {
     		sPanel.loadStage(loaded);
     		FlyRailPanel fPanel = (FlyRailPanel) ComponentManager.getComp("FlyRailPanel");
     		fPanel.loadFlyRails(loaded);
-    		ObjectPanel oPanel = (ObjectPanel) ComponentManager.getComp("ObjectPanel");
-    		oPanel.loadObjects(loaded);
-    		UndoManager.get().reset();
+    		UndoManager.reset();
           }
     }    
     
+    /**
+     * Loads the image HashMap from file
+     * @return The loaded HashMap
+     */
     public static HashMap loadImageMap(){
     	HashMap map = new HashMap();
     	try {
@@ -422,6 +470,10 @@ public class FileManager {
         return map;
     }
     
+    /**
+     * Saves given HashMap to file
+     * @param _map The map to save
+     */
     public static void saveImageMap(HashMap _map) {
     	try {
     		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -457,8 +509,15 @@ public class FileManager {
     	catch (Exception e){ e.printStackTrace(); }
     }
     
+    /**
+     * Adds a StageObject to the Objects file
+     * @param objName The object's name
+     * @param objWidth The object's width
+     * @param objLength The object's length
+     * @param objImageRef The object's image ref
+     */
     public static void addObjectToDefaults(String objName, double objWidth, double objLength, String objImageRef) {
-    	ArrayList<StageObject> objects = FileManager.getListOfObjects();
+    	ArrayList<StageObject> objects = FileManager.loadListOfObjects();
     	if(objImageRef != null && !objImageRef.equals("")) {
     		File original = new File(objImageRef);
     		
@@ -496,17 +555,29 @@ public class FileManager {
     	}
     	FileManager.saveListOfObjects(objects);
 		ObjectPanel oPanel = (ObjectPanel) ComponentManager.getComp("ObjectPanel");
-		oPanel.loadObjects(StageManager.getStage());
+		oPanel.refresh();
     }
     
+    /**
+     * Removes specified StageObject from Objects file
+     * @param obj The StageObject to remove
+     */
     public static void removeObjectFromDefaults(StageObject obj) {
-    	ArrayList<StageObject> objects = FileManager.getListOfObjects();
+    	ArrayList<StageObject> objects = FileManager.loadListOfObjects();
     	objects.remove(obj);
     	FileManager.saveListOfObjects(objects);
     	ObjectPanel oPanel = (ObjectPanel) ComponentManager.getComp("ObjectPanel");
-    	oPanel.loadObjects(StageManager.getStage());    	
+    	oPanel.refresh();    	
     }
     
+    /**
+     * Replaces given StageObject with a new one that will be created based on given params
+     * @param obj The StageObject to remove
+     * @param objName The new StageObject's name
+     * @param objWidth The new StageObject's width
+     * @param objLength The new StageObject's Length
+     * @param objImageRef The new StageObject's image ref
+     */
     public static void replaceObjectInDefaults(StageObject obj, String objName, double objWidth, double objLength, String objImageRef) {
     	FileManager.removeObjectFromDefaults(obj);
     	FileManager.addObjectToDefaults(objName, objWidth, objLength, objImageRef);

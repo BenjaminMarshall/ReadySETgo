@@ -21,7 +21,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
-import readySETgo.components.MainFrame;
 import readySETgo.managers.ComponentManager;
 import readySETgo.managers.FileManager;
 import readySETgo.managers.StageManager;
@@ -32,25 +31,38 @@ import readySETgo.models.Stage;
 import readySETgo.models.assets.Asset;
 import readySETgo.models.assets.StageObject;
 
+/**
+ * 
+ * Creates subpanels used with dragging and dropping stageobjects
+ * 
+ * @author ReadySETgo
+ * @version Beta 3
+ * @since 2016-12-04
+ * 
+ */
 public class ObjectPanel extends JPanel {
+
 	private JScrollPane scroller;
 	private JPanel container;
 	private ArrayList<SingleObjectPanel> subPanels;
 	private ArrayList<StageObject> listModel;
 	
-	public ObjectPanel(){
+	/**
+	 * Creates and adds a subpanel for every drag and drop object
+	 */
+	public ObjectPanel() {
 		super();
 		ComponentManager.registerComp("ObjectPanel", this);
-		container = new JPanel();
-		refresh();
+		this.container = new JPanel();
+		this.refresh();
 				
-		scroller = new JScrollPane(container, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		this.scroller = new JScrollPane(container, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		// Increase scroll speed from default
-		scroller.getVerticalScrollBar().setUnitIncrement(15);
+		this.scroller.getVerticalScrollBar().setUnitIncrement(15);
 
 		GridBagLayout gc = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
-		setLayout(gc);
+		this.setLayout(gc);
 		
 		c.gridx = 0;
 		c.gridy = 0;
@@ -58,78 +70,53 @@ public class ObjectPanel extends JPanel {
 		c.weighty = 1;
 		c.fill = c.BOTH;
 		
-		add(scroller, c);
+		this.add(scroller, c);
 	}
 	
-	public void loadObjects(Stage s){
-		// Reset container
-		container.removeAll();
-		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-		// Reset subPanels
-		subPanels = new ArrayList<SingleObjectPanel>();
-		// Combine stage object list with the default object list, remove dupes
-		listModel = FileManager.getListOfObjects();
-		// Combination disabled for now
-		//listModel.addAll((ArrayList<StageObject>)(ArrayList<?>) (s.getAssets()));
-		// TODO - Figure out why this isn't removing duplicates
-		Set<StageObject> dupeRemover = new HashSet<>();
-		dupeRemover.addAll(listModel);
-		listModel.clear();
-		listModel.addAll(dupeRemover);
-		// Sort the list
-		Collections.sort(listModel, StageObject.getAlphabeticComparator());
+	/**
+	 * Remove panel contents and regenerate subpanels
+	 * according to objects in the objects file
+	 */
+	public void refresh() {
 		
-		// Add the new subPanels
-		for(StageObject o: listModel) {
-			SingleObjectPanel op = new SingleObjectPanel(o);
-			op.setPreferredSize(new Dimension(200, 100));
-			op.addMouseListener(new ObjPanelMouseAdapter(op));
-			op.addMouseMotionListener(new ObjPanelMotionListener(op));
-			subPanels.add(op);
-			container.add(op);
-		}
-		this.validate();
-		this.repaint();
-	}
+		this.container.removeAll();
+		this.subPanels = new ArrayList<SingleObjectPanel>();
 
-	
-	private void refresh(){
-		
-		container.removeAll();
-		subPanels = new ArrayList<SingleObjectPanel>();
-		
-		
-		if(listModel != null){
-			FileManager.saveListOfObjects(listModel);
-		}
-		
-		listModel = FileManager.getListOfObjects();
-		
+		this.listModel = FileManager.loadListOfObjects();
 		Collections.sort(listModel, StageObject.getAlphabeticComparator());
+		this.container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
 		
-		container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-		
-		for(StageObject o: listModel){
+		for(StageObject o : listModel) {
 			SingleObjectPanel op = new SingleObjectPanel(o);
 			op.setPreferredSize(new Dimension(200, 100));
 			op.addMouseListener(new ObjPanelMouseAdapter(op));
 			op.addMouseMotionListener(new ObjPanelMotionListener(op));
 			
-			subPanels.add(op);
-			container.add(op);
+			this.subPanels.add(op);
+			this.container.add(op);
 		}
 		
 	}
 	
-	
+	/**
+	 * 
+	 * Handles dragging objects onto the stage in tandem with the motionlistener
+	 *
+	 */
 	class ObjPanelMouseAdapter extends MouseAdapter {
 		
 		private SingleObjectPanel sop;
 		
-		public ObjPanelMouseAdapter(SingleObjectPanel sop) {
-			this.sop = sop;
-		}
+		/**
+		 * 
+		 * Constructor for ObjPanelMouseAdapter
+		 * 
+		 * @param sop The SingleObjectPanel that this Adapter will be attached to
+		 */
+		public ObjPanelMouseAdapter(SingleObjectPanel sop) { this.sop = sop; }
 		
+		
+		// TODO - Have Ben javadoc
 		@Override
 		public void mousePressed(MouseEvent e) {
 			UserManager.setSelected(((SingleObjectPanel) e.getComponent()).getCopyOfStageObject());
@@ -137,11 +124,11 @@ public class ObjectPanel extends JPanel {
 			
 		}
 
+		//TODO - Have ben javadoc
 		@Override
 		public void mouseReleased(MouseEvent e) {
 				
-				
-				if(UserManager.getSelectedState().equals(SelectedState.DRAGGING)){
+				if(UserManager.getSelectedState().equals(SelectedState.DRAGGING)) {
 					double scale = StageManager.getStage().getScale();
 					
 					Point p = new Point(e.getX(), e.getY());
@@ -151,7 +138,7 @@ public class ObjectPanel extends JPanel {
 					SwingUtilities.convertPointToScreen(p, sop);
 					SwingUtilities.convertPointFromScreen(p,  sp);		
 					
-					if(sp.getStage().getAssets().contains(UserManager.getSelected())){
+					if(sp.getStage().getAssets().contains(UserManager.getSelected())) {
 						if(p.getX() < 0 || p.getY() < 0 || p.getX() > sp.getWidth() || p.getY() > sp.getHeight()) {
 							sp.getStage().deleteSelected();
 							ComponentManager.getComp("MainFrame").
@@ -161,27 +148,39 @@ public class ObjectPanel extends JPanel {
 				}
 				
 				UserManager.setSelectedState(SelectedState.SELECTED);
-				
 		}
 
+		// Todo - Is this necesary?
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			if(UserManager.getSelectedState().equals(SelectedState.DRAGGING) && UserManager.getMouseState(e).equals(MouseState.UP)){
+			if(UserManager.getSelectedState().equals(SelectedState.DRAGGING) && UserManager.getMouseState(e).equals(MouseState.UP)) {
 				UserManager.setSelectedState(SelectedState.SELECTED);
 			}
 		}
 	}
 	
+	/**
+	 * 
+	 * Handles dragging objects onto the stage in tandem with the mouseadapter
+	 *
+	 */
 	class ObjPanelMotionListener extends MouseMotionAdapter {
 
 		private SingleObjectPanel op;
 		
-		public ObjPanelMotionListener(SingleObjectPanel _op) {
-			this.op = _op;
+		/**
+		 * 
+		 * Default Constructor
+		 * 
+		 * @param sop The SingleObjectPanel that this will be attached to
+		 */
+		public ObjPanelMotionListener(SingleObjectPanel sop) {
+			this.op = sop;
 		}
 		
+		// Todo - Have ben javadoc
 		public void mouseDragged(MouseEvent e) {
-			if(UserManager.getSelectedState().equals(SelectedState.DRAGGING)){
+			if(UserManager.getSelectedState().equals(SelectedState.DRAGGING)) {
 				double scale = StageManager.getStage().getScale();
 				
 				Point p = new Point(e.getX(), e.getY());
@@ -196,20 +195,19 @@ public class ObjectPanel extends JPanel {
 				
 				
 				List<Asset> assets = StageManager.getStage().getAssets();
-				if(assets != null && assets.contains(UserManager.getSelected())){
+				if(assets != null && assets.contains(UserManager.getSelected())) {
 					if(p.getX() < 0 || p.getY() < 0 || p.getX() > sp.getWidth() || p.getY() > sp.getHeight()) {
                 		ComponentManager.getComp("MainFrame").
                 		setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
                 				new ImageIcon("res/no.png").getImage(),
                 				new Point(0,0),"custom cursor"));
-                	} else {
+                	}
+					else {
                 		ComponentManager.getComp("MainFrame").
                 		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                 	}
 				}
 			}
 		}
-
 	}
-	
 }

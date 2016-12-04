@@ -6,12 +6,24 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import readySETgo.MenuItemFactory;
+import readySETgo.factories.MenuItemFactory;
 import readySETgo.managers.FileManager;
 import readySETgo.managers.PrintManager;
 
+/**
+ * 
+ * The File menu for the MainFrame
+ * 
+ * @author ReadySETgo
+ * @version Beta 3
+ * @since 2016-12-04
+ * 
+ */
 public class FileMenu extends JMenu {
 	
+	/**
+	 * Default constructor
+	 */
 	public FileMenu() {
 		super("File");
         MenuItemFactory mf = new MenuItemFactory();
@@ -42,19 +54,17 @@ public class FileMenu extends JMenu {
 		JMenuItem printMenuItem = new JMenuItem("Print...");
 		printMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				PrintManager.getManager().print();
+				PrintManager.print();
 			}});
 		this.add(printMenuItem);
 		this.addSeparator();
-		this.add(this.createExitMenuItem()); 
-	}
 
-	private JMenuItem createExitMenuItem() {
 		JMenuItem exitMenuItem = new JMenuItem("Exit");
 		exitMenuItem.addActionListener(new ActionListener() {
-            								public void actionPerformed(ActionEvent e) {
-                							System.exit(0);
-                						}});
-		return exitMenuItem;
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}});
+		this.add(exitMenuItem);
+
 	}
 }

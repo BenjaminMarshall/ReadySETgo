@@ -12,12 +12,24 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JLabel;
 
+/**
+ * 
+ * Represents a textbox which can be placed on a Stage
+ * 
+ * @author ReadySETgo
+ * @version Beta 3
+ * @since 2016-12-04
+ * 
+ */
 public class TextBox extends Asset{
 	private JLabel label;
 	private String text;
 	private double fontScale;
 	
-	public TextBox(){
+	/**
+	 * Default constructor
+	 */
+	public TextBox() {
 		super();
 		setText("Default Text");
 		this.setFontScale(1);
@@ -33,12 +45,12 @@ public class TextBox extends Asset{
 		return tag;
 	}
 
-	@Override
-	public void toXML() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	/**
+	 * Draws TextBox
+	 * @param stageGraphics Graphics object to use
+	 * @param scale The scale factor to draw with
+	 * @param selected Whether to draw with a selection border
+	 */
 	@Override
 	public void draw(Graphics stageGraphics, double scale, boolean selected) {
 		
@@ -76,20 +88,42 @@ public class TextBox extends Asset{
         stg2D.dispose();
 	}
 	
+	/**
+	 * Constructor specifying text
+	 * @param text The text inside the textbox
+	 */
 	public TextBox(String text){
 		this(0,0,0,0,0,text, 1.0);
 	}
 	
+	/**
+	 * Constructor specifying width, length, x pos, y pos, rotation angle, text, and fontScale
+	 * @param w The width
+	 * @param l The length
+	 * @param x The x position
+	 * @param y The y position
+	 * @param a The rotation angle
+	 * @param text The contained text
+	 * @param fontScale The font scale
+	 */
 	public TextBox(double w, double l, double x, double y, double a, String text, double fontScale){
 		super(w, l, x, y, a);
 		setText(text);
 		setFontScale(fontScale);
 	}
 	
+	/**
+	 * Returns String representation of TextBox
+	 * @return String representation of TextBox
+	 */
 	public String toString() {
 		return String.format("w: %s, l: %s, x: %s, y: %s, a: %s, text: %s", this.getPhysicalWidth(), this.getPhysicalLength(), this.getxPos(), this.getyPos(), this.getAngle(), this.text);
 	}
 	
+	/**
+	 * Sets the text inside the TextBox
+	 * @param text The text to set
+	 */
 	public void setText(String text){
 		this.text = text;
 		String formatText = convertTextToTag(text);
@@ -117,18 +151,34 @@ public class TextBox extends Asset{
 		}	 
 	}
 	
+	/**
+	 * Returns a copy of the TextBox
+	 * @return A copy of the TextBox
+	 */
 	public Asset copyOf() {
 		return new TextBox(this.getPhysicalWidth(),this.getPhysicalLength(),this.getxPos(), this.getyPos(), this.getAngle(), this.getText(), this.getFontScale());
 	}
 
+	/**
+	 * Gets the TextBox's text
+	 * @return The TextBox's text
+	 */
 	public String getText() {
 		return text;
 	}
 
+	/**
+	 * Gets the TextBox's scale
+	 * @return The font scale
+	 */
 	public double getFontScale() {
 		return fontScale;
 	}
 
+	/**
+	 * Sets the TextBox's font scale
+	 * @param fontScale The scale to set
+	 */
 	public void setFontScale(double fontScale) {
 		this.fontScale = fontScale;
 	}

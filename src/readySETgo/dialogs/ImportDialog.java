@@ -21,6 +21,15 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import readySETgo.managers.ComponentManager;
 import readySETgo.managers.FileManager;
 
+/**
+ * 
+ * Dialog for creating new StageObjects
+ * 
+ * @author ReadySETgo
+ * @version Beta 3
+ * @since 2016-12-04
+ * 
+ */
 public class ImportDialog extends JOptionPane {
 
 	public static final String WINDOW_TITLE = "Import new stage object";
@@ -30,9 +39,12 @@ public class ImportDialog extends JOptionPane {
 	public static final String LENGTH_LABEL_TXT = "Length (in)";
 	public static final String IMAGE_LABEL_TXT = "Image";
 			
-	
+	// Disable default constructor
 	private ImportDialog() {}
 	
+	/**
+	 * Create and show import dialog
+	 */
 	public static void createAndShow() {
 		ImportDialog.createDialog(null, null, null, null, null, null, null, null);
 	}

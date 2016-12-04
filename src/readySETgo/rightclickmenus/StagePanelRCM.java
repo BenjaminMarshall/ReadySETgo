@@ -15,10 +15,24 @@ import readySETgo.models.assets.Asset;
 import readySETgo.models.assets.StageObject;
 import readySETgo.models.assets.TextBox;
 
+/**
+ * 
+ * The right click menu for the StagePanel
+ * 
+ * @author ReadySETgo
+ * @version Beta 3
+ * @since 2016-12-04
+ * 
+ */
 public class StagePanelRCM extends JPopupMenu {
 	
 	private Stage stage;
 	
+	/**
+	 * Default Constructor
+	 * @param s The Stage in the StagePanel
+	 * @param e The MouseEvent that spawned this menu
+	 */
 	public StagePanelRCM(Stage s, MouseEvent e){
 		stage = s;
 		
@@ -91,6 +105,11 @@ public class StagePanelRCM extends JPopupMenu {
 		}
 	}
 	
+	/**
+	 * Creates an adapter which spawns the right click menu
+	 * @param s The Stage in the StagePanel
+	 * @return The MouseAdapter to attach to the StagePanel
+	 */
 	public static MouseAdapter createAdapter(Stage s){
 		return new MouseAdapter(){
 		

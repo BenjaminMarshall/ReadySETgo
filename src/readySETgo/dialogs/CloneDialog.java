@@ -22,17 +22,30 @@ import readySETgo.managers.ComponentManager;
 import readySETgo.managers.FileManager;
 import readySETgo.models.assets.StageObject;
 
+/**
+ * 
+ * Dialog for cloning StageObjects
+ * 
+ * @author ReadySETgo
+ * @version Beta 3
+ * @since 2016-12-04
+ * 
+ */
 public class CloneDialog extends JOptionPane {
 
 	public static final String WINDOW_TITLE = "Clone stage object";
-	
 	public static final String NAME_LABEL_TXT = "New Name";
 	public static final String WIDTH_LABEL_TXT = "New Width (in)";
 	public static final String LENGTH_LABEL_TXT = "New Length (in)";
 	public static final String IMAGE_LABEL_TXT = "New Image";
 			
+	// Disable default constructor
 	private CloneDialog() {}
 	
+	/**
+	 * Creates and shows the dialog, setting it to clone the specified StageObject
+	 * @param obj The StageObject to clone
+	 */
 	public static void createAndShow(StageObject obj) {
 		CloneDialog.createDialog(obj, null, null, null, null, null, null, null, null);
 	}

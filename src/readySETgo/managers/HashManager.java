@@ -9,7 +9,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * RSG
+ * 
+ * Manager for creating file hashes, used in detecting duplicate images before import
+ * 
+ * @author ReadySETgo
+ * @version Beta 3
+ * @since 2016-12-04
+ * 
  */
 public class HashManager {
 
@@ -20,10 +26,19 @@ public class HashManager {
 		imageHashMap = FileManager.loadImageMap();
 	}
 	
+	/**
+	 * Returns the manager's HashMap
+	 * @return The manager's HashMap
+	 */
 	public static HashMap getMap() {
 		return manager.imageHashMap;
 	}
 	
+	/**
+	 * Computes the hash string for a given file
+	 * @param f The File to hash
+	 * @return The File's hash string
+	 */
     public static String computeFileHashString(File f) {
     	String result = "Error";
 
@@ -53,6 +68,5 @@ public class HashManager {
         
         return result;
     }
-     
 }
 

@@ -13,19 +13,31 @@ import javax.swing.UIManager;
 
 import readySETgo.managers.ComponentManager;
 import readySETgo.managers.UndoManager;
-import readySETgo.models.assets.Asset;
 import readySETgo.models.assets.TextBox;
 
+/**
+ * 
+ * Dialog for editing labels aka Textboxes
+ * 
+ * @author ReadySETgo
+ * @version Beta 3
+ * @since 2016-12-04
+ * 
+ */
 public class EditLabelDialog extends JOptionPane {
 
 	public static final String WINDOW_TITLE = "Edit Label";
 	public static final String SCALE_LABEL_TXT = "Multiplicative Factor (Format x.xx):";
 	public static final String TEXT_LABEL_TXT = "Text:";
 
-			
+	// Disable default constructor
 	private EditLabelDialog() {}
 
-	public static void createAndShow(TextBox t){
+	/**
+	 * Create and show edit dialog
+	 * @param t The TextBox to edit
+	 */
+	public static void createAndShow(TextBox t) {
 		EditLabelDialog.createDialog(t, null, "" + t.getFontScale(), null, t.getText());
 	}
 	
@@ -89,7 +101,7 @@ public class EditLabelDialog extends JOptionPane {
 			
 			if(noErrors) {
 				float scale = Float.parseFloat(scaleField.getText());
-				UndoManager.get().storeLabelEdit(t, t.getText(), textArea.getText(), t.getFontScale(), scale);
+				UndoManager.storeLabelEdit(t, t.getText(), textArea.getText(), t.getFontScale(), scale);
 				t.setText(textArea.getText());
 				t.setFontScale(scale);
 			}

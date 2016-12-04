@@ -14,14 +14,27 @@ import readySETgo.managers.ComponentManager;
 import readySETgo.managers.UndoManager;
 import readySETgo.models.assets.Asset;
 
+/**
+ * 
+ * Dialog for rotating an Asset
+ * 
+ * @author ReadySETgo
+ * @version Beta 3
+ * @since 2016-12-04
+ * 
+ */
 public class RotateDialog extends JOptionPane {
 
 	public static final String WINDOW_TITLE = "Rotate Object";
 	public static final String TEXT_LABEL_TXT = "Angle (Degrees)";
 
-			
+	// Disable default constructor
 	private RotateDialog() {}
 
+	/**
+	 * Creates and shows a rotation dialog
+	 * @param a The Asset to rotate
+	 */
 	public static void createAndShow(Asset a){
 		RotateDialog.createDialog(a, null, null);
 	}
@@ -64,7 +77,7 @@ public class RotateDialog extends JOptionPane {
 			}
 			
 			if(noErrors) {
-				UndoManager.get().storeRotate(a, a.getAngle(), Double.parseDouble(text.getText()));
+				UndoManager.storeRotate(a, a.getAngle(), Double.parseDouble(text.getText()));
 				a.setAngle(Double.parseDouble(text.getText()));
 			}
 			else {				

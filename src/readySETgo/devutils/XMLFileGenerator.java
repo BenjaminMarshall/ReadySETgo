@@ -9,8 +9,20 @@ import readySETgo.managers.HashManager;
 import readySETgo.models.FlyRail;
 import readySETgo.models.assets.StageObject;
 
+/**
+ * 
+ * Development class used for generating XML data files
+ * 
+ * @author ReadySETgo
+ * @version Beta 3
+ * @since 2016-12-04
+ * 
+ */
 public class XMLFileGenerator {
 
+	/**
+	 * Creates the Objects data file
+	 */
 	public static void generateObjectFile() {
 		ArrayList<StageObject> objects = new ArrayList<StageObject>();
 		
@@ -60,7 +72,7 @@ public class XMLFileGenerator {
 			System.out.println("Saved.");
 			
 			System.out.println("Loading...");
-			objects = FileManager.getListOfObjects();
+			objects = FileManager.loadListOfObjects();
 			System.out.println("Loaded.");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -69,6 +81,9 @@ public class XMLFileGenerator {
 		
 	}
 	
+	/**
+	 * Creates the imageMap file used for hashing imported images
+	 */
 	public static void generateImageMapFile() {
 		String[] imageRefs = {"res/black.png",
 							  "res/chair.png",
@@ -89,6 +104,9 @@ public class XMLFileGenerator {
 		FileManager.saveImageMap(map);
 	}
 	
+	/**
+	 * Creates the Flyrail data fiole
+	 */
 	public static void generateFlyRailFile() {
 		ArrayList<FlyRail> rails = new ArrayList<FlyRail>();
 		
@@ -118,7 +136,7 @@ public class XMLFileGenerator {
 			System.out.println("Saved.");
 			
 			System.out.println("Loading...");
-			rails = FileManager.getListOfFlyRails();
+			rails = FileManager.loadListOfFlyRails();
 			System.out.println("Loaded.");
 			
 			for(FlyRail f: rails){
@@ -129,7 +147,7 @@ public class XMLFileGenerator {
 		}
 	}
 		
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		generateFlyRailFile();
 		generateObjectFile();
 		generateImageMapFile();

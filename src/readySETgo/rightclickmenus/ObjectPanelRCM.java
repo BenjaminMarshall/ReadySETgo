@@ -16,9 +16,22 @@ import readySETgo.dialogs.ImportDialog;
 import readySETgo.dialogs.PropsDialog;
 import readySETgo.models.assets.StageObject;
 
+/**
+ * 
+ * The right click menu for the ObjectPanel
+ * 
+ * @author ReadySETgo
+ * @version Beta 3
+ * @since 2016-12-04
+ * 
+ */
 public class ObjectPanelRCM extends JPopupMenu {
 	
-	
+	/**
+	 * Default Constructor
+	 * @param e The MouseEvent that spawned this menu
+	 * @param obj The StageObject from the panel which was clicked
+	 */
 	public ObjectPanelRCM(MouseEvent e, StageObject obj){
 
 		JMenuItem viewPropsItem = new JMenuItem(new AbstractAction("View object properties ...") {
@@ -64,6 +77,11 @@ public class ObjectPanelRCM extends JPopupMenu {
 		
 	}
 	
+	/**
+	 * Creates an adapter which spawns the right click menu
+	 * @param obj The StageObject from the panel which this Adapter was attached to
+	 * @return The MouseAdapter to attach to a SingleObjectPanel
+	 */
 	public static MouseAdapter createAdapter(StageObject obj){
 		return new MouseAdapter(){
 				

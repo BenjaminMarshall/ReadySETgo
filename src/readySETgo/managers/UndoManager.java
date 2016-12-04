@@ -16,7 +16,13 @@ import readySETgo.models.stageactions.RotateAction;
 import readySETgo.models.stageactions.StageAction;
 
 /**
- * RSG
+ * 
+ * Manager for Undo/Redo'ing user actions
+ * 
+ * @author ReadySETgo
+ * @version Beta 3
+ * @since 2016-12-04
+ * 
  */
 public class UndoManager {
 
@@ -34,97 +40,162 @@ public class UndoManager {
 	private static UndoManager manager = new UndoManager();
 
 	private UndoManager() {
-		undoStack = new Stack<StageAction>();
-		redoStack = new Stack<StageAction>();
+		this.undoStack = new Stack<StageAction>();
+		this.redoStack = new Stack<StageAction>();
 	}
 	
-    public static UndoManager get() { return manager; }
-    
-    public void reset() {
-    	undoStack = new Stack<StageAction>();
-		redoStack = new Stack<StageAction>();
-		savedAtAction = null;
+	/**
+	 * Resets the manager, clearing both stacks
+	 */
+    public static void reset() {
+    	manager.undoStack = new Stack<StageAction>();
+		manager.redoStack = new Stack<StageAction>();
+		manager.savedAtAction = null;
     }
     
-    public boolean hasUnsavedChanges() {
-    	if(undoStack.isEmpty()) { return false; }
-    	else if (undoStack.peek() == savedAtAction) { return false; }
+    /**
+     * Returns whether the stage has unsaved changes
+     * @return Whether the stage has unsaved changes
+     */
+    public static boolean hasUnsavedChanges() {
+    	if(manager.undoStack.isEmpty()) { return false; }
+    	else if (manager.undoStack.peek() == manager.savedAtAction) { return false; }
     	return true;
     }
     
-    public void registerSave() {
-    	if(!undoStack.isEmpty()) savedAtAction = undoStack.peek();
-    	else savedAtAction = null;
+    /**
+     * Registers saving the stage
+     */
+    public static void registerSave() {
+    	if(!manager.undoStack.isEmpty()) manager.savedAtAction = manager.undoStack.peek();
+    	else manager.savedAtAction = null;
     }
     
-    public void storeDragStart(Asset dragged, double origX, double origY, UserManager.SelectedState origState, Asset prevSelected) {
-    	this.dragged = dragged;
-    	this.origX = origX;
-    	this.origY = origY;
-    	this.origState = origState;
-    	this.prevSelected = prevSelected;
-    	redoStack.removeAllElements();
+    /**
+     * Stores a drag start for use in creating a Drag Action on completion
+     * @param dragged The dragged Asset
+     * @param origX The original x
+     * @param origY The original y
+     * @param origState The original selected state
+     * @param prevSelected The previously selected Asset
+     */
+    public static void storeDragStart(Asset dragged, double origX, double origY, UserManager.SelectedState origState, Asset prevSelected) {
+    	manager.dragged = dragged;
+    	manager.origX = origX;
+    	manager.origY = origY;
+    	manager.origState = origState;
+    	manager.prevSelected = prevSelected;
+    	manager.redoStack.removeAllElements();
     }
  
-    public void storeDragEnd() {
-    	undoStack.push(new DragAction(dragged, origX, origY, dragged.getxPos(), dragged.getyPos(), origState, prevSelected));
-    	redoStack.removeAllElements();
+    /**
+     * Signals manager to create a Drag Action, using previously stored data
+     */
+    public static void storeDragEnd() {
+    	manager.undoStack.push(new DragAction(manager.dragged,
+    										  manager.origX,
+    										  manager.origY,
+    										  manager.dragged.getxPos(),
+    										  manager.dragged.getyPos(),
+    										  manager.origState,
+    										  manager.prevSelected));
+    	manager.redoStack.removeAllElements();
     }
  
-    public void storeObjectPlacement(Asset created) {
-    	undoStack.push(new CreationAction(created));
-    	redoStack.removeAllElements();
+    /**
+     * Stores an action where an Asset is created on stage
+     * @param created The created Asset
+     */
+    public static void storeObjectPlacement(Asset created) {
+    	manager.undoStack.push(new CreationAction(created));
+    	manager.redoStack.removeAllElements();
     }
     
-    public void storeCut(Asset cutted, UserManager.SelectedState origState, Asset prevSelected) {
-    	undoStack.push(new CutAction(cutted, origState, prevSelected));
-    	redoStack.removeAllElements();
+    /**
+     * Stores an action where an Asset is cut
+     * @param cutted The cut Asset
+     * @param origState The original SelectedState
+     * @param prevSelected The originally selected Asset
+     */
+    public static void storeCut(Asset cutted, UserManager.SelectedState origState, Asset prevSelected) {
+    	manager.undoStack.push(new CutAction(cutted, origState, prevSelected));
+    	manager.redoStack.removeAllElements();
     }
     
-    public void storePaste(Asset pasted, UserManager.SelectedState origState, Asset prevSelected) {
-    	undoStack.push(new PasteAction(pasted, origState, prevSelected));
-    	redoStack.removeAllElements();
+    /**
+     * Stores a paste action
+     * @param pasted The pasted Asset
+     * @param origState The original SelectedState
+     * @param prevSelected The originally selected Asset
+     */
+    public static void storePaste(Asset pasted, UserManager.SelectedState origState, Asset prevSelected) {
+    	manager.undoStack.push(new PasteAction(pasted, origState, prevSelected));
+    	manager.redoStack.removeAllElements();
     }
     
-    public void storeDelete(Asset deleted, UserManager.SelectedState origState, Asset prevSelected) {
-    	undoStack.push(new DeleteAction(deleted, origState, prevSelected));
-    	redoStack.removeAllElements();
+    /**
+     * Stores an Asset deletion
+     * @param deleted The deleted Asset
+     * @param origState The original SelectedState
+     * @param prevSelected The originally selected Asset
+     */
+    public static void storeDelete(Asset deleted, UserManager.SelectedState origState, Asset prevSelected) {
+    	manager.undoStack.push(new DeleteAction(deleted, origState, prevSelected));
+    	manager.redoStack.removeAllElements();
     }
     
-    public void storeRailToggle(SingleRailPanel panel) {
-    	undoStack.push(new RailToggleAction(panel));
-    	redoStack.removeAllElements();
+    /**
+     * Stores a RailToggle action
+     * @param panel The toggled SingleRailPanel
+     */
+    public static void storeRailToggle(SingleRailPanel panel) {
+    	manager.undoStack.push(new RailToggleAction(panel));
+    	manager.redoStack.removeAllElements();
     }
     
-    public void storeLabelEdit(TextBox l, String oldText, String newText, double oldScale, double newScale) {
-		undoStack.push(new EditLabelAction(l, oldText, newText, oldScale, newScale));
-		redoStack.removeAllElements();
+    /**
+     * Stores a TextBox edit action
+     * @param l The TextBox
+     * @param oldText The old text
+     * @param newText The new text
+     * @param oldScale The old scale
+     * @param newScale The new scale
+     */
+    public static void storeLabelEdit(TextBox l, String oldText, String newText, double oldScale, double newScale) {
+		manager.undoStack.push(new EditLabelAction(l, oldText, newText, oldScale, newScale));
+		manager.redoStack.removeAllElements();
 	}
     
-	public void storeRotate(Asset a, double angle, double newAngle) {
-		undoStack.push(new RotateAction(a, angle, newAngle));
-		redoStack.removeAllElements();
+    /**
+     * Stores a rotation action
+     * @param a The rotated Asset
+     * @param angle The old angle
+     * @param newAngle The new angle
+     */
+	public static void storeRotate(Asset a, double angle, double newAngle) {
+		manager.undoStack.push(new RotateAction(a, angle, newAngle));
+		manager.redoStack.removeAllElements();
 	}
 	
-    public void undo() {
-    	if(!undoStack.isEmpty()) {
-    		StageAction a = undoStack.pop();
+	/**
+	 * Pops an Asset off the undo stack, calls its undo method, and pushes it on the redo stack
+	 */
+    public static void undo() {
+    	if(!manager.undoStack.isEmpty()) {
+    		StageAction a = manager.undoStack.pop();
     		a.undoAction();
-    		redoStack.push(a);
+    		manager.redoStack.push(a);
     	}
     }
     
-    public void redo() {
-    	if(!redoStack.isEmpty()) {
-    		StageAction a = redoStack.pop();
+    /**
+     * Pops an Asset off the redo stack, calls its redo method, and pushes it on the undo stack
+     */
+    public static void redo() {
+    	if(!manager.redoStack.isEmpty()) {
+    		StageAction a = manager.redoStack.pop();
     		a.redoAction();
-    		undoStack.push(a);
+    		manager.undoStack.push(a);
     	}
     }
-
-
-
-	
-    
 }
-
