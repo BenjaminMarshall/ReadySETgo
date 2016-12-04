@@ -79,8 +79,6 @@ public class StageObject extends Asset {
 		rotateTransform.rotate(Math.toRadians(getAngle()), (int) (this.getxPos()*scale), (int) (this.getyPos()*scale));
 		stg2D.transform(rotateTransform);
 		
-		
-		
 		stg2D.drawImage(bi, (int) (this.getxPos()*scale), (int) (this.getyPos()*scale), null);
 		
 		
