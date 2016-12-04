@@ -61,6 +61,11 @@ public class StagePanel extends JPanel implements Printable {
                         UndoManager.get().storeDragStart(a, a.getxPos(), a.getyPos(), UserManager.getSelectedState(), UserManager.getSelected());
                         UserManager.setSelected(a);
                         UserManager.setSelectedState(SelectedState.DRAGGING);
+                        
+                        double s = stage.getScale();
+                        UserManager.setDragOffsetX((e.getX() / s) - a.getxPos());
+                        UserManager.setDragOffsetY((e.getY() / s) - a.getyPos());
+            
                     } else {
                         UserManager.setSelectedState(SelectedState.EMPTY);
                         UserManager.setSelected(null);
@@ -82,6 +87,8 @@ public class StagePanel extends JPanel implements Printable {
                 	} else {
                 		UndoManager.get().storeDragEnd();
                         UserManager.setSelectedState(SelectedState.SELECTED);
+                        UserManager.setDragOffsetX(0);
+                        UserManager.setDragOffsetY(0);
                 	}
                     
                 }
@@ -103,6 +110,8 @@ public class StagePanel extends JPanel implements Printable {
                 if (UserManager.getSelectedState().equals(SelectedState.DRAGGING)) {
                     if (UserManager.getMouseState(e).equals(MouseState.UP)) {
                         UserManager.setSelectedState(SelectedState.EMPTY);
+                        UserManager.setDragOffsetX(0);
+                        UserManager.setDragOffsetY(0);
                     } else if (!stage.getAssets().contains(UserManager.getSelected())) {
                         UndoManager.get().storeObjectPlacement(UserManager.getSelected());
                         stage.getAssets().add(UserManager.getSelected());
@@ -126,19 +135,19 @@ public class StagePanel extends JPanel implements Printable {
                 	}
                 	Stage s = StageManager.getStage();
                 	Double scale = s.getScale();
-                    UserManager.getSelected().setxPos(e.getX() / scale);
-                    UserManager.getSelected().setyPos(e.getY() / scale);
+                    UserManager.getSelected().setxPos((e.getX() - UserManager.getDragOffsetX()) / scale);
+                    UserManager.getSelected().setyPos((e.getY() - UserManager.getDragOffsetY()) / scale);
                 } 
             }
 
-            public void mouseMoved(MouseEvent e) {
+            /*public void mouseMoved(MouseEvent e) {
                 if (UserManager.getSelectedState().equals(SelectedState.DRAGGING)) {
                 	Stage s = StageManager.getStage();
                 	Double scale = s.getScale();
                 	UserManager.getSelected().setxPos(e.getX() / scale);
                     UserManager.getSelected().setyPos(e.getY() / scale);
                 } 
-            }
+            } */
 
         });
     }
