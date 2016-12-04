@@ -5,10 +5,10 @@ public class EditLabelAction extends StageAction {
 	private TextBox edited;
 	private String origText;
 	private String newText;
-	private float oldScale;
-	private float newScale;
+	private double oldScale;
+	private double newScale;
 	
-	public EditLabelAction(TextBox edited, String origText, String newText, float oldScale, float newScale){
+	public EditLabelAction(TextBox edited, String origText, String newText, double oldScale, double newScale){
 		this.edited = edited;
 		this.origText = origText;
 		this.newText = newText;

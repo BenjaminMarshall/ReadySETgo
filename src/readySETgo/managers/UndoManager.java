@@ -96,7 +96,7 @@ public class UndoManager {
     	redoStack.removeAllElements();
     }
     
-    public void storeLabelEdit(TextBox l, String oldText, String newText, float oldScale, float newScale) {
+    public void storeLabelEdit(TextBox l, String oldText, String newText, double oldScale, double newScale) {
 		undoStack.push(new EditLabelAction(l, oldText, newText, oldScale, newScale));
 		redoStack.removeAllElements();
 	}

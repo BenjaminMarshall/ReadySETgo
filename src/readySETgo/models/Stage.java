@@ -143,7 +143,8 @@ public class Stage {
 	
 	public void copySelected(){
 		if(UserManager.getSelected() != null) {
-			UserManager.setClipboard(UserManager.getSelected().copyOf());
+			Asset copied = UserManager.getSelected().copyOf();
+			UserManager.setClipboard(copied);
 		}
 	}
 	

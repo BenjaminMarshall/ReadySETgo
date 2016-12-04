@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 public class TextBox extends Asset{
 	private JLabel label;
 	private String text;
-	private float fontScale;
+	private double fontScale;
 	
 	public TextBox(){
 		super();
@@ -77,12 +77,17 @@ public class TextBox extends Asset{
 	}
 	
 	public TextBox(String text){
-		this(0,0,0,0,0,text);
+		this(0,0,0,0,0,text, 1.0);
 	}
 	
-	public TextBox(double w, double l, double x, double y, double a, String text){
+	public TextBox(double w, double l, double x, double y, double a, String text, double fontScale){
 		super(w, l, x, y, a);
 		setText(text);
+		setFontScale(fontScale);
+	}
+	
+	public String toString() {
+		return String.format("w: %s, l: %s, x: %s, y: %s, a: %s, text: %s", this.getPhysicalWidth(), this.getPhysicalLength(), this.getxPos(), this.getyPos(), this.getAngle(), this.text);
 	}
 	
 	public void setText(String text){
@@ -90,7 +95,7 @@ public class TextBox extends Asset{
 		String formatText = convertTextToTag(text);
 		
 		this.label = new JLabel("<html><body style='padding: 5px;'>"
-                				+ formatText + "</html>");
+                				+ formatText + "</body></html>");
 		
 		
 		label.setSize(label.getPreferredSize());
@@ -99,7 +104,7 @@ public class TextBox extends Asset{
 		if(d.getWidth() > 157){
 		
 			this.label = new JLabel("<html><body style='width:157px; padding: 5px;'>"
-									+ formatText + "</html>");
+									+ formatText + "</body></html>");
 			
 			
 			d = label.getPreferredSize();
@@ -112,20 +117,19 @@ public class TextBox extends Asset{
 		}	 
 	}
 	
-
 	public Asset copyOf() {
-		return new TextBox(this.getPhysicalWidth(),this.getPhysicalLength(),this.getxPos(), this.getyPos(), this.getAngle(), this.getText());
+		return new TextBox(this.getPhysicalWidth(),this.getPhysicalLength(),this.getxPos(), this.getyPos(), this.getAngle(), this.getText(), this.getFontScale());
 	}
 
 	public String getText() {
 		return text;
 	}
 
-	public float getFontScale() {
+	public double getFontScale() {
 		return fontScale;
 	}
 
-	public void setFontScale(float fontScale) {
+	public void setFontScale(double fontScale) {
 		this.fontScale = fontScale;
 	}
 	

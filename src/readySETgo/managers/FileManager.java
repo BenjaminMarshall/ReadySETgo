@@ -56,6 +56,7 @@ public class FileManager {
         		Element asset = doc.createElement("asset");
         		
         		
+        		
         		Attr xpos = doc.createAttribute("x");
         		xpos.setValue("" + a.getxPos());
         		Attr ypos = doc.createAttribute("y");
@@ -77,6 +78,10 @@ public class FileManager {
         			asset.appendChild(doc.createTextNode(((StageObject) a).getName()));
 
         		} else {
+        			Attr multiplier = doc.createAttribute("multiplier");
+            		multiplier.setValue("" + ((TextBox) a).getFontScale());
+            		asset.setAttributeNode(multiplier);
+            		
         			type.setValue("TextBox");
         			asset.appendChild(doc.createTextNode(((TextBox) a).getText()));
         		}
@@ -152,7 +157,8 @@ public class FileManager {
         			stageAssets.add(o);
         		} else {
         			String text = e.getTextContent();
-        			TextBox tb = new TextBox(width, length, xpos, ypos, angle, text);
+        			double multiplier = Double.parseDouble(e.getAttribute("multiplier"));
+        			TextBox tb = new TextBox(width, length, xpos, ypos, angle, text, multiplier);
         			stageAssets.add(tb);
         		}
         	}
