@@ -164,13 +164,22 @@ public class MainFrame extends JFrame {
     			FileManager.attemptSaveSilently();
     		}
     	});
-    	
+
     	// Ctrl O => Open
     	KeyStroke ctrlO = KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK);
     	actionMap.put(ctrlO, new AbstractAction("open") {
     		@Override
     		public void actionPerformed(ActionEvent e) {
     			FileManager.displayOpenPrompt();
+    		}
+    	});
+
+    	// Ctrl R => Rotate
+    	KeyStroke ctrlR = KeyStroke.getKeyStroke(KeyEvent.VK_R, KeyEvent.CTRL_DOWN_MASK);
+    	actionMap.put(ctrlR, new AbstractAction("rotate") {
+    		@Override
+    		public void actionPerformed(ActionEvent e) {
+    			StageManager.getStage().rotateSelectedAsset();
     		}
     	});
     	
