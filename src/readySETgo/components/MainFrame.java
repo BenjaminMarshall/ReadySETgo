@@ -33,11 +33,12 @@ import readySETgo.toolbarmenus.ToolsMenu;
 
 public class MainFrame extends JFrame {
     private ContainerPanel container;
-
+    private boolean areKbShortcutsEnabled;
+    
     public MainFrame(int width, int height) {
         super();
         ComponentManager.registerComp("MainFrame", this);
-        
+        this.areKbShortcutsEnabled = true;
         setSize(width, height);
         try {
             this.setIconImage(ImageIO.read(new File("res/logo.png")));
@@ -60,6 +61,16 @@ public class MainFrame extends JFrame {
             	else {
             		System.exit(0);
             	}
+            }
+            
+            @Override
+            public void windowActivated(WindowEvent windowEvent) {
+            	MainFrame.this.areKbShortcutsEnabled = true;
+            }
+            
+            @Override
+            public void windowDeactivated(WindowEvent windowEvent) {
+            	MainFrame.this.areKbShortcutsEnabled = false;
             }
         });
         
@@ -201,7 +212,7 @@ public class MainFrame extends JFrame {
 	    	@Override
 	    	public boolean dispatchKeyEvent(KeyEvent e) {
 	    		KeyStroke keyStroke = KeyStroke.getKeyStrokeForEvent(e);
-	    		if ( actionMap.containsKey(keyStroke) ) {
+	    		if ( actionMap.containsKey(keyStroke) && MainFrame.this.areKbShortcutsEnabled) {
 	    			final Action a = actionMap.get(keyStroke);
 	    			final ActionEvent ae = new ActionEvent(e.getSource(), e.getID(), null );
 	    			SwingUtilities.invokeLater( new Runnable() {
