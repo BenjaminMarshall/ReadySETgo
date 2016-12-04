@@ -65,7 +65,14 @@ public class EditLabelDialog extends JOptionPane {
 		if (res == JOptionPane.OK_OPTION) {
 			boolean noErrors = true;
 			
-			String scaleLabelText = EditLabelDialog.TEXT_LABEL_TXT;
+			String scaleLabelText = EditLabelDialog.SCALE_LABEL_TXT;
+			String textAreaLabelText = EditLabelDialog.TEXT_LABEL_TXT;
+			
+
+			if(textArea.getText().replaceAll("\\s","").isEmpty()) {
+				noErrors = false;
+				textAreaLabelText = EditLabelDialog.generateErrorStr(textAreaLabelText, "Cannot be empty.");
+			}
 			
 			if(scaleField.getText().isEmpty()){
 				noErrors = false;
@@ -78,7 +85,6 @@ public class EditLabelDialog extends JOptionPane {
 				scaleLabelText = EditLabelDialog.generateErrorStr(scaleLabelText, "Cannot be Negative");
 			}
 			
-			String textAreaLabelText = EditLabelDialog.TEXT_LABEL_TXT;
 			
 			
 			if(noErrors) {
