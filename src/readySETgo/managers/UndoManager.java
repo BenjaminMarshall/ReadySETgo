@@ -9,7 +9,7 @@ import readySETgo.models.stageactions.CreationAction;
 import readySETgo.models.stageactions.CutAction;
 import readySETgo.models.stageactions.DeleteAction;
 import readySETgo.models.stageactions.DragAction;
-import readySETgo.models.stageactions.EditTextAction;
+import readySETgo.models.stageactions.EditLabelAction;
 import readySETgo.models.stageactions.PasteAction;
 import readySETgo.models.stageactions.RailToggleAction;
 import readySETgo.models.stageactions.RotateAction;
@@ -96,8 +96,8 @@ public class UndoManager {
     	redoStack.removeAllElements();
     }
     
-    public void storeEditText(TextBox l, String text, String text2) {
-		undoStack.push(new EditTextAction(l, text, text2));
+    public void storeLabelEdit(TextBox l, String oldText, String newText, float oldScale, float newScale) {
+		undoStack.push(new EditLabelAction(l, oldText, newText, oldScale, newScale));
 		redoStack.removeAllElements();
 	}
     
