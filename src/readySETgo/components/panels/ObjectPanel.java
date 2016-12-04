@@ -6,9 +6,12 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -20,6 +23,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import readySETgo.components.MainFrame;
 import readySETgo.managers.ComponentManager;
@@ -37,13 +41,14 @@ public class ObjectPanel extends JPanel {
 	private JPanel container;
 	private ArrayList<SingleObjectPanel> subPanels;
 	private ArrayList<StageObject> listModel;
+	private boolean initialDrag;
 	
 	public ObjectPanel(){
 		super();
 		ComponentManager.registerComp("ObjectPanel", this);
 		container = new JPanel();
 		refresh();
-				
+		initialDrag = false;
 		scroller = new JScrollPane(container, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		// Increase scroll speed from default
 		scroller.getVerticalScrollBar().setUnitIncrement(15);
@@ -59,6 +64,8 @@ public class ObjectPanel extends JPanel {
 		c.fill = c.BOTH;
 		
 		add(scroller, c);
+		
+		
 	}
 	
 	public void loadObjects(Stage s){
@@ -121,6 +128,13 @@ public class ObjectPanel extends JPanel {
 		
 	}
 	
+	public void setInitialDrag(boolean b) {
+		this.initialDrag = b;
+	}
+	
+	public boolean getInitialDrag() {
+		return this.initialDrag;
+	}
 	
 	class ObjPanelMouseAdapter extends MouseAdapter {
 		
@@ -132,6 +146,7 @@ public class ObjectPanel extends JPanel {
 		
 		@Override
 		public void mousePressed(MouseEvent e) {
+			ObjectPanel.this.setInitialDrag(true);
 			UserManager.setSelected(((SingleObjectPanel) e.getComponent()).getCopyOfStageObject());
 			UserManager.setSelectedState(SelectedState.DRAGGING);
 			
@@ -170,6 +185,13 @@ public class ObjectPanel extends JPanel {
 				UserManager.setSelectedState(SelectedState.SELECTED);
 			}
 		}
+		
+		@Override
+		public void mouseExited(MouseEvent e) {
+			ObjectPanel.this.initialDrag = false;
+			ObjectPanel.this.repaint();
+		}
+		
 	}
 	
 	class ObjPanelMotionListener extends MouseMotionAdapter {
@@ -189,6 +211,11 @@ public class ObjectPanel extends JPanel {
 				StagePanel sp = (StagePanel) ComponentManager.getComp("StagePanel");
 				
 				SwingUtilities.convertPointToScreen(p, op);
+				
+				
+				op.setObjX(e.getX());
+				op.setObjY(e.getY());
+				
 				SwingUtilities.convertPointFromScreen(p,  sp);
 										
 				UserManager.getSelected().setxPos(p.getX() / scale);

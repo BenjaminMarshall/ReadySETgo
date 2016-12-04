@@ -43,13 +43,6 @@ public class StagePanel extends JPanel implements Printable {
         StageManager.registerStage(stage);
         ComponentManager.registerComp("StagePanel", this);
 
-        Timer t = new Timer(10, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                repaint();
-            }
-        });
-        t.start();
-
         addMouseListener(StagePanelRCM.createAdapter(stage));
         addMouseListener(new MouseAdapter() {
 
