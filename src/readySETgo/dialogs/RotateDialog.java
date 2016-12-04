@@ -47,7 +47,9 @@ public class RotateDialog extends JOptionPane {
 		        new JLabel(angleText), text
 		};
 		
+
 		int res = RotateDialog.showConfirmDialog(ComponentManager.getComp("MainFrame"), inputs, RotateDialog.WINDOW_TITLE, JOptionPane.YES_NO_OPTION);
+
 		if (res == JOptionPane.OK_OPTION) {
 			boolean noErrors = true;
 			

@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 import readySETgo.components.panels.StagePanel;
 import readySETgo.dialogs.EditLabelDialog;
 import readySETgo.dialogs.RotateDialog;
+import readySETgo.dialogs.RotateSelectionErrorDialog;
 import readySETgo.managers.ComponentManager;
 import readySETgo.managers.FileManager;
 import readySETgo.managers.UndoManager;
@@ -211,8 +212,12 @@ public class Stage {
 
 
 	public void rotateSelectedAsset() {
-		RotateDialog.createAndShow(UserManager.getSelected());
-		
+		if(UserManager.getSelectedState() == UserManager.SelectedState.SELECTED && UserManager.getSelected() != null) {
+			RotateDialog.createAndShow(UserManager.getSelected());
+		}
+		else {
+			RotateSelectionErrorDialog.createAndShow();
+		}
 	}
 
 
