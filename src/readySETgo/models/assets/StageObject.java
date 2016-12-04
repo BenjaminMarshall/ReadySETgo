@@ -49,7 +49,7 @@ public class StageObject extends Asset {
 	@Override
 	public void draw(Graphics stageGraphics, double scale, boolean selected) {
 	
-		Graphics2D stg2D = (Graphics2D) stageGraphics;
+		Graphics2D stg2D = (Graphics2D) stageGraphics.create();
 		stg2D.setColor(Color.BLACK);
 		
 		BufferedImage bi = new BufferedImage(
@@ -94,6 +94,7 @@ public class StageObject extends Asset {
 		//Reset and dispose
 		stg2D.setTransform(old);
 		g.dispose();
+		stg2D.dispose();
 	}
 	
 	public void draw(Graphics g2, double scale, double x, double y) {

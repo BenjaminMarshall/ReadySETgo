@@ -40,8 +40,7 @@ public class TextBox extends Asset{
 	@Override
 	public void draw(Graphics stageGraphics, double scale, boolean selected) {
 		
-		//Graphics2D cast
-		Graphics2D stg2D = (Graphics2D) stageGraphics;
+		Graphics2D stg2D = (Graphics2D) stageGraphics.create();
 		stg2D.setColor(Color.BLACK);
 		
 		label.setSize(label.getPreferredSize());
@@ -72,6 +71,7 @@ public class TextBox extends Asset{
         
         stg2D.transform(old);
         g.dispose();
+        stg2D.dispose();
 	}
 	
 	public TextBox(String text){
