@@ -15,6 +15,8 @@ public class UserManager {
 	private static SelectedState state = SelectedState.EMPTY;
 	private static Asset selected;
 	private static Asset clipboard;
+	private static double dragOffsetX;
+	private static double dragOffsetY;
 
 	public static MouseState getMouseState(MouseEvent e){
 		int mask = MouseEvent.BUTTON1_DOWN_MASK;
@@ -47,6 +49,22 @@ public class UserManager {
 
 	public static void setClipboard(Asset clipboard) {
 		UserManager.clipboard = clipboard;
+	}
+	
+	public static double getDragOffsetX(){
+		return dragOffsetX;
+	}
+	
+	public static void setDragOffsetX(double x){
+		dragOffsetX = x;
+	}
+	
+	public static double getDragOffsetY(){
+		return dragOffsetY;
+	}
+	
+	public static void setDragOffsetY(double y){
+		dragOffsetY = y;
 	}
 	
 }
