@@ -46,7 +46,7 @@ public class Stage implements Printable {
     private Image stageImage;
     private double width;
     private double length;
-    
+        
     private String filePath;
     
     /**
@@ -98,7 +98,7 @@ public class Stage implements Printable {
      */
     public void draw(Graphics g){
     	StagePanel stagePanel = (StagePanel) ComponentManager.getComp("StagePanel");
-    	double scale = (stagePanel.getWidth() / this.width);
+    	double scale = this.getScale();
     	g.drawImage(stageImage, 0, 0, (int) (width*scale), (int) (length*scale), null);
     	for(Asset a : assets) {
     		a.draw(g, scale, UserManager.getSelectedState() == UserManager.SelectedState.SELECTED && UserManager.getSelected() == a);
@@ -110,6 +110,26 @@ public class Stage implements Printable {
     		}
     	}
     }
+    
+    /**
+     * Draws the stage
+     * @param g The Graphics object to draw with
+     */
+    public void printDraw(Graphics g, double printScale){
+    	StagePanel stagePanel = (StagePanel) ComponentManager.getComp("StagePanel");
+    	double scale = printScale;
+    	g.drawImage(stageImage, 0, 0, (int) (width*scale), (int) (length*scale), null);
+    	for(Asset a : assets) {
+    		a.draw(g, scale, UserManager.getSelectedState() == UserManager.SelectedState.SELECTED && UserManager.getSelected() == a);
+    	}
+    	for(FlyRail f: flyRails){
+    		if(f.isFlownIn()) {
+    			Asset a = f.getDrawable();
+    			a.draw(g, scale, false);
+    		}
+    	}
+    }
+    
     
     /**
      * Return the stage's name
@@ -292,27 +312,24 @@ public class Stage implements Printable {
     // TODO - Javadoc after fixinf printing
     @Override
     public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-//        if (pageIndex > 0) {
-//            return NO_SUCH_PAGE;
-//        }
-//        graphics.getClip();
-//        Graphics2D g2d = (Graphics2D) graphics;
-//        double xScale = 0.79;
-//        double yScale = 0.9;
-//
-//        g2d.scale(xScale, yScale);
-//        pageFormat.setOrientation(PageFormat.LANDSCAPE);
-//        g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
-//        printAll(graphics);
-//        return PAGE_EXISTS;
-    	 	if (pageIndex > 0){
-    	      return Printable.NO_SUCH_PAGE;
-    	      }
 
-    	      Graphics2D g2 = (Graphics2D) graphics;
-    	      g2.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
-    	      this.draw(g2);
-    	      return Printable.PAGE_EXISTS;
+		if (pageIndex > 0){ return Printable.NO_SUCH_PAGE; }
+		
+		Graphics2D g2 = (Graphics2D) graphics;
+		g2.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+		
+		AffineTransform old = g2.getTransform();
+		AffineTransform rotateTransform = new AffineTransform();
+		rotateTransform.translate(pageFormat.getImageableWidth(), 0);
+		rotateTransform.rotate(Math.toRadians(90));
+		g2.transform(rotateTransform);
+		
+		double printScale = this.width / (pageFormat.getImageableHeight() * 1.5 );
+		
+		this.printDraw(g2, printScale);
+		
+		g2.transform(old);
+		return Printable.PAGE_EXISTS;
     }
 	
 	
