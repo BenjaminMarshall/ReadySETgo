@@ -132,21 +132,21 @@ public class XMLFileGenerator {
 			int legsXoffset = 95;
 			int elecXoffset = 90;
 			
-			rails.add(new FlyRail("Cyc", 604, 5, curtainXoffset, 10,  true, "res/black.png"));
-			rails.add(new FlyRail("Upstage Traveler", 604, 12, curtainXoffset, 20,  true, "res/curtain.png"));
-			rails.add(new FlyRail("4th Legs", 720, 12, legsXoffset, 47,  true, "res/legs.png"));
-			rails.add(new FlyRail("5th Electric", 742, 2, elecXoffset, 62,  true, "res/black.png"));
-			rails.add(new FlyRail("4th Electric", 742, 2, elecXoffset, 80,  true, "res/black.png"));
-			rails.add(new FlyRail("3rd Legs", 720, 12, legsXoffset, 105,  true, "res/legs.png"));
-			rails.add(new FlyRail("3rd Electric", 742, 2, elecXoffset, 120,  true, "res/black.png"));
-			rails.add(new FlyRail("2nd Legs", 720, 12, legsXoffset, 140,  true, "res/legs.png"));
-			rails.add(new FlyRail("Mid Traveler", 604, 12, curtainXoffset, 160,  true, "res/curtain.png"));
-			rails.add(new FlyRail("Screen", 256, 5, 315, 175,  true, "res/black.png"));
-			rails.add(new FlyRail("Banners", 458, 5, 215, 175,  true, "res/banners.png"));
-			rails.add(new FlyRail("2nd Electric", 742, 2, elecXoffset, 190,  true, "res/black.png"));
-			rails.add(new FlyRail("1st Legs", 720, 12, legsXoffset, 200,  true, "res/legs.png"));
-			rails.add(new FlyRail("1st Electric", 742, 2, elecXoffset, 230,  true, "res/black.png"));
-			rails.add(new FlyRail("Main Curtain", 604, 12, curtainXoffset, 320,  true, "res/curtain.png"));
+			rails.add(new FlyRail("Cyc", 604, 5, curtainXoffset, 10,  false, "res/black.png"));
+			rails.add(new FlyRail("Upstage Traveler", 604, 12, curtainXoffset, 20,  false, "res/curtain.png"));
+			rails.add(new FlyRail("4th Legs", 720, 12, legsXoffset, 47,  false, "res/legs.png"));
+			rails.add(new FlyRail("5th Electric", 742, 2, elecXoffset, 62,  false, "res/black.png"));
+			rails.add(new FlyRail("4th Electric", 742, 2, elecXoffset, 80,  false, "res/black.png"));
+			rails.add(new FlyRail("3rd Legs", 720, 12, legsXoffset, 105,  false, "res/legs.png"));
+			rails.add(new FlyRail("3rd Electric", 742, 2, elecXoffset, 120,  false, "res/black.png"));
+			rails.add(new FlyRail("2nd Legs", 720, 12, legsXoffset, 140,  false, "res/legs.png"));
+			rails.add(new FlyRail("Mid Traveler", 604, 12, curtainXoffset, 160,  false, "res/curtain.png"));
+			rails.add(new FlyRail("Screen", 256, 5, 315, 175,  false, "res/black.png"));
+			rails.add(new FlyRail("Banners", 458, 5, 215, 175,  false, "res/banners.png"));
+			rails.add(new FlyRail("2nd Electric", 742, 2, elecXoffset, 190,  false, "res/black.png"));
+			rails.add(new FlyRail("1st Legs", 720, 12, legsXoffset, 200,  false, "res/legs.png"));
+			rails.add(new FlyRail("1st Electric", 742, 2, elecXoffset, 230,  false, "res/black.png"));
+			rails.add(new FlyRail("Main Curtain", 604, 12, curtainXoffset, 320,  false, "res/curtain.png"));
 
 			
 			
