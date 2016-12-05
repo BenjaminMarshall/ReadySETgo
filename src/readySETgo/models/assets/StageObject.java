@@ -88,8 +88,8 @@ public class StageObject extends Asset {
 		stg2D.setColor(Color.BLACK);
 		
 		BufferedImage bi = new BufferedImage(
-	            (!defaultPic ? (int) (getPhysicalWidth() * scale) : (int) (getPhysicalWidth() * scale) + 1),
-	            (!defaultPic ? (int) (getPhysicalLength() * scale) : (int) (getPhysicalLength() * scale) + 1),
+	            (!defaultPic ? (int) (getPhysicalWidth() * scale) + 1: (int) (getPhysicalWidth() * scale) + 1),
+	            (!defaultPic ? (int) (getPhysicalLength() * scale) + 1: (int) (getPhysicalLength() * scale) + 1),
 	            BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g = bi.createGraphics();
 		

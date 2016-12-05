@@ -174,19 +174,27 @@ public class StagePanel extends JPanel implements Printable {
     // TODO - Javadoc after fixinf printing
     @Override
     public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-        if (pageIndex > 0) {
-            return NO_SUCH_PAGE;
-        }
-        graphics.getClip();
-        Graphics2D g2d = (Graphics2D) graphics;
-        double xScale = 0.79;
-        double yScale = 0.9;
+//        if (pageIndex > 0) {
+//            return NO_SUCH_PAGE;
+//        }
+//        graphics.getClip();
+//        Graphics2D g2d = (Graphics2D) graphics;
+//        double xScale = 0.79;
+//        double yScale = 0.9;
+//
+//        g2d.scale(xScale, yScale);
+//        pageFormat.setOrientation(PageFormat.LANDSCAPE);
+//        g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+//        printAll(graphics);
+//        return PAGE_EXISTS;
+    	 	if (pageIndex > 0){
+    	      return Printable.NO_SUCH_PAGE;
+    	      }
 
-        g2d.scale(xScale, yScale);
-        pageFormat.setOrientation(PageFormat.LANDSCAPE);
-        g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
-        printAll(graphics);
-        return PAGE_EXISTS;
+    	      Graphics2D g2 = (Graphics2D) graphics.create();
+    	      g2.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+    	      this.paint(g2);
+    	      return Printable.PAGE_EXISTS;
     }
 
     /**
