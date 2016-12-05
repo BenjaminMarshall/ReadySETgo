@@ -41,7 +41,7 @@ import readySETgo.rightclickmenus.StagePanelRCM;
  * @since 2016-12-04
  * 
  */
-public class StagePanel extends JPanel implements Printable {
+public class StagePanel extends JPanel {
 
 	private Stage stage;
 
@@ -50,7 +50,6 @@ public class StagePanel extends JPanel implements Printable {
 	 */
     public StagePanel() {
         super();
-        PrintManager.register(this);
         this.stage = new Stage();
         StageManager.registerStage(this.stage);
         ComponentManager.registerComp("StagePanel", this);
@@ -171,31 +170,7 @@ public class StagePanel extends JPanel implements Printable {
      */
     public Stage getStage() { return this.stage; }
 
-    // TODO - Javadoc after fixinf printing
-    @Override
-    public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-//        if (pageIndex > 0) {
-//            return NO_SUCH_PAGE;
-//        }
-//        graphics.getClip();
-//        Graphics2D g2d = (Graphics2D) graphics;
-//        double xScale = 0.79;
-//        double yScale = 0.9;
-//
-//        g2d.scale(xScale, yScale);
-//        pageFormat.setOrientation(PageFormat.LANDSCAPE);
-//        g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
-//        printAll(graphics);
-//        return PAGE_EXISTS;
-    	 	if (pageIndex > 0){
-    	      return Printable.NO_SUCH_PAGE;
-    	      }
 
-    	      Graphics2D g2 = (Graphics2D) graphics.create();
-    	      g2.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
-    	      this.paint(g2);
-    	      return Printable.PAGE_EXISTS;
-    }
 
     /**
      * Loads the specified Stage into the panel and registers it with the StageManager

@@ -1,12 +1,16 @@
 package readySETgo.models;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,6 +24,7 @@ import readySETgo.dialogs.RotateDialog;
 import readySETgo.dialogs.RotateSelectionErrorDialog;
 import readySETgo.managers.ComponentManager;
 import readySETgo.managers.FileManager;
+import readySETgo.managers.PrintManager;
 import readySETgo.managers.UndoManager;
 import readySETgo.managers.UserManager;
 import readySETgo.models.assets.Asset;
@@ -34,7 +39,7 @@ import readySETgo.models.assets.TextBox;
  * @since 2016-12-04
  * 
  */
-public class Stage {
+public class Stage implements Printable {
     private String name;
     private List<Asset> assets;
     private List<FlyRail> flyRails;
@@ -49,6 +54,7 @@ public class Stage {
      */
     public Stage(){
     	this.name = "New Stage";
+    	PrintManager.register(this);
     	this.assets = new ArrayList<Asset>();
     	this.flyRails =  FileManager.loadListOfFlyRails();
     	try {
@@ -282,6 +288,34 @@ public class Stage {
 		}
 	}
 
+	
+    // TODO - Javadoc after fixinf printing
+    @Override
+    public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+//        if (pageIndex > 0) {
+//            return NO_SUCH_PAGE;
+//        }
+//        graphics.getClip();
+//        Graphics2D g2d = (Graphics2D) graphics;
+//        double xScale = 0.79;
+//        double yScale = 0.9;
+//
+//        g2d.scale(xScale, yScale);
+//        pageFormat.setOrientation(PageFormat.LANDSCAPE);
+//        g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+//        printAll(graphics);
+//        return PAGE_EXISTS;
+    	 	if (pageIndex > 0){
+    	      return Printable.NO_SUCH_PAGE;
+    	      }
+
+    	      Graphics2D g2 = (Graphics2D) graphics;
+    	      g2.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+    	      this.draw(g2);
+    	      return Printable.PAGE_EXISTS;
+    }
+	
+	
 	/**
 	 * Show the dialog to edit the selected TextBox
 	 */
