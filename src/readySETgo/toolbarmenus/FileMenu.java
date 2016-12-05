@@ -6,9 +6,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import readySETgo.dialogs.UnsavedChangesDialog;
 import readySETgo.factories.MenuItemFactory;
 import readySETgo.managers.FileManager;
 import readySETgo.managers.PrintManager;
+import readySETgo.managers.UndoManager;
 
 /**
  * 
@@ -62,7 +64,10 @@ public class FileMenu extends JMenu {
 		JMenuItem exitMenuItem = new JMenuItem("Exit");
 		exitMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				System.exit(0);
+				if(UndoManager.hasUnsavedChanges()) {
+	        		UnsavedChangesDialog.createAndShow();
+	        	}
+	        	else { System.exit(0); }
 			}});
 		this.add(exitMenuItem);
 
