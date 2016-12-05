@@ -309,7 +309,12 @@ public class Stage implements Printable {
 	}
 
 	
-    // TODO - Javadoc after fixinf printing
+    /**
+     * Prints the stage
+     * @param graphics The Graphics object used for printing
+     * @param pageFormat The printing PageFormat
+     * @param pageIndex The printing page index
+     */
     @Override
     public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
 
