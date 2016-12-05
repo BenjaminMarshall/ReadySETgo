@@ -82,7 +82,6 @@ public class ImportDialog extends JOptionPane {
 		    	if (retCode == JFileChooser.APPROVE_OPTION) {
 		    		File f = menu.getSelectedFile();
 		    		String path = f.getAbsolutePath();
-		    		// TODO, check that file is actually an image
 		    		objImageRef.setText(path);
 		    	}
 			}
@@ -151,11 +150,6 @@ public class ImportDialog extends JOptionPane {
 				noErrors = false;
 				imgText = ImportDialog.generateErrorStr(imgText, "File does not exist");
 			}
-			// TODO - Get image validation working
-//			else if(!isImage(new File(objImageRef.getText()))) {
-//				noErrors = false;
-//				imgText = ImportDialog.generateErrorStr(imgText, "File is not an image");
-//			}
 			
 			if(noErrors) {
 				FileManager.addObjectToDefaults(objName.getText(), Double.parseDouble(objWidth.getText()), Double.parseDouble(objLength.getText()), objImageRef.getText());

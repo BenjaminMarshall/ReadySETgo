@@ -63,7 +63,7 @@ public class Stage implements Printable {
     		e.printStackTrace();
     	}
     	this.width = 77 * 12; // Width in Inches
-    	this.length = 45 * 12; // Len in inches //TODO
+    	this.length = 45 * 12; // Len in inches
     }
     
     /**

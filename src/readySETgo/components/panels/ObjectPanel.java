@@ -11,9 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -27,7 +25,6 @@ import readySETgo.managers.StageManager;
 import readySETgo.managers.UserManager;
 import readySETgo.managers.UserManager.MouseState;
 import readySETgo.managers.UserManager.SelectedState;
-import readySETgo.models.Stage;
 import readySETgo.models.assets.Asset;
 import readySETgo.models.assets.StageObject;
 
@@ -116,7 +113,10 @@ public class ObjectPanel extends JPanel {
 		public ObjPanelMouseAdapter(SingleObjectPanel sop) { this.sop = sop; }
 		
 		
-		// TODO - Have Ben javadoc
+		/**
+		 * Detect if a drag is being started, and set the selected object to the StageObject this panel contains.
+		 * 
+		 */
 		@Override
 		public void mousePressed(MouseEvent e) {
 			UserManager.setSelected(((SingleObjectPanel) e.getComponent()).getCopyOfStageObject());
@@ -124,7 +124,12 @@ public class ObjectPanel extends JPanel {
 			
 		}
 
-		//TODO - Have ben javadoc
+		/**
+		 * On a mouse release - 
+		 * 	   If the mouse was released outside the stage bounds, get rid of the object being dragged.
+		 *         and reset the cursor back
+		 *     Finally, change the selected state from DRAGGING to SELECTED
+		 */
 		@Override
 		public void mouseReleased(MouseEvent e) {
 				
@@ -150,7 +155,9 @@ public class ObjectPanel extends JPanel {
 				UserManager.setSelectedState(SelectedState.SELECTED);
 		}
 
-		// Todo - Is this necesary?
+		/**
+		 * If somehow mouseEvents were interrupted (Perhaps if it left the application), this ensures the UserManager is in the correct state.
+		 */
 		@Override
 		public void mouseEntered(MouseEvent e) {
 			if(UserManager.getSelectedState().equals(SelectedState.DRAGGING) && UserManager.getMouseState(e).equals(MouseState.UP)) {
@@ -178,7 +185,12 @@ public class ObjectPanel extends JPanel {
 			this.op = sop;
 		}
 		
-		// Todo - Have ben javadoc
+		/**
+		 * If a drag is in progress, move the object being dragged to the mouse's coordinate.
+		 * 
+		 * Additionally, if the object is in an invalid location, change the cursor to an X
+		 */
+		@Override
 		public void mouseDragged(MouseEvent e) {
 			if(UserManager.getSelectedState().equals(SelectedState.DRAGGING)) {
 				double scale = StageManager.getStage().getScale();

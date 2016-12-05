@@ -3,7 +3,6 @@ package readySETgo.components.panels;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -11,9 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.awt.print.PageFormat;
-import java.awt.print.Printable;
-import java.awt.print.PrinterException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -21,7 +17,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 import readySETgo.managers.ComponentManager;
-import readySETgo.managers.PrintManager;
 import readySETgo.managers.StageManager;
 import readySETgo.managers.UndoManager;
 import readySETgo.managers.UserManager;
@@ -64,6 +59,9 @@ public class StagePanel extends JPanel {
         // Handle dragging
         addMouseListener(new MouseAdapter() {
 
+        	/**
+        	 * Handle drag starts and selections, and de-selections
+        	 */
             @Override
             public void mousePressed(MouseEvent e) { 
                 Asset a;
@@ -86,6 +84,10 @@ public class StagePanel extends JPanel {
                 }
             }
 
+            
+            /**
+             * Handle drag ends.
+             */
             @Override
             public void mouseReleased(MouseEvent e) {
                 if (UserManager.getSelectedState().equals(SelectedState.DRAGGING)) {
@@ -106,6 +108,9 @@ public class StagePanel extends JPanel {
 
             }
 
+            /**
+             * If a TextBox is double-clicked, open an edit dialog.
+             */
             public void mouseClicked(MouseEvent e){
             	if(e.getClickCount()==2){
                     if(UserManager.getSelectedState().equals(SelectedState.SELECTED)){
@@ -116,6 +121,10 @@ public class StagePanel extends JPanel {
                 }
             }
 
+            /**
+             * Handle a drag coming from off stage. Also, if mouse events are interrupted for some reason,
+             * this will ensure the state is correct.
+             */
             @Override
             public void mouseEntered(MouseEvent e) {
                 if (UserManager.getSelectedState().equals(SelectedState.DRAGGING)) {
@@ -130,9 +139,13 @@ public class StagePanel extends JPanel {
                 }
             }
         });
-        // Handle dragging
+        
+        //Handle dragging
         addMouseMotionListener(new MouseMotionAdapter() {
 
+        	/**
+        	 * Handle dragging
+        	 */
             public void mouseDragged(MouseEvent e) {
                 if (UserManager.getSelectedState().equals(SelectedState.DRAGGING)) {
                 	if(e.getX() < 0 || e.getY() < 0 || e.getX() > getWidth() || e.getY() > getHeight()) {
