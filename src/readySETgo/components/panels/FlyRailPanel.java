@@ -49,7 +49,7 @@ public class FlyRailPanel extends JPanel{
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.PAGE_AXIS));		
 		List<FlyRail> rails = s.getFlyRails();
 		for (FlyRail f : rails) { contentPanel.add(new SingleRailPanel(f)); }
-		// Reset layout TODO- check if this should be moved to constructor
+		
 		GridBagLayout gc = new GridBagLayout();
 		GridBagConstraints c = new GridBagConstraints();
 		this.setLayout(gc);
@@ -58,7 +58,7 @@ public class FlyRailPanel extends JPanel{
 		c.weightx = 1;
 		c.weighty = 1;
 		c.fill = c.BOTH;
-		// End TODO
+		
 		// Create & add scrollpane
 		JScrollPane scrollPane = new JScrollPane(contentPanel, 
 				   ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,  

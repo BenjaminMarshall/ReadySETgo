@@ -117,7 +117,7 @@ public class CloneDialog extends JOptionPane {
 		int res = CloneDialog.showConfirmDialog(ComponentManager.getComp("MainFrame"), inputs, CloneDialog.WINDOW_TITLE, JOptionPane.YES_NO_OPTION);
 		if (res == JOptionPane.OK_OPTION) {
 			// Save the object, or create a new dialog showing errors
-			// TODO - Fix this horrible mess
+			
 			boolean noErrors = true;
 			String nameText = CloneDialog.NAME_LABEL_TXT;
 			String widthText = CloneDialog.WIDTH_LABEL_TXT;

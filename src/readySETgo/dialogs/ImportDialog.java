@@ -110,7 +110,7 @@ public class ImportDialog extends JOptionPane {
 		int res = ImportDialog.showConfirmDialog(ComponentManager.getComp("MainFrame"), inputs, ImportDialog.WINDOW_TITLE, JOptionPane.YES_NO_OPTION);
 		if (res == JOptionPane.OK_OPTION) {
 			// Save the object, or create a new dialog showing errors
-			// TODO - Fix this horrible mess
+			
 			boolean noErrors = true;
 			String nameText = ImportDialog.NAME_LABEL_TXT;
 			String widthText = ImportDialog.WIDTH_LABEL_TXT;
