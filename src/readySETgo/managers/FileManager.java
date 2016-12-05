@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -133,7 +134,7 @@ public class FileManager {
             transformer.transform(source, result);
             
         } catch (Exception e) {
-            e.printStackTrace();
+        	JOptionPane.showMessageDialog(ComponentManager.getComp("MainFrame"), "There was an error saving the stage to a file: \r\n" + e.getMessage(), "Error saving stage.", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -209,7 +210,7 @@ public class FileManager {
     		UndoManager.reset();
         	
         } catch (Exception ex) {
-            ex.printStackTrace();
+        	JOptionPane.showMessageDialog(ComponentManager.getComp("MainFrame"), "There was an error loading the stage from a file: \r\n" + ex.getMessage(), "Error loading stage.", JOptionPane.ERROR_MESSAGE);
            
         }
         return stage;
@@ -250,7 +251,7 @@ public class FileManager {
             StreamResult result = new StreamResult(new File("res/Objects.xml"));
             transformer.transform(source, result);
     	} catch (Exception e){
-    		e.printStackTrace();
+    		JOptionPane.showMessageDialog(ComponentManager.getComp("MainFrame"), "There was an error saving the list of objects: \r\n" + e.getMessage(), "Error saving objects.", JOptionPane.ERROR_MESSAGE);
     	}
     	
     }
@@ -284,15 +285,8 @@ public class FileManager {
 	    		objects.add(o);
 	    	}	    	
 	    	
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(ComponentManager.getComp("MainFrame"), "There was an error loading the default objects xml: \r\n" + e.getMessage(), "Error loading objects.", JOptionPane.ERROR_MESSAGE);
 		}
     	
     	return objects;
@@ -336,7 +330,7 @@ public class FileManager {
             StreamResult result = new StreamResult(new File("res/Rails.xml"));
             transformer.transform(source, result);
     	} catch (Exception e){
-    		e.printStackTrace();
+    		JOptionPane.showMessageDialog(ComponentManager.getComp("MainFrame"), "There was an error saving the list of flyrails: \r\n" + e.getMessage(), "Error saving flyrails.", JOptionPane.ERROR_MESSAGE);
     	}
     }
     
@@ -371,15 +365,8 @@ public class FileManager {
 	    		rails.add(f);
 	    	}	    	
 	    	
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e){
+			JOptionPane.showMessageDialog(ComponentManager.getComp("MainFrame"), "There was an error loading the list of flyrails: \r\n" + e.getMessage(), "Error loading flyrails.", JOptionPane.ERROR_MESSAGE);
 		}
     	
     	return rails;

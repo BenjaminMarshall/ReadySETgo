@@ -1,6 +1,8 @@
 package readySETgo.managers;
 
 import javax.print.PrintService;
+import javax.swing.JOptionPane;
+
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
@@ -41,7 +43,9 @@ public class PrintManager {
                 boolean ok = job.printDialog();
                 if (ok) { job.print(); }
             }
-            catch (PrinterException e) { /* TODO - Add Error logging code */}
+            catch (PrinterException e) { 
+            	JOptionPane.showMessageDialog(ComponentManager.getComp("MainFrame"), "There was an error printing: \r\n" + e.getMessage(), "Error printing.", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 }
