@@ -1,5 +1,7 @@
 package readySETgo.managers;
 
+import readySETgo.components.panels.FlyRailPanel;
+import readySETgo.components.panels.StagePanel;
 import readySETgo.models.Stage;
 
 /**
@@ -22,6 +24,15 @@ public class StageManager {
 	 * @return The registered Stage
 	 */
     public static Stage getStage() { return manager.stage; }
+    
+    public static void makeNewStage() {
+    	Stage newStage = new Stage();
+    	((StagePanel) ComponentManager.getComp("StagePanel")).loadStage(newStage);
+    	UndoManager.reset();
+    	UserManager.setSelectedState(UserManager.SelectedState.EMPTY);
+    	UserManager.setSelected(null);
+    	((FlyRailPanel) ComponentManager.getComp("FlyRailPanel")).loadFlyRails(newStage);
+    }
     
     /**
      * Registers a stage to be returned by getStage

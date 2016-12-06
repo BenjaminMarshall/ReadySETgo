@@ -5,6 +5,7 @@ import javax.swing.UIManager;
 
 import readySETgo.managers.ComponentManager;
 import readySETgo.managers.FileManager;
+import readySETgo.managers.StageManager;
 
 /**
  * 
@@ -20,13 +21,15 @@ public class UnsavedChangesDialog extends JOptionPane {
 	public static final String WINDOW_TITLE = "Save unsaved changes?";
 	public static final String WINDOW_MSG = "You have unsaved changes. Would you like to save?";
 	
+	public enum Operation {EXIT, NEWSTAGE}
+	
 	// Disable default constructor
 	private UnsavedChangesDialog() {}
 	
 	/**
 	 * Creates and shows the dialog
 	 */
-	public static void createAndShow() {
+	public static void createAndShow(UnsavedChangesDialog.Operation op) {
 		// Custom yes/no button text
 		UIManager.put("OptionPane.yesButtonText", "Save");
     	UIManager.put("OptionPane.noButtonText", "Don't Save");
@@ -36,8 +39,14 @@ public class UnsavedChangesDialog extends JOptionPane {
                 JOptionPane.YES_NO_CANCEL_OPTION,
                 JOptionPane.WARNING_MESSAGE);
     	if (response == JOptionPane.YES_OPTION){
-            if(FileManager.attemptSaveSilently()) { System.exit(0); }
+            if(FileManager.attemptSaveSilently()) {
+            	if(op == UnsavedChangesDialog.Operation.EXIT) { System.exit(0); }
+            	if(op == UnsavedChangesDialog.Operation.NEWSTAGE) { StageManager.makeNewStage(); }
+            }
         }
-    	if (response == JOptionPane.NO_OPTION) { System.exit(0); }
+    	if (response == JOptionPane.NO_OPTION) {
+    		if(op == UnsavedChangesDialog.Operation.EXIT) { System.exit(0); }
+        	if(op == UnsavedChangesDialog.Operation.NEWSTAGE) { StageManager.makeNewStage(); }
+    	}
 	}	
 }

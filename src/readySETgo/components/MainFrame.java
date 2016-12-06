@@ -249,7 +249,7 @@ public class MainFrame extends JFrame {
         @Override
         public void windowClosing(WindowEvent windowEvent) {
         	if(UndoManager.hasUnsavedChanges()) {
-        		UnsavedChangesDialog.createAndShow();
+        		UnsavedChangesDialog.createAndShow(UnsavedChangesDialog.Operation.EXIT);
         	}
         	else { System.exit(0); }
         }

@@ -10,6 +10,7 @@ import readySETgo.dialogs.UnsavedChangesDialog;
 import readySETgo.factories.MenuItemFactory;
 import readySETgo.managers.FileManager;
 import readySETgo.managers.PrintManager;
+import readySETgo.managers.StageManager;
 import readySETgo.managers.UndoManager;
 
 /**
@@ -29,6 +30,17 @@ public class FileMenu extends JMenu {
 	public FileMenu() {
 		super("File");
         MenuItemFactory mf = new MenuItemFactory();
+        
+        // "new" is a keyword lmao
+        JMenuItem nu = mf.createJMenuItem("New", "Create a new File");
+        nu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(UndoManager.hasUnsavedChanges()) {
+	        		UnsavedChangesDialog.createAndShow(UnsavedChangesDialog.Operation.NEWSTAGE);
+	        	}
+	        	else { StageManager.makeNewStage(); }
+			}});
+        this.add(nu);
         
         JMenuItem open = mf.createJMenuItem("Open", "Open a File");
         open.addActionListener(new ActionListener() {
@@ -65,7 +77,7 @@ public class FileMenu extends JMenu {
 		exitMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(UndoManager.hasUnsavedChanges()) {
-	        		UnsavedChangesDialog.createAndShow();
+	        		UnsavedChangesDialog.createAndShow(UnsavedChangesDialog.Operation.EXIT);
 	        	}
 	        	else { System.exit(0); }
 			}});
