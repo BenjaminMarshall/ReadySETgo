@@ -55,7 +55,7 @@ public class StagePanel extends JPanel {
         t.start();
 
         // Add right click menu
-        addMouseListener(StagePanelRCM.createAdapter(this.stage));
+        addMouseListener(StagePanelRCM.createAdapter());
         // Handle dragging
         addMouseListener(new MouseAdapter() {
 

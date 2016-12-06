@@ -208,7 +208,7 @@ public class FileManager {
     		UserManager.setSelectedState(UserManager.SelectedState.EMPTY);
     		UserManager.setSelected(null);
     		UndoManager.reset();
-        	
+        	StageManager.registerStage(stage);
         } catch (Exception ex) {
         	JOptionPane.showMessageDialog(ComponentManager.getComp("MainFrame"), "There was an error loading the stage from a file: \r\n" + ex.getMessage(), "Error loading stage.", JOptionPane.ERROR_MESSAGE);
            

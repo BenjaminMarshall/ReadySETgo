@@ -9,6 +9,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import readySETgo.dialogs.PropsDialog;
+import readySETgo.managers.StageManager;
 import readySETgo.managers.UserManager;
 import readySETgo.models.Stage;
 import readySETgo.models.assets.Asset;
@@ -26,32 +27,29 @@ import readySETgo.models.assets.TextBox;
  */
 public class StagePanelRCM extends JPopupMenu {
 	
-	private Stage stage;
-	
 	/**
 	 * Default Constructor
 	 * @param s The Stage in the StagePanel
 	 * @param e The MouseEvent that spawned this menu
 	 */
-	public StagePanelRCM(Stage s, MouseEvent e){
-		stage = s;
+	public StagePanelRCM(MouseEvent e){
 		
 		double origX = e.getX();
 		double origY = e.getY();
 		
-		Asset obj = stage.eventOnObject(e);
+		Asset obj = StageManager.getStage().eventOnObject(e);
 		Boolean isOnObject = (obj != null);
 		if(isOnObject) {
 			JMenuItem cutItem = new JMenuItem(new AbstractAction("Cut") {
 				public void actionPerformed(ActionEvent e) {
-					stage.cutSelected();
+					StageManager.getStage().cutSelected();
 				}
 			});
 			add(cutItem);
 			
 			JMenuItem copyItem = new JMenuItem(new AbstractAction("Copy") {
 				public void actionPerformed(ActionEvent e) {
-					stage.copySelected();
+					StageManager.getStage().copySelected();
 				}
 			});
 			add(copyItem);
@@ -59,7 +57,7 @@ public class StagePanelRCM extends JPopupMenu {
 			if(UserManager.getSelected() instanceof TextBox){
 				JMenuItem editItem = new JMenuItem(new AbstractAction("Edit"){
 					public void actionPerformed(ActionEvent e){
-						stage.editSelectedTextBox();
+						StageManager.getStage().editSelectedTextBox();
 					}
 				});
 				add(editItem);
@@ -75,14 +73,14 @@ public class StagePanelRCM extends JPopupMenu {
 			
 			JMenuItem rotateItem = new JMenuItem(new AbstractAction("Rotate"){
 				public void actionPerformed(ActionEvent e){
-					stage.rotateSelectedAsset();
+					StageManager.getStage().rotateSelectedAsset();
 				}
 			});
 			add(rotateItem);
 			
 			JMenuItem deleteItem = new JMenuItem(new AbstractAction("Delete") {
 				public void actionPerformed(ActionEvent e) {
-					stage.deleteSelected();
+					StageManager.getStage().deleteSelected();
 				}
 			});
 			add(deleteItem);
@@ -90,7 +88,7 @@ public class StagePanelRCM extends JPopupMenu {
 		else {
 			JMenuItem pasteItem = new JMenuItem(new AbstractAction("Paste") {
 				public void actionPerformed(ActionEvent e) {
-					stage.pasteFromClipboard(origX, origY);
+					StageManager.getStage().pasteFromClipboard(origX, origY);
 				}
 			});
 			pasteItem.setEnabled(UserManager.getClipboard() != null);
@@ -98,7 +96,7 @@ public class StagePanelRCM extends JPopupMenu {
 			
 			JMenuItem addLabelItem = new JMenuItem(new AbstractAction("Add Textbox") {
 				public void actionPerformed(ActionEvent e){
-					stage.createTextBox(origX, origY);
+					StageManager.getStage().createTextBox(origX, origY);
 				}
 			});
 			add(addLabelItem);
@@ -107,10 +105,9 @@ public class StagePanelRCM extends JPopupMenu {
 	
 	/**
 	 * Creates an adapter which spawns the right click menu
-	 * @param s The Stage in the StagePanel
 	 * @return The MouseAdapter to attach to the StagePanel
 	 */
-	public static MouseAdapter createAdapter(Stage s){
+	public static MouseAdapter createAdapter(){
 		return new MouseAdapter(){
 		
 			
@@ -127,7 +124,7 @@ public class StagePanelRCM extends JPopupMenu {
 			 }
 			 
 			 private void doPop(MouseEvent e){
-				 StagePanelRCM menu = new StagePanelRCM(s, e);
+				 StagePanelRCM menu = new StagePanelRCM(e);
 				 menu.show(e.getComponent(), e.getX(), e.getY());
 			 }
 		};

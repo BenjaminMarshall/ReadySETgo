@@ -281,13 +281,17 @@ public class Stage implements Printable {
 	 * @param yPos The y pos
 	 */
 	public void createTextBox(double xPos, double yPos){
+
 		TextBox a = new TextBox();
 		a.setxPos(xPos / getScale());
 		a.setyPos(yPos / getScale());
+		
+		
 		UndoManager.storeObjectPlacement(a);
 		UserManager.setSelected(a);
 		UserManager.setSelectedState(UserManager.SelectedState.SELECTED);
-		this.getAssets().add(a);
+		
+		this.getAssets().add(a);	
 	}
 	
 	/**
