@@ -203,18 +203,26 @@ public class MainFrame extends JFrame {
     		}
     	});
     	
+    	// Ctrl N => New Stage
+    	KeyStroke ctrlN = KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_DOWN_MASK);
+    	actionMap.put(ctrlN, new AbstractAction("new") {
+    		@Override
+    		public void actionPerformed(ActionEvent e) {
+    			if(UndoManager.hasUnsavedChanges()) {
+    	    		UnsavedChangesDialog.createAndShow(UnsavedChangesDialog.Operation.NEWSTAGE);
+    	    	}
+    	    	else { StageManager.makeNewStage(); }
+    		}
+    	});
     	
-    	// Delete or Ctrl + Backspace => Delete Stage Object
-    	AbstractAction deleteAction = new AbstractAction("delete") {
+    	// Delete Key => Delete Stage Object
+    	KeyStroke delete = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0);
+    	actionMap.put(delete, new AbstractAction("delete") {
     		@Override
     		public void actionPerformed(ActionEvent e) {
     			StageManager.getStage().deleteSelected();
     		}
-    	};
-    	KeyStroke delete = KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0);
-    	actionMap.put(delete, deleteAction);
-    	KeyStroke ctrlBackspace = KeyStroke.getKeyStroke(KeyEvent.VK_BACK_SPACE, KeyEvent.CTRL_DOWN_MASK);
-    	actionMap.put(ctrlBackspace, deleteAction);
+    	});
     	
     	KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager();
     	kfm.addKeyEventDispatcher(new KeyEventDispatcher() {
